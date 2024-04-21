@@ -14,7 +14,7 @@ I did everything you said but
 - The test page sidebar looks weird!
 - Dark mode did fail but I can share you what I tried
 
-    ```js
+    ```
 if (localStorage.getItem('theme')==='dark') {
   const all = document.getElementsByTagName("*");
   document.querySelector("body").style.backgroundColor = "#121212"; // as Bonson said
