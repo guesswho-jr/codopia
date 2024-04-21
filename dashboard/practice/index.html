@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h3>projects</h3>
+
+    <div id="projects">
+        <div class="project">
+            <form action="" method="post" class="liker">
+                <p>An amazin project</p>
+                <button type="submit">Like</button>
+                <span class="likes" projectId="1" liked="false">0</span>
+            </form>
+        </div>
+
+        <div class="project">
+            <form action="" method="post" class="liker">
+                <p>An amazin project</p>
+                <button type="submit">Like</button>
+                <span class="likes" projectId="2" liked="false">0</span>
+            </form>
+        </div>
+
+        <div class="project">
+            <form action="" method="post" class="liker">
+                <p>An amazin project</p>
+                <button type="submit">Like</button>
+                <span class="likes" projectId="3" liked="false">0</span>
+            </form>
+        </div>
+    </div>
+    <script>
+        /* I hate relative choosing but this left me with no choice!!! */
+        let data;
+        let resp;
+        const xhr = new XMLHttpRequest();
+        const likers = document.querySelectorAll(".liker");
+        likers.forEach(liker => {
+            liker.addEventListener("submit", event => {
+                event.preventDefault();
+
+                data = JSON.stringify({
+                    projectId: (event.target.children[2].getAttribute("projectId"))
+                });
+
+                if (event.target.children[2].getAttribute("liked") == "true" && event.target.children[2].textContent > 0) {
+                    event.target.children[2].setAttribute("liked", "false")
+                    xhr.open("DELETE", "BenyasVersion.php");
+                }
+                else {
+                    event.target.children[2].setAttribute("liked", "true");
+                    xhr.open("PUT", "BenyasVersion.php");
+                }
+
+
+                xhr.setRequestHeader("content-type", "application/json");
+                xhr.onload = () => {
+                    const resp = JSON.parse(xhr.responseText);
+                    if (resp.success) {
+                        if (parseInt(resp.type) === 9) {
+
+                            event.target.children[2].textContent++;
+                        }
+                        else if (parseInt(resp.type) === 10) {
+                            event.target.children[2].textContent--;
+                        }
+                        else {
+                            alert("Error occured!");
+                        }
+                    }
+                    if (resp.error) {
+                        alert(`Error occured ${resp.error}`);
+                    }
+                };
+                xhr.send(data);
+
+
+            }); //xhr
+
+        })
+    </script>
+</body>
+
+</html>

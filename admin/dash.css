@@ -1,0 +1,62 @@
+
+.admin{
+    letter-spacing: 5px;
+  }
+.nav-item{
+    font-weight: 300;
+    overflow: hidden;
+    height: 50px;
+    transition: all 0.5s ease-in-out;
+  }
+  .nav-link{
+    letter-spacing: 5px;
+  }
+  #log{
+    letter-spacing: 0px;
+  }
+  .nav-item:hover{
+    background-color: rgb(45, 45, 45);
+    width: auto;
+    border-radius: 10px;
+    color: rgb(255, 255, 255);
+    padding: 10px;
+    transition: all 0.5s ease-in-out;
+  }
+ .breadcrumb-item{
+  text-decoration: none;
+ }
+ #nav-b{
+  margin: 0%;
+ }
+ .data{
+  position: absolute;
+  top:20%;
+  left: 10%;
+ }
+ @media screen and (max-width:1000px) {
+  .data{
+left: 0px;
+  }
+  .btn-danger{
+    width: 40vh;
+  }
+  .nav-item{
+    font-weight: 300;
+    overflow: hidden;
+    height: 80px;
+    transition: all 0.5s ease-in-out;
+  }
+
+
+ }
+ .box {
+  width: 150px;
+  height: 150px;
+  border-radius: 5px;
+  padding-left: 20px;
+ }
+
+.g-try {
+  display: flex;
+  flex-direction: row-reverse;
+}
