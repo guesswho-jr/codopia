@@ -15,7 +15,25 @@ I did everything you said but
 - Dark mode did fail but I can share with you what I tried
 
 ```javascript
-console.log(1)
+if (localStorage.getItem('theme')==='dark') {
+  const all = document.getElementsByTagName("*");
+  document.querySelector("body").style.backgroundColor = "#121212"; // as Bonson said
+
+  let newClassName="";
+  for (let index = 0; index < all.length; index++) {
+    for (let prop of all[index].classList){
+      if (prop === "container"|| prop === "container-fluid"){
+        all[index].classList.toggle("bg-dark")
+      }
+      if (prop.includes("light")){
+        newClassName.concat(prop.replace(/light/, "dark"));
+        all[index].classList.replace(prop, newClassName);
+      }
+      else if(prop.includes("dark")){
+        newClassName.concat(prop.replace(/dark/, "light"));
+        all[index].classList.replace(prop, newClassName);
+      }
+    }
 ```
 It didn't work tho
 ## Hosting
