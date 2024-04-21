@@ -14,9 +14,9 @@ I did everything you said but
 - The test page sidebar looks weird!
 - Dark mode did fail but I can share with you what I tried
 
-    ```
+```javascript
 console.log(1)
-    ```
+```
 It didn't work tho
 ## Hosting
 
