@@ -7,12 +7,12 @@ If you are reading it for the first time START HOSTING
 I did everything you said but
 
 - I didn't finish the dark mode but I started the code tho
-- I didn't test the mailer couz I was offline
-- Fixed like hundred bugs
+- I didn't test the mailer because I was offline
+- Fixed like a hundred bugs
 - Tested it
 - Tried to create JSON API but failed
 - The test page sidebar looks weird!
-- Dark mode did fail but I can share you what I tried
+- Dark mode did fail but I can share with you what I tried
 
     ```
 if (localStorage.getItem('theme')==='dark') {
@@ -34,9 +34,6 @@ if (localStorage.getItem('theme')==='dark') {
         all[index].classList.replace(prop, newClassName);
       }
     }
-    
-  }
-}
     ```
 It didn't work tho
 ## Hosting
