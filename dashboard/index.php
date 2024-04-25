@@ -29,6 +29,7 @@ $resultForThePointsAndUploads = $resultForThePointsAndUploads[0];
   <link rel="stylesheet" href="side.css">
   <link rel="stylesheet" href="fix.css">
   <link rel="stylesheet" href="loader.css">
+  <!-- <link rel="stylesheet" href="./dark.css"> -->
   <link rel="stylesheet" href="/static/bootstrap.min.css">
   <title>Dashboard - <?php echo $_SESSION["username"] ?></title>
   <style>
@@ -52,9 +53,9 @@ $resultForThePointsAndUploads = $resultForThePointsAndUploads[0];
       //MARK: SIDEBAR
       ?>
       <!-- #1e2d40 -->
-      <div id="sidebar" class="sidebar d-none d-md-block col-md-3 sidebar-g position-relative shadow bg-light">
+      <div id="sidebar" class="sidebar d-none d-md-block col-md-3 sidebar-g position-relative shadow" style="background-color: #1e2d40;">
         <div class="logo d-flex h-25 justify-content-center align-items-center">
-          <img src="/imgs/text-logo.png" style="width: 187.5px;" alt="codopia logo">
+          <a href="../"><img src="/imgs/text-logo.png" style="width: 187.5px;" alt="codopia logo"></a>
         </div>
         <ul class="nav mt-5 flex-column">
           <li class="nav-item">
@@ -91,7 +92,7 @@ $resultForThePointsAndUploads = $resultForThePointsAndUploads[0];
               </svg> Feedback</a>
           </li>
           <li class="nav-item position-absolute bottom-0 mb-3">
-            <div class="container col-12 nav-link">
+            <div class="container col-12">
               <button type="button" class="btn btn-dark border-0" data-bs-toggle="modal" data-bs-target="#coolModal">
                 <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi me-2 bi-list" viewBox="0 0 16 16">
                   <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5" />
@@ -200,6 +201,7 @@ $resultForThePointsAndUploads = $resultForThePointsAndUploads[0];
                       <h5 class="card-subtitle mb-2 text-muted">
                         <?php echo $_SESSION["full_name"] ?>
                       </h5>
+                      <p class="mb-2 text-muted"><?php echo $_SESSION["bio"] ?></p>
 
                       <div class="row">
                         <div class="col-md-6">
@@ -263,42 +265,47 @@ $resultForThePointsAndUploads = $resultForThePointsAndUploads[0];
           //MARK: Project
           ?>
 
-          <div class="row">
-            <div class="container p-2 mb-5">
+          <div class="row mb-5">
+            <div class="container p-2">
               <?php
               $statementForTheProjects = $con->prepare("SELECT * FROM projects INNER JOIN users ON projects.user_id = users.id ORDER BY project_time DESC");
               $statementForTheProjects->execute();
               $resultsForTheProjects = $statementForTheProjects->fetchAll(PDO::FETCH_ASSOC);
-              list($badgeName, $badgeColor) = getBadge((int)$resultForThePointsAndUploads["points"]);
-              $admin = $_SESSION["admin_status"] ? "<div class='badge bg-success'>Admin</div>" : "";
+
               if ($statementForTheProjects->rowCount() === 0) {
-                echo '<div class="text-muted text-center">No project uploaded so far</div>';
+                echo '<div class="text-muted text-center">No projects uploaded so far</div>';
               }
               foreach ($resultsForTheProjects as $eachProjects) {
                 $eachProjectId = (string) "project_{$eachProjects['project_id']}";
+
+                list($badgeName, $badgeColor) = getBadge((int)$eachProjects["points"]);
+                $admin = $eachProjects["is_admin"] ? "<div class='badge bg-success col-2 d-flex justify-content-center align-items-center' style='margin-right: 6px'>Admin</div>" : "";
+
                 echo "
                 
-                <div class='container shadow col-md-8 rounded-3 mt-5 mb-5 border border-1'>
-                $admin
-                <div class='badge $badgeColor'>$badgeName level user</div>
+                <div class='container shadow col-md-8 rounded-3 mt-5 mb-5 border border-1 project-style'>
+                <div class='row d-flex p-2'>
+                  $admin
+                  <div class='badge $badgeColor col-2 d-flex justify-content-center align-items-center' style='margin-right: 6px'>$badgeName</div>
+                </div>
                   <div class='text-center p-2'>
-                    <a href='profile.html' class='nav-link '>
+                    <a href='profile.php?id={$eachProjects['user_id']}' class='nav-link'>
                       <svg xmlns='http://www.w3.org/2000/svg' width='100' height='100' fill='currentColor' class='bi text-primary bi-person' viewBox='0 0 16 16'>
                         <path d='M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6m2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0m4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4m-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10s-3.516.68-4.168 1.332c-.678.678-.83 1.418-.832 1.664z' />
-                      </svg> <br>
-                      @{$eachProjects['username']}</a>
-                    <a href='profile.html' class='nav-link'>
-                      <h3 class='search-item'>{$eachProjects['full_name']}</h3>
+                      </svg>
+                      <p class='search-item username'>@{$eachProjects['username']}<p></a>
+                    <a href='profile.php?id={$eachProjects['user_id']}' class='nav-link'>
+                      <h3 class='search-item full_name'>{$eachProjects['full_name']}</h3>
                     </a>
                     <div class='mt-1 text-center'>
                       <p class=''>{$eachProjects['bio']}</p>
                     </div>
                   </div>
-                  <div class='text-center p-2 search-item'>
-                    <h1 class='text search-item'>{$eachProjects['project_name']}</h1>
+                  <div class='text-center p-2'>
+                    <h1 class='text search-item project_name'>{$eachProjects['project_name']}</h1>
                   </div>
-                  <div class='text-center p-4 search-item'>
-                    <p class='text '>{$eachProjects['project_detail']}</p>
+                  <div class='text-center p-4'>
+                    <p class='text search-item project_detail'>{$eachProjects['project_detail']}</p>
                   </div>
                   <div class='p-4 d-flex justify-content-center align-items-center'>
                     <a href='download.php?file={$eachProjects['file_path']}' class='btn btn-lg shadow btn-success p-2'>Download</a>
@@ -307,7 +314,7 @@ $resultForThePointsAndUploads = $resultForThePointsAndUploads[0];
                   <div class='row'>
                     <div class='col p-4'>
           
-                        <button type='submit' class='btn btn-transparent text-danger'>
+                        <button type='submit' class='btn btn-transparent text-danger g-test-btn'>
                           <svg xmlns='http://www.w3.org/2000/svg' width='30' height='30' fill='currentColor' class='bi bi-heart-fill' viewBox='0 0 16 16'>
                             <path class='liker' project_id='{$eachProjects['project_id']}' fill-rule='evenodd' d='M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z' />
                           </svg>
@@ -358,7 +365,7 @@ $resultForThePointsAndUploads = $resultForThePointsAndUploads[0];
           </button>
         </div>
         <div class="modal-body text-center d-flex flex-column">
-          <div class="dropdown">
+          <!--<div class="dropdown">
             <button class="btn border-0 dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
               Theme
             </button>
@@ -371,8 +378,8 @@ $resultForThePointsAndUploads = $resultForThePointsAndUploads[0];
                   </svg> Light</Button></li>
 
             </ul>
-          </div>
-          <div class="dropdown mt-3">
+          </div>-->
+          <div class="dropdown">
             <button class="btn border-0 dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
               Fonts
             </button>
@@ -390,7 +397,6 @@ $resultForThePointsAndUploads = $resultForThePointsAndUploads[0];
             </svg> Share</button>
 
           <a href="../logout/"><button class="col-12 btn mt-2 btn-danger">Log Out</button></a>
-          <!-- <button class="btn btn-danger col-12 mt-2 shadow">Delete your account</button> -->
         </div>
         <div class="modal-footer">
           <a href="#" class="nav-link">Powered by <img src="../imgs/logo.png" style="height: 50px;" alt=""></a>

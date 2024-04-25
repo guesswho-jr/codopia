@@ -14,6 +14,7 @@ if (!$_SESSION["loggedin"]) {
   <link rel="shortcut icon" href="/imgs/logo.png">
   <link rel="stylesheet" href="/static/bootstrap.min.css">
   <link rel="stylesheet" href="upload.css">
+  <link rel="stylesheet" href="../side.css">
   <link rel="stylesheet" href="../loader.css">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Upload</title>
@@ -31,7 +32,7 @@ if (!$_SESSION["loggedin"]) {
   <div class="container-fluid">
     <div class="row">
       <!-- Sidebar -->
-      <div id="sidebar" class="sidebar d-none d-md-block col-md-3 sidebar-g position-relative shadow bg-light">
+      <div id="sidebar" class="sidebar d-none d-md-block col-md-3 sidebar-g position-relative shadow" style="background-color: #1e2d40;">
         <div class="logo d-flex h-25 justify-content-center align-items-center">
           <img src="/imgs/text-logo.png" style="width: 187.5px;" alt="codopia logo">
         </div>
@@ -122,22 +123,23 @@ if (!$_SESSION["loggedin"]) {
         </ul>
       </div>
 
+
       <!-- Main content container -->
       <div class="container col-md-9 main-content-g position-relative d-flex justify-content-center align-items-center">
-        <form action="./toProjects.php" method="post" enctype="multipart/form-data" class="col-12 m-0 p-0 d-flex justify-content-center" id="upload-form">
+        <form action="" method="post" enctype="multipart/form-data" class="col-12 m-0 p-0 d-flex justify-content-center" id="upload-form">
           <div class="container m-0 p-0 col-12 col-md-8 shadow p-3">
+            <div id="message-container"></div>
             <h2>Upload your project</h2>
-            <h3>Note: Max is 5 MB. </h3>
             <input type="file" name="theFile" id="file-upload" class="file-upload" accept=".zip">
             <label for="file-upload" class="custom-file-upload bg-dark">Choose File</label>
             <span class="file-name" id="file-name" style="font-size: 12px;">No file chosen</span>
             <div class="form-group">
-              <label for="name">Project name</label>
-              <input type="text" class="form-control" id="" name="projName" placeholder="Enter project name" required="">
+              <label for="projName">Project name</label>
+              <input type="text" class="form-control" id="projName" name="projName" placeholder="Enter project name" required="">
             </div>
             <div class="form-group">
-              <label for="name">Caption</label>
-              <textarea type="text" class="form-control" id="" name="capInput" placeholder="Enter About your project" required></textarea>
+              <label for="capInput">Caption</label>
+              <textarea type="text" class="form-control" id="capInput" name="capInput" placeholder="Enter About your project" required></textarea>
             </div>
             <input type="submit" name="post" value="Post" class="btn btn-dark mt-3 col-5" id="modal-button">
           </div>
@@ -145,22 +147,24 @@ if (!$_SESSION["loggedin"]) {
 
       </div>
 
+
     </div>
   </div>
 
-  <script src="../loader.js"></script>
   <script src="/static/bootstrap.bundle.min.js"></script>
+  <script src="../loader.js"></script>
+  <script src="./script.js"></script>
+  <script src="/static/sweetalert2.js"></script>
   <script>
     document.getElementById('file-upload').addEventListener('change', function(e) {
       const fileName = e.target.files[0].name;
-      document.getElementById('file-name').innerHTML = fileName;
+      document.getElementById('file-name').textContent = fileName;
     });
   </script>
 
   <script>
     if (localStorage.getItem("font-family")) document.querySelector("style").innerHTML = `*{font-family:"${localStorage.getItem("font-family")}";}`
   </script>
-  <script src="./script.js"></script>
 </body>
 
 </html>

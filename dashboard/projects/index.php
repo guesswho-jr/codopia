@@ -22,6 +22,7 @@ $projectList = $statementForProjectFetching->fetchAll();
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="shortcut icon" href="/imgs/logo.png">
   <link rel="stylesheet" href="project.css">
+  <link rel="stylesheet" href="../side.css">
   <link rel="stylesheet" href="../loader.css">
   <link rel="stylesheet" href="/static/bootstrap.min.css">
   <link rel="stylesheet" href="/static/bootstrap.min.css">
@@ -43,7 +44,7 @@ $projectList = $statementForProjectFetching->fetchAll();
   <div class="container-fluid">
     <div class="row">
       <!-- Sidebar -->
-      <div id="sidebar" class="sidebar d-none d-md-block col-md-3 sidebar-g position-relative shadow bg-light">
+      <div id="sidebar" class="sidebar d-none d-md-block col-md-3 sidebar-g position-relative shadow" style="background-color: #1e2d40;">
         <div class="logo d-flex h-25 justify-content-center align-items-center">
           <img src="/imgs/text-logo.png" style="width: 187.5px;" alt="codopia logo">
         </div>
@@ -171,10 +172,10 @@ $projectList = $statementForProjectFetching->fetchAll();
     </div>
   </div>
 
+  <script src="../loader.js"></script>
   <script src="/static/sweetalert2.js"></script>
   <script src="projects.js"></script>
   <script src="delete.js"></script>
-  <script src="../loader.js"></script>
   <script>
     const editButtons = document.querySelectorAll(".edit-btn");
     let projectId;
@@ -212,9 +213,9 @@ $projectList = $statementForProjectFetching->fetchAll();
               })
             }
             if (resp.success) {
-              ev.target.parentElement.parentElement.children[0].textContent = projectName
-              ev.target.parentElement.parentElement.children[1].textContent = ProjectDesc
-
+              // FIXME: added the following condition
+              if (projectName != "") ev.target.parentElement.parentElement.children[0].textContent = projectName;
+              if (ProjectDesc != "") ev.target.parentElement.parentElement.children[1].textContent = ProjectDesc;
             }
 
           }

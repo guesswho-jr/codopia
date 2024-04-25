@@ -1,5 +1,8 @@
 <?php
 
+// $dbname = "if0_36424959_codopia";
+// $dbpass = "infinitecode";
+// $dbuser = "if0_36424959";
 $dbname = "donict";
 $dbpass = "";
 $dbuser = "root";

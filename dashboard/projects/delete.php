@@ -17,9 +17,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $db->executeSql("DELETE FROM projects WHERE project_id = ?", [$data]);
         $db->executeSql("UPDATE users SET uploads = uploads - 1 WHERE id = ?", [$userid]);
         $xp->decreaseXP(10);
-        echo "DELETED";
+        die(json_encode(["CODE" => 2001, "MESSAGE" => "Deleted"]));
     } else {
-        die("ERROR");
+        die(json_encode(["CODE" => 2002, "MESSAGE" => "Unexpected error occurred; Failed to delete project."]));
     }
 }
 

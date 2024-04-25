@@ -14,6 +14,7 @@ if (!$_SESSION["loggedin"]) {
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="shortcut icon" href="/imgs/logo.png">
   <link rel="stylesheet" href="feed.css">
+  <link rel="stylesheet" href="../side.css">
   <link rel="stylesheet" href="../loader.css">
   <link rel="stylesheet" href="/static/bootstrap.min.css">
   <title>Feedback</title>
@@ -31,7 +32,7 @@ if (!$_SESSION["loggedin"]) {
   <div class="container-fluid">
     <div class="row">
       <!-- Sidebar -->
-      <div id="sidebar" class="sidebar d-none d-md-block col-md-3 sidebar-g position-relative shadow bg-light">
+      <div id="sidebar" class="sidebar d-none d-md-block col-md-3 sidebar-g position-relative shadow" style="background-color: #1e2d40;">
         <div class="logo d-flex h-25 justify-content-center align-items-center">
           <img src="/imgs/text-logo.png" style="width: 187.5px;" alt="codopia logo">
         </div>
@@ -123,22 +124,22 @@ if (!$_SESSION["loggedin"]) {
 
       <!-- Main content container -->
       <div class="container col-md-9 main-content-g position-relative d-flex justify-content-center align-items-center">
-        <div class="container col-md-6 shadow rounded-3 m-0 p-1">
+        <div class="container col-md-6 shadow rounded-3 m-0 p-2">
 
           <!-- ################ FORM START ################ -->
-          <form action="feedHandler.php" method="post">
+          <form action="" method="post" id="feedback-form">
 
             <div class="text-start p-1">
-              <h1 class="text-dark">Write to us</h1>
+              <h2 class="text-dark">Write to us</h2>
             </div>
 
             <div class="container">
-              <textarea name="feed" required class="form-control" id="" cols="30" rows="10"></textarea>
+              <textarea name="feed" required class="form-control codo-feed" cols="30" rows="8"></textarea>
             </div>
 
             <div class="container">
               <div class="form-check d-flex width">
-                <input class="form-check-input" type="checkbox" name="bug-report" value="checked" id="flexCheckChecked">
+                <input class="form-check-input codo-bug" type="checkbox" name="bug-report" value="checked" id="flexCheckChecked">
                 <label class="form-check-label text-danger font-weight-bold b-flex" id="checkbox" for="flexCheckChecked"> Bug report</label>
               </div>
             </div>
@@ -210,10 +211,12 @@ if (!$_SESSION["loggedin"]) {
   </div>
 
   <script src="../loader.js"></script>
+  <script src="/static/sweetalert2.js"></script>
+  <script src="./feed.js"></script>
+  <script src="./ajax.js"></script>
   <script>
     if (localStorage.getItem("font-family")) document.querySelector("style").innerHTML = `*{font-family:"${localStorage.getItem("font-family")}";}`
   </script>
-  <script src="feed.js"></script>
   <script src="/static/bootstrap.bundle.min.js"></script>
 </body>
 

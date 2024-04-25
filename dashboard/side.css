@@ -13,15 +13,20 @@
 }
 
 .sidebar .nav-link {
-  color: #262626;
+  color: white;
   padding: 12px 16px;
   display: flex;
   align-items: center;
   text-decoration: none;
+  transition: 0.3s ease-in-out;
 }
 
 .sidebar .nav-link:hover {
-  background-color: #f5f5f5;
+  color: white;
+  background-color: #253750;
+  box-shadow: 0 0 2px white;
+  border-radius: 10px;
+  /* background-color: #f5f5f5; */
 }
 
 .sidebar .nav-link i {
