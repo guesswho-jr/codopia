@@ -1,0 +1,26 @@
+/* Custom Checkbox Styling */
+.d-flex {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.d-flex input[type="checkbox"] {
+    margin-right: 10px;
+    cursor: pointer;
+}
+
+.d-flex label {
+    font-size: 14px;
+    color: #333;
+    cursor: pointer;
+}
+
+.d-flex label a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+.d-flex label a:hover {
+    text-decoration: underline;
+}

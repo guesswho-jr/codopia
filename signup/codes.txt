@@ -1,0 +1,16 @@
+** mail.php **
+
+000 => invalid email
+001 => email sent
+002 => limit reached
+003 => could not address email
+004 => already logged in
+
+005:
+    0051 => incomplete forma
+    0052 => invalid full name
+    0053 => invalid email
+    0054 => password too short
+    0055 => invalid username
+    0056 => invalid password
+    
