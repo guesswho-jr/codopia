@@ -28,7 +28,7 @@ if ($isUser["rows"] == 0) {
   <link rel="stylesheet" href="../side.css">
   <link rel="stylesheet" href="../loader.css">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Upload</title>
+  <title>Upload - <?php echo $_SESSION["username"] ?></title>
   <style>
     /* THIS PLACE IS NEEDED FOR THE THEME AND FONT CHANGES */
   </style>
@@ -45,7 +45,7 @@ if ($isUser["rows"] == 0) {
       <!-- Sidebar -->
       <div id="sidebar" class="sidebar d-none d-md-block col-md-3 sidebar-g position-relative shadow" style="background-color: #1e2d40;">
         <div class="logo d-flex h-25 justify-content-center align-items-center">
-          <img src="/imgs/text-logo.png" style="width: 187.5px;" alt="codopia logo">
+          <a href="/"><img src="/imgs/text-logo.png" style="width: 187.5px;" alt="codopia logo"></a>
         </div>
         <ul class="nav mt-5 flex-column">
           <li class="nav-item">
