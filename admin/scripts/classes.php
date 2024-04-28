@@ -16,7 +16,9 @@ require "PHPMailer/src/PHPMailer.php";
 require "PHPMailer/src/SMTP.php";
 // Created this file to follow the DRY principle.
 
-// Please manually set the credentils
+// Please manually set the credentials
+
+// OPTIMIZE: MARK: TRACKER
 class Tracker {
 
     public  $logFile;
@@ -38,10 +40,11 @@ class Tracker {
     }
 }
 
-
+// OPTIMIZE: MARK: DATABASE
 class DataBase
 {
     private $con;
+    // public function __construct(string $username = "if0_36424959", string $password = "15o4d15o3c", string $host = "sql104.infinityfree.com", string $dbname = "if0_36424959_codopia")
     public function __construct(string $username = "root", string $password = "", string $host = "localhost", string $dbname = "donict")
     {
         $this->con = new PDO("mysql:host=$host;dbname=$dbname", $username, $password);
@@ -111,6 +114,7 @@ class DataBase
     // Find a way if there is a way to close PDO connections
 }
 
+// OPTIMIZE: MARK: XPSYSTEM
 class XPSystem extends DataBase
 {
 
@@ -132,7 +136,7 @@ class XPSystem extends DataBase
             $this->logger->log("[INFO] at " . date("y-m-d h:m:s") ." xp added for user " . $_SESSION["username"] . "with IP address " . $_SERVER['REMOTE_ADDR'] . "Added XP: $points");
             $this->executeSql("UPDATE `users` SET `points` = `points` + ? WHERE id=?", [$points, $this->userId], FALSE);
         } else {
-            die("Error occured check your argument!!");
+            die("Error occurred check your argument!!");
         }
     }
     public function decreaseXP(int $points)
@@ -141,11 +145,12 @@ class XPSystem extends DataBase
             $this->logger->log("[INFO] at " . date("y-m-d h:m:s") ." xp decreased for user " . $_SESSION["username"] . "with IP address " . $_SERVER['REMOTE_ADDR'] . "XP: $points");
             $this->executeSql("UPDATE `users` SET `points` = `points` - ? WHERE id=?", [$points, $this->userId], FALSE);
         } else {
-            die("Error occured check your argument!!");
+            die("Error occurred check your argument!!");
         }
     }
 }
 
+// OPTIMIZE: MARK: USER
 class User extends DataBase 
 {
     /**
@@ -165,7 +170,7 @@ class User extends DataBase
             $this->username = $username;
             $this->password = $password;
         } else {
-            die(json_encode(["type" => "error", "message" => "Error occured when validating your inputs."]));
+            die(json_encode(["type" => "error", "message" => "Error occurred when validating your inputs."]));
         }
     }
     private function hashPassword(string $raw_password)
@@ -206,7 +211,7 @@ class User extends DataBase
             return 0; // "error"=> "Form error")
         }
         if (!preg_match("/[a-zA-Z]\s[a-zA-Z]/", $full_name)) {
-            // ("type"=> "error","message"=>"Check your form error occured"));
+            // ("type"=> "error","message"=>"Check your form error occurred"));
             return 1;
         }
         if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
@@ -238,23 +243,25 @@ class User extends DataBase
     {
         $this->tracker->log("[INFO] at " . date("y-m-d h:m:s")  . " IP address " . $_SERVER['REMOTE_ADDR'] . " attempted a signup with a username of $username");
         if ($resp = $this->validateForSignUp($username,  $password,  $cpassword,  $bio,  $full_name, $email) != 7) {
-         
+        // if (!signupValidation($username,  $password,  $cpassword,  $bio,  $full_name, $email)) {
             $this->tracker->log("[WARNING] at " . date("y-m-d h:m:s")  . " IP address " . $_SERVER['REMOTE_ADDR'] . " attempted a signup with  $this->username but validation failed");
-            return ["data" => json_encode(["type" => "error", "message" => "Error occured while validating your input possibly it is your password length. CODE: " . (string)($resp)]), "code" => 1];
+            return ["data" => json_encode(["type" => "error", "message" => "Error occurred while validating your input possibly it is your password length. CODE: " . (string)($resp)]), "code" => 1];
+            // return ["data" => json_encode(["type" => "error", "message" => "Error occurred while validating your input possibly it is your password length."]), "code" => 1];
         }
         $hashed_password = password_hash($password, PASSWORD_ARGON2ID);
-        $a = $this->executeSql("insert into users (full_name,email,username,password,bio,points,uploads,ip_addr) values (?,?,?,?,?,?,?)", [$full_name, $email, $username, $hashed_password, $bio, 0, 0], TRUE);
+        $a = $this->executeSql("insert into users (full_name, email, username, password, bio, points, uploads) values (?,?,?,?,?,?,?)", [$full_name, $email, $username, $hashed_password, $bio, 0, 0], TRUE);
         $this->tracker->log("[INFO] at " . date("y-m-d h:m:s")  . " IP address " . $_SERVER['REMOTE_ADDR'] . " $this->username is added to the database");
         if (is_object($a)) {
             if (get_class($a) == "PDOException") {
                 $message = $a->getMessage();
-                $this->tracker->log("[WARNING] at " . date("y-m-d h:m:s")  . " IP address " . $_SERVER['REMOTE_ADDR'] . " error occured on the database with the error of $message");
+                $this->tracker->log("[WARNING] at " . date("y-m-d h:m:s")  . " IP address " . $_SERVER['REMOTE_ADDR'] . " error occurred on the database with the error of $message");
                 unset($message);
                 return ["code" => 2, "obj" => $a];
             }
         }
         return ["code" => 0];
     }
+    
     public function mail(string $from, string $toEmail, string $content, string $pwd, string $toName, string $subject) {
         $mailer = new PHPMailer(true);
         try {
@@ -281,7 +288,7 @@ class User extends DataBase
     
 }
 
-
+// OPTIMIZE: MARK: BADGE
 function getBadge(int $pts)
 {
   switch ($pts) {
@@ -299,6 +306,8 @@ function getBadge(int $pts)
       return ["Unknown", "bg-danger"];
   }
 }
+
+// OPTIMIZE: MARK: CACHE
 class Cache
 {
     public $userId;
@@ -308,6 +317,9 @@ class Cache
     private $tracker ;
     public function __construct(int $userId)
     {
+        if (!is_dir("cache")){
+            mkdir("cache");
+        }
         $this->tracker = new Tracker("caches.log");
         $this->userId = (string)$userId;
         if (!isset($_COOKIE[session_name()])) {
@@ -318,6 +330,7 @@ class Cache
     }
     public function set(string $value, int $subjectID)
     {
+        
         $this->tracker->log("[INFO] at " . date("y-m-d h:m:s")  . " IP address " . $_SERVER['REMOTE_ADDR'] . " used a cache of value $value and subjectID $subjectID");
         /** set the cache data and returns -1 if the user is not logged in */
         if (!$_SESSION["username"]) {

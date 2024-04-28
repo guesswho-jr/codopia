@@ -1,7 +1,7 @@
 -- If it is in the hosting website ignore the next line
-CREATE DATABASE donict;
+-- CREATE DATABASE donict;
 
-USE donict;
+-- USE donict;
 
 CREATE TABLE `users` (
     id INT PRIMARY KEY AUTO_INCREMENT,

@@ -329,3 +329,30 @@
 [INFO] at 24-04-20 02:04:33 IP address ::1 the cache get function is called POST HTTP/1.1 
 [INFO] at 24-04-20 02:04:22 IP address ::1 used a cache of value 1 and subjectID 1 GET HTTP/1.1 
 [INFO] at 24-04-20 02:04:22 IP address ::1 the cache get function is called GET HTTP/1.1 
+[INFO] at 24-04-26 02:04:43 IP address 196.188.179.240 used a cache of value 1 and subjectID 1 GET HTTP/1.1 
+[INFO] at 24-04-26 02:04:58 IP address 196.188.179.240 used a cache of value 1 and subjectID 1 GET HTTP/1.1 
+[INFO] at 24-04-26 02:04:04 IP address 196.188.179.240 used a cache of value 1 and subjectID 1 GET HTTP/1.1 
+[INFO] at 24-04-26 03:04:13 IP address 196.188.179.240 used a cache of value 1 and subjectID 1 GET HTTP/1.1 
+[INFO] at 24-04-26 03:04:33 IP address 196.188.179.240 used a cache of value 1 and subjectID 1 GET HTTP/1.1 
+[INFO] at 24-04-26 03:04:56 IP address 196.188.179.240 used a cache of value 2 and subjectID 1 POST HTTP/1.1 
+[INFO] at 24-04-26 03:04:01 IP address 196.188.179.240 used a cache of value 3 and subjectID 1 POST HTTP/1.1 
+[INFO] at 24-04-26 03:04:08 IP address 196.188.179.240 used a cache of value 4 and subjectID 1 POST HTTP/1.1 
+[INFO] at 24-04-26 03:04:14 IP address 196.188.179.240 used a cache of value 5 and subjectID 1 POST HTTP/1.1 
+[INFO] at 24-04-26 03:04:22 IP address 196.188.179.240 used a cache of value 6 and subjectID 1 POST HTTP/1.1 
+[INFO] at 24-04-26 03:04:22 IP address 196.188.179.240 the clean up POST HTTP/1.1 
+[INFO] at 24-04-26 06:04:17 IP address 102.218.51.130 used a cache of value 1 and subjectID 1 GET HTTP/1.1 
+[INFO] at 24-04-26 06:04:33 IP address 102.218.51.130 used a cache of value 2 and subjectID 1 POST HTTP/1.1 
+[INFO] at 24-04-26 06:04:40 IP address 102.218.51.130 used a cache of value 3 and subjectID 1 POST HTTP/1.1 
+[INFO] at 24-04-26 06:04:52 IP address 102.218.51.130 used a cache of value 4 and subjectID 1 POST HTTP/1.1 
+[INFO] at 24-04-26 06:04:55 IP address 102.218.51.130 used a cache of value 5 and subjectID 1 POST HTTP/1.1 
+[INFO] at 24-04-26 06:04:00 IP address 102.218.51.130 used a cache of value 6 and subjectID 1 POST HTTP/1.1 
+[INFO] at 24-04-26 06:04:00 IP address 102.218.51.130 the clean up POST HTTP/1.1 
+[INFO] at 24-04-26 12:04:29 IP address 196.190.62.206 used a cache of value 1 and subjectID 2 GET HTTP/1.1 
+[INFO] at 24-04-26 12:04:41 IP address 196.190.62.206 used a cache of value 2 and subjectID 2 POST HTTP/1.1 
+[INFO] at 24-04-26 01:04:12 IP address 196.188.161.136 used a cache of value 1 and subjectID 2 GET HTTP/1.1 
+[INFO] at 24-04-26 01:04:46 IP address 196.188.161.136 used a cache of value 2 and subjectID 2 POST HTTP/1.1 
+[INFO] at 24-04-26 01:04:12 IP address 196.188.161.136 used a cache of value 3 and subjectID 2 POST HTTP/1.1 
+[INFO] at 24-04-26 01:04:19 IP address 196.188.161.136 used a cache of value 4 and subjectID 2 POST HTTP/1.1 
+[INFO] at 24-04-26 01:04:31 IP address 196.188.161.136 used a cache of value 5 and subjectID 2 POST HTTP/1.1 
+[INFO] at 24-04-26 01:04:40 IP address 196.188.161.136 used a cache of value 6 and subjectID 2 POST HTTP/1.1 
+[INFO] at 24-04-26 01:04:40 IP address 196.188.161.136 the clean up POST HTTP/1.1 

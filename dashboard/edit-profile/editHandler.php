@@ -22,6 +22,10 @@ if (!empty($_POST["username"])) {
     if (!validateString($_POST["username"])) {
         die("<div class='alert alert-danger'>Valdation error occured!</div>");
     }
+    $r = $db->executeSql("select username from users where username=? limit 1", [$_POST["username"]], true);
+    if ((int)$r["rows"] !== 0) {
+        die("<div class='alert alert-danger'>Username is taken!</div>");
+    }
     $db->executeSql("update users set username=? where id=?", [$_POST["username"], (int)$_SESSION["userid"]]);
     $_SESSION["username"] = $_POST["username"];
 } //username update
@@ -56,6 +60,7 @@ if (!empty($_POST["bio"])) {
         die("<div class='alert alert-danger'>Validation error!</div>");
     }
     $db->executeSql("UPDATE users SET bio = ? WHERE id = ?", [$_POST["bio"], (int)$_SESSION["userid"]]);
+    $_SESSION["bio"] = $_POST["bio"];
 } // bio update
 
 header("Location: /dashboard");

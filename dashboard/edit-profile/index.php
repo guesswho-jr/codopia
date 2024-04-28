@@ -1,8 +1,19 @@
 <?php
+require_once("../../admin/scripts/classes.php");
 session_start();
-if (!$_SESSION["loggedin"]) {
+
+if (isset($_SESSION["loggedin"]) and !$_SESSION["loggedin"]) {
   header("Location: /login");
   exit;
+}
+
+$db = new DataBase();
+$isUser = $db->executeSql("SELECT id FROM users WHERE id = ?", [$_SESSION['userid']], true);
+
+if ($isUser["rows"] == 0) {
+  session_unset();
+  session_destroy();
+  header("Location: /login");
 }
 ?>
 
@@ -14,6 +25,7 @@ if (!$_SESSION["loggedin"]) {
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="shortcut icon" href="/imgs/logo.png">
   <link rel="stylesheet" href="edit.css">
+  <link rel="stylesheet" href="../side.css">
   <link rel="stylesheet" href="../loader.css">
   <link rel="stylesheet" href="/static/bootstrap.min.css">
   <title>Edit profile</title>
@@ -31,7 +43,7 @@ if (!$_SESSION["loggedin"]) {
   <div class="container-fluid">
     <div class="row">
       <!-- Sidebar -->
-      <div id="sidebar" class="sidebar d-none d-md-block col-md-3 sidebar-g position-relative shadow bg-light">
+      <div id="sidebar" class="sidebar d-none d-md-block col-md-3 sidebar-g position-relative shadow" style="background-color: #1e2d40;">
         <div class="logo d-flex h-25 justify-content-center align-items-center">
           <img src="/imgs/text-logo.png" style="width: 187.5px;" alt="codopia logo">
         </div>

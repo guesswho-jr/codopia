@@ -31,7 +31,7 @@ $number_of_feedbacks = $result_feedbacks[0]["NUMBER_OF_FEEDBACKS"];
 <head>
   <meta charset="UTF-8">
   <link rel="stylesheet" href="dash.css">
-  <link rel="shortcut ion" href="img/_48e7c163-caf9-4db3-a887-7da3e53d3830-removebg-preview.png">
+  <link rel="shortcut icon" href="/imgs/logo.png">
   <link rel="stylesheet" href="/static/bootstrap.min.css">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Admin Dashboard - <?php echo $_SESSION["username"] ?> </title>
@@ -53,8 +53,8 @@ $number_of_feedbacks = $result_feedbacks[0]["NUMBER_OF_FEEDBACKS"];
       </nav>
       <nav aria-label="breadcrumb">
         <ul class="breadcrumb">
-          <li class="breadcrumb-item"><a class="breadcrumb-item" href="#">Terms</a></li>
-          <li class="breadcrumb-item"><a class="breadcrumb-item" href="#">Privacy-policy</a></li>
+          <li class="breadcrumb-item"><a class="breadcrumb-item" href="/term/">Terms / Regulations</a></li>
+          <!-- <li class="breadcrumb-item"><a class="breadcrumb-item" href="#">Privacy-policy</a></li> -->
         </ul>
       </nav>
       <button class="navbar-toggler shadow-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
@@ -95,9 +95,21 @@ $number_of_feedbacks = $result_feedbacks[0]["NUMBER_OF_FEEDBACKS"];
                 </svg> Feedbacks</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="./events/"><svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-balloon me-2" viewBox="0 0 16 16">
+              <a class="nav-link" href="./all-projects/"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="me-2 bi bi-buildings" viewBox="0 0 16 16">
+                  <path d="M14.763.075A.5.5 0 0 1 15 .5v15a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5V14h-1v1.5a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5V10a.5.5 0 0 1 .342-.474L6 7.64V4.5a.5.5 0 0 1 .276-.447l8-4a.5.5 0 0 1 .487.022M6 8.694 1 10.36V15h5zM7 15h2v-1.5a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 .5.5V15h2V1.309l-7 3.5z" />
+                  <path d="M2 11h1v1H2zm2 0h1v1H4zm-2 2h1v1H2zm2 0h1v1H4zm4-4h1v1H8zm2 0h1v1h-1zm-2 2h1v1H8zm2 0h1v1h-1zm2-2h1v1h-1zm0 2h1v1h-1zM8 7h1v1H8zm2 0h1v1h-1zm2 0h1v1h-1zM8 5h1v1H8zm2 0h1v1h-1zm2 0h1v1h-1zm0-2h1v1h-1z" />
+                </svg> All Projects</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="./events/"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="me-2 bi bi-upload" viewBox="0 0 16 16">
+                  <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5" />
+                  <path d="M7.646 1.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 2.707V11.5a.5.5 0 0 1-1 0V2.707L5.354 4.854a.5.5 0 1 1-.708-.708z" />
+                </svg> Upload Events</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="./all-events/"><svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-balloon me-2" viewBox="0 0 16 16">
                   <path fill-rule="evenodd" d="M8 9.984C10.403 9.506 12 7.48 12 5a4 4 0 0 0-8 0c0 2.48 1.597 4.506 4 4.984M13 5c0 2.837-1.789 5.227-4.52 5.901l.244.487a.25.25 0 1 1-.448.224l-.008-.017c.008.11.02.202.037.29.054.27.161.488.419 1.003.288.578.235 1.15.076 1.629-.157.469-.422.867-.588 1.115l-.004.007a.25.25 0 1 1-.416-.278c.168-.252.4-.6.533-1.003.133-.396.163-.824-.049-1.246l-.013-.028c-.24-.48-.38-.758-.448-1.102a3 3 0 0 1-.052-.45l-.04.08a.25.25 0 1 1-.447-.224l.244-.487C4.789 10.227 3 7.837 3 5a5 5 0 0 1 10 0m-6.938-.495a2 2 0 0 1 1.443-1.443C7.773 2.994 8 2.776 8 2.5s-.226-.504-.498-.459a3 3 0 0 0-2.46 2.461c-.046.272.182.498.458.498s.494-.227.562-.495" />
-                </svg> Events</a>
+                </svg> All Events</a>
             </li>
             <li class="nav-item">
               <a href="./admin-table/" class="nav-link"><svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="me-2 bi bi-controller" viewBox="0 0 16 16">

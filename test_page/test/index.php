@@ -40,9 +40,9 @@ if (!isset($_SESSION["doneTests"])){
 /////// First try to put the subject_ID in the Cache
 $cache = new Cache($_SESSION["userid"]);
 $cache->set("1", SUBJECT_ID);
+
 $subjectMap = [1=>"JavaScript",2=>"HTML"];
 ////
-
 
 $questionOne = $db->executeParams("select question,a,b,c,d from tests where subject=? limit 1 offset ?",[$subjectMap[SUBJECT_ID], (int)$cache->get() -1],TRUE);
 
@@ -62,7 +62,7 @@ $topic = $subjectMap[SUBJECT_ID];
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
-    <title>Test - Math</title>
+    <title>Test </title>
 </head>
 <body>
     <div class="main">

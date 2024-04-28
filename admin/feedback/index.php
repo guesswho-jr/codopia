@@ -26,6 +26,7 @@ function giveInformationAboutUser($information)
   <meta charset="UTF-8">
   <link rel="stylesheet" href="/static/bootstrap.min.css">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="shortcut icon" href="/imgs/logo.png" type="image/x-icon">
   <title>Feedbacks</title>
 </head>
 
@@ -38,7 +39,7 @@ function giveInformationAboutUser($information)
       </ol>
     </nav>
     <form action="" class="mb-1" style="float: right;">
-      <input type="text" style="border: none; height: 30px;" placeholder="Search user(full name)" class="mt-2 me-2" id="searchInput">
+      <input type="text" style="border: none; height: 30px;" placeholder="Search by full name" class="mt-2 me-2" id="searchInput">
       <button class="btn btn-dark me-2"><svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
           <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
         </svg></button>
@@ -62,13 +63,12 @@ function giveInformationAboutUser($information)
           $bugs = $userInformation['bug'] ? "Reported" : "";
           $rating = $userInformation['rating'];
           $feedback = $userInformation["feedback_body"];
-          $timestamp = $userInformation["feedback_time"];
+          $timestamp = date("M d, Y", $userInformation["feedback_time"]);
           echo "<tr>
             <td class='inputData'>$fullName</td>
-            <td>$userEmail</td>
+            <td><a href='https://mail.google.com/mail/u/0/?fs=1&tf=cm&source=mailto&to={$userEmail}' style='text-decoration: none;'>$userEmail</a></td>
             <td>$bugs</td>
             <td>$rating</td>
-            <td>$userEmail</td>
             <td><button id='openModalBtn' class='btn btn-dark g-open' data-toggle='modal' data-target='#myModal'>Read Feedback</button>
               <div id='myModal' class='modal g-modal'>
                 <div class='modal-dialog'>
