@@ -8,7 +8,7 @@ if (!isset($_SESSION["loggedin"]) || !$_SESSION["loggedin"]) {
         echo json_encode(array("type"=> "error","message"=> "Fill out the fields first!"));
         exit;
     }
-    if (!preg_match("/^[a-zA-Z1-9]+$/",$_POST["username"])){
+    if (!preg_match("/^[a-zA-Z0-9_]+$/",$_POST["username"])){
         echo json_encode(array("type"=> "error","message"=> "Username is invalid"));
         exit;
     }
