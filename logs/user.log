@@ -177,3 +177,10 @@
 [INFO] at 24-04-27 10:04:48 IP address 127.0.0.1 attempted a login with a username of white POST HTTP/1.1 
 [INFO] at 24-04-28 07:04:00 IP address ::1 attempted a login with a username of gerum POST HTTP/1.1 
 [INFO] at 24-04-28 10:04:37 IP address ::1 attempted a login with a username of gerum POST HTTP/1.1 
+[INFO] at 24-04-28 07:04:31 IP address ::1 attempted a login with a username of gerum POST HTTP/1.1 
+[INFO] at 24-04-28 05:04:46 IP address ::1 attempted a signup with a username of darkknight POST HTTP/1.1 
+[INFO] at 24-04-28 05:04:46 IP address ::1 darkknight is added to the database POST HTTP/1.1 
+[INFO] at 24-04-28 07:04:57 IP address ::1 attempted a login with a username of darkknight POST HTTP/1.1 
+[INFO] at 24-04-30 02:04:23 IP address ::1 attempted a login with a username of gerum POST HTTP/1.1 
+[INFO] at 24-04-30 04:04:02 IP address 192.168.1.103 attempted a login with a username of gerum POST HTTP/1.1 
+[INFO] at 24-04-30 10:04:22 IP address 127.0.0.1 attempted a login with a username of gerum POST HTTP/1.1 
