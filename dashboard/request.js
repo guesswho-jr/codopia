@@ -35,41 +35,44 @@ document.addEventListener("DOMContentLoaded", () => {
     const joinBtn = document.querySelector(".join-btn");
     const totalXp = document.getElementById("total-xp");
     const eventXp = document.getElementById("event-xp");
-    
-    form.addEventListener("submit", event => {
-        event.preventDefault();
-        const checked = document.querySelector(".condition").checked ? 1: -1;
-        const target = event.target;
-        const eventData = JSON.stringify({
-            condition: checked,
-            event_id: target.getAttribute("event_id"),
-            xp: target.getAttribute("xp")
-        })
 
-        const xhr = new XMLHttpRequest();
-        xhr.open("POST", "./acceptHandler.php", true);
-        xhr.onload = function() {
-            if (xhr.status == 200) {
-                if (xhr.response == "ACCEPTED") {
-                    joinBtn.style.backgroundColor = "#dc3545";
-                    joinBtn.textContent = "Reject";
-                    totalXp.textContent = Number(totalXp.textContent) + Number(eventXp.textContent);
-                } else if (xhr.response == "REJECTED") {
-                    joinBtn.style.backgroundColor = "#0d6efd";
-                    joinBtn.textContent = "Join";
-                    totalXp.textContent = Number(totalXp.textContent) - Number(eventXp.textContent);
-                } else {
-                    Swal.fire({
-                        icon: "error",
-                        title: "Oops...",
-                        text: "Something went wrong!",
-                        // footer: '<a href="#">Why do I have this issue?</a>'
-                    });
+    if (form) {
+        form.addEventListener("submit", event => {
+            event.preventDefault();
+            const checked = document.querySelector(".condition").checked ? 1: -1;
+            const target = event.target;
+            const eventData = JSON.stringify({
+                condition: checked,
+                event_id: target.getAttribute("event_id"),
+                xp: target.getAttribute("xp")
+            })
+    
+            const xhr = new XMLHttpRequest();
+            xhr.open("POST", "./acceptHandler.php", true);
+            xhr.onload = function() {
+                if (xhr.status == 200) {
+                    if (xhr.response == "ACCEPTED") {
+                        joinBtn.style.backgroundColor = "#dc3545";
+                        joinBtn.textContent = "Reject";
+                        totalXp.textContent = Number(totalXp.textContent) + Number(eventXp.textContent);
+                    } else if (xhr.response == "REJECTED") {
+                        joinBtn.style.backgroundColor = "#0d6efd";
+                        joinBtn.textContent = "Join";
+                        totalXp.textContent = Number(totalXp.textContent) - Number(eventXp.textContent);
+                    } else {
+                        Swal.fire({
+                            icon: "error",
+                            title: "Oops...",
+                            text: "Something went wrong!",
+                            // footer: '<a href="#">Why do I have this issue?</a>'
+                        });
+                    }
                 }
             }
-        }
-        xhr.setRequestHeader("Content-Type", "application/json");
-        xhr.send(eventData);
-    })
+            xhr.setRequestHeader("Content-Type", "application/json");
+            xhr.send(eventData);
+        });
+    }
+    
 
 });
