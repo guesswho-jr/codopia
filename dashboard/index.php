@@ -276,7 +276,7 @@ $resultForThePointsAndUploads = $resultForThePointsAndUploads[0];
           ?>
 
           <div class="row mb-5">
-            <div class="container p-2">
+            <div class="container p-2 d-flex flex-wrap overflow-auto">
               <?php
               $statementForTheProjects = $con->prepare("SELECT * FROM projects INNER JOIN users ON projects.user_id = users.id ORDER BY project_time DESC");
               $statementForTheProjects->execute();
@@ -294,7 +294,7 @@ $resultForThePointsAndUploads = $resultForThePointsAndUploads[0];
 
                 echo "
                 
-                <div class='container shadow col-md-8 rounded-3 mt-5 mb-5 border border-1 project-style bg-white'>
+                <div class='container shadow col-8 rounded-3 mt-5 mb-5 border border-1 project-style bg-white'>
                   <div class='row d-flex px-2 pt-2'>
                     $admin
                     <div class='badge $badgeColor col-3 col-sm-2 col-xs-3 d-flex justify-content-center align-items-center' style='margin-right: 6px'>$badgeName</div>
