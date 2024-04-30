@@ -58,3 +58,16 @@ CREATE TABLE if NOT EXISTS tests (
     `subject` VARCHAR(50)
 );
 
+-- Comments table
+
+CREATE TABLE comments (
+    comment_id INT PRIMARY KEY AUTO_INCREMENT,
+    comment_text TEXT NOT NULL,
+    comment_time TEXT NOT NULL,
+    comment_likes INT DEFAULT 0,
+    comment_liked_by TEXT DEFAULT '[]',
+    comment_project_id INT NOT NULL,
+    FOREIGN KEY (comment_project_id) REFERENCES projects(project_id) ON DELETE CASCADE,
+    comment_user_id INT NOT NULL,
+    FOREIGN KEY (comment_user_id) REFERENCES users(id) ON DELETE CASCADE
+);

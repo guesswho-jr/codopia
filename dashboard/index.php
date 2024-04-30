@@ -218,6 +218,8 @@ $resultForThePointsAndUploads = $resultForThePointsAndUploads[0];
           //MARK: Project
           ?>
 
+          <span id="comment-tracker"></span>
+
           <div class="row mb-5">
             <div class="container p-2 d-flex flex-wrap overflow-auto">
               <?php
@@ -227,216 +229,157 @@ $resultForThePointsAndUploads = $resultForThePointsAndUploads[0];
 
               if ($statementForTheProjects->rowCount() === 0) {
                 echo '<div class="text-muted text-center">No projects uploaded so far</div>';
-              }
-              foreach ($resultsForTheProjects as $eachProjects) {
-                $eachProjectId = (string) "project_{$eachProjects['project_id']}";
-                $projectTime = date("M d, Y", $eachProjects['project_time']);
-
-                list($badgeName, $badgeColor) = getBadge((int)$eachProjects["points"]);
-                $admin = $eachProjects["is_admin"] ? "<div class='badge bg-success col-3 col-sm-2 col-xs-3 d-flex justify-content-center align-items-center' style='margin-right: 6px'>Admin</div>" : "";
-
-                echo "
-                
-                <div class='container shadow col-10 col-md-9 rounded-3 mt-5 mb-5 border border-1 project-style bg-white pt-0'>
-                  <div class='row d-flex px-2 pt-2'>
-                    $admin
-                    <div class='badge $badgeColor col-3 col-sm-2 col-xs-3 d-flex justify-content-center align-items-center' style='margin-right: 6px'>$badgeName</div>
-                  </div>
-                  <div class='row d-flex ps-2 pt-2'>
-                    <div class='col-md-4 col-sm-4 col-6 fw-bold text-dark bg-warning rounded-2 text-center' style='font-size: 0.75rem;'><span class='small-date-360'>{$projectTime}</span></div>
-                  </div>
-                  <div class='text-center p-2'>
-                    <a href='profile.php?id={$eachProjects['user_id']}' class='nav-link'>
-                      <svg xmlns='http://www.w3.org/2000/svg' width='100' height='100' fill='currentColor' class='bi text-primary bi-person' viewBox='0 0 16 16'>
-                        <path d='M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6m2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0m4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4m-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10s-3.516.68-4.168 1.332c-.678.678-.83 1.418-.832 1.664z' />
-                      </svg>
-                      <p class='search-item username'>@{$eachProjects['username']}<p></a>
-                    <a href='profile.php?id={$eachProjects['user_id']}' class='nav-link'>
-                      <h3 class='search-item full_name'>{$eachProjects['full_name']}</h3>
-                    </a>
-                    <div class='mt-1 text-center'>
-                      <p class=''>{$eachProjects['bio']}</p>
+              } else {
+                foreach ($resultsForTheProjects as $eachProjects) {
+                  $eachProjectId = (string) "project_{$eachProjects['project_id']}";
+                  $projectTime = date("M d, Y", $eachProjects['project_time']);
+  
+                  list($badgeName, $badgeColor) = getBadge((int)$eachProjects["points"]);
+                  $admin = $eachProjects["is_admin"] ? "<div class='badge bg-success col-3 col-sm-2 col-xs-3 d-flex justify-content-center align-items-center' style='margin-right: 6px'>Admin</div>" : "";
+  
+                  echo "
+                  
+                  <div class='container shadow col-10 col-md-9 rounded-3 mt-5 mb-5 border border-1 project-style bg-white pt-0'>
+                    <div class='row d-flex px-2 pt-2'>
+                      $admin
+                      <div class='badge $badgeColor col-3 col-sm-2 col-xs-3 d-flex justify-content-center align-items-center' style='margin-right: 6px'>$badgeName</div>
                     </div>
-                  </div>
-
-                  <div class='text-center p-2'>
-                    <h1 class='text search-item project_name'>{$eachProjects['project_name']}</h1>
-                  </div>
-
-                  <div class='text-center p-4'>
-                    <p class='text search-item project_detail'>{$eachProjects['project_detail']}</p>
-                  </div>
-
-                  <div class='p-0 p-sm-4 d-flex justify-content-center align-items-center'>
-                    <a href='download.php?file={$eachProjects['file_path']}' class='btn btn-lg shadow btn-success p-2 me-1 col-xl-3 col-lg-4 col-md-5 col-sm-4 col-6'><span class='small-font-360'>Download</span></a>
-                    <button id='project_{$eachProjects['project_id']}' class='btn btn-lg btn-transparent p-2 border border-3 border-dark ms-1 col-xl-3 col-lg-4 col-md-5 col-sm-4 col-6' onclick='(copyLinkToClipboard(\"{$eachProjectId}\"))'>
-                      <svg xmlns='http://www.w3.org/2000/svg' width='25' height='25' fill='currentColor' class='bi bi-share hide-below-420' viewBox='0 0 16 16'>
-                        <path d='M13.5 1a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zM11 2.5a2.5 2.5 0 1 1 .603 1.628l-6.718 3.12a2.499 2.499 0 0 1 0 1.504l6.718 3.12a2.5 2.5 0 1 1-.488.876l-6.718-3.12a2.5 2.5 0 1 1 0-3.256l6.718-3.12A2.5 2.5 0 0 1 11 2.5zm-8.5 4a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zm11 5.5a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3z' />
-                      </svg>
-                      <span class='small-font-360'>Share</span>
-                    </button>
-                  </div>
-
-                  <div class='row my-3'>
-                    <div class='col-4 p-0 text-center'>
-          
-                        <button type='submit' class='btn btn-transparent text-danger g-test-btn p-2'>
-                          <svg xmlns='http://www.w3.org/2000/svg' width='30' height='30' fill='currentColor' class='bi bi-heart-fill' viewBox='0 0 16 16'>
-                            <path class='liker' project_id='{$eachProjects['project_id']}' fill-rule='evenodd' d='M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z' />
-                          </svg>
-                          <br>  
-                          <span class='text-danger'>{$eachProjects['likes']}</span>
-                        </button>
-          
+                    <div class='row d-flex ps-2 pt-2'>
+                      <div class='col-md-4 col-sm-4 col-6 fw-bold text-dark bg-warning rounded-2 text-center' style='font-size: 0.75rem;'><span class='small-date-360'>{$projectTime}</span></div>
                     </div>
-
-                    <div class='col-4 p-0 text-center'>
-                        <button class='btn btn-transparent p-2' type='button' data-bs-toggle='offcanvas' data-bs-target='#offcanvasScrolling' aria-controls='offcanvasScrolling'>
-                        <svg xmlns='http://www.w3.org/2000/svg' width='30' height='30' fill='currentColor' class='bi bi-chat-left-dots' viewBox='0 0 16 16'>
-                          <path d='M14 1a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H4.414A2 2 0 0 0 3 11.586l-2 2V2a1 1 0 0 1 1-1zM2 0a2 2 0 0 0-2 2v12.793a.5.5 0 0 0 .854.353l2.853-2.853A1 1 0 0 1 4.414 12H14a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z'/>
-                          <path d='M5 6a1 1 0 1 1-2 0 1 1 0 0 1 2 0m4 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0m4 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0'/>
+                    <div class='text-center p-2'>
+                      <a href='profile.php?id={$eachProjects['user_id']}' class='nav-link'>
+                        <svg xmlns='http://www.w3.org/2000/svg' width='100' height='100' fill='currentColor' class='bi text-primary bi-person' viewBox='0 0 16 16'>
+                          <path d='M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6m2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0m4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4m-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10s-3.516.68-4.168 1.332c-.678.678-.83 1.418-.832 1.664z' />
                         </svg>
-                        <br>
-                        <span class='small'>Comments</span>
+                        <p class='search-item username'>@{$eachProjects['username']}<p></a>
+                      <a href='profile.php?id={$eachProjects['user_id']}' class='nav-link'>
+                        <h3 class='search-item full_name'>{$eachProjects['full_name']}</h3>
+                      </a>
+                      <div class='mt-1 text-center'>
+                        <p class=''>{$eachProjects['bio']}</p>
+                      </div>
+                    </div>
+  
+                    <div class='text-center p-2'>
+                      <h1 class='text search-item project_name'>{$eachProjects['project_name']}</h1>
+                    </div>
+  
+                    <div class='text-center p-4'>
+                      <p class='text search-item project_detail'>{$eachProjects['project_detail']}</p>
+                    </div>
+  
+                    <div class='p-0 p-sm-4 d-flex justify-content-center align-items-center'>
+                      <a href='download.php?file={$eachProjects['file_path']}' class='btn btn-lg shadow btn-success p-2 me-1 col-xl-3 col-lg-4 col-md-5 col-sm-4 col-6'><span class='small-font-360'>Download</span></a>
+                      <button id='project_{$eachProjects['project_id']}' class='btn btn-lg btn-transparent p-2 border border-3 border-dark ms-1 col-xl-3 col-lg-4 col-md-5 col-sm-4 col-6' onclick='(copyLinkToClipboard(\"{$eachProjectId}\"))'>
+                        <svg xmlns='http://www.w3.org/2000/svg' width='25' height='25' fill='currentColor' class='bi bi-share hide-below-420' viewBox='0 0 16 16'>
+                          <path d='M13.5 1a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zM11 2.5a2.5 2.5 0 1 1 .603 1.628l-6.718 3.12a2.499 2.499 0 0 1 0 1.504l6.718 3.12a2.5 2.5 0 1 1-.488.876l-6.718-3.12a2.5 2.5 0 1 1 0-3.256l6.718-3.12A2.5 2.5 0 0 1 11 2.5zm-8.5 4a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zm11 5.5a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3z' />
+                        </svg>
+                        <span class='small-font-360'>Share</span>
                       </button>
                     </div>
-
-                    <div class='offcanvas offcanvas-start' data-bs-scroll='true' data-bs-backdrop='false' tabindex='-1' id='offcanvasScrolling' aria-labelledby='offcanvasScrollingLabel'>
-                      <div class='offcanvas-header'>
-                        <h5 class='offcanvas-title' id='offcanvasScrollingLabel'>Comments</h5>
-                        <button type='button' class='btn-close shadow-none' data-bs-dismiss='offcanvas' aria-label='Close'></button>
+  
+                    <div class='row my-3'>
+                      <div class='col-4 p-0 text-center'>
+            
+                          <button type='submit' class='btn btn-transparent text-danger g-test-btn p-2'>
+                            <svg xmlns='http://www.w3.org/2000/svg' width='30' height='30' fill='currentColor' class='bi bi-heart-fill' viewBox='0 0 16 16'>
+                              <path class='liker' project_id='{$eachProjects['project_id']}' fill-rule='evenodd' d='M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z' />
+                            </svg>
+                            <br>  
+                            <span class='text-danger'>{$eachProjects['likes']}</span>
+                          </button>
+            
                       </div>
-                      <div class='offcanvas-body'>
-                        <div class='container p-0'>
-                          <div class='d-flex'>
-                            <input type='text' class='form-control me-1' placeholder='Leave your comments'>
-                            <button class='btn btn-dark btn-outline-light border border-outline-2 border-outline-dark'>Send</button>
-                          </div>
+  
+                      <div class='col-4 p-0 text-center'>
+                          <button class='btn btn-transparent p-2' type='button' data-bs-toggle='offcanvas' data-bs-target='#offcanvasScrolling' aria-controls='offcanvasScrolling'>
+                          <svg xmlns='http://www.w3.org/2000/svg' width='30' height='30' fill='currentColor' class='bi bi-chat-left-dots' viewBox='0 0 16 16'>
+                            <path d='M14 1a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H4.414A2 2 0 0 0 3 11.586l-2 2V2a1 1 0 0 1 1-1zM2 0a2 2 0 0 0-2 2v12.793a.5.5 0 0 0 .854.353l2.853-2.853A1 1 0 0 1 4.414 12H14a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z'/>
+                            <path d='M5 6a1 1 0 1 1-2 0 1 1 0 0 1 2 0m4 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0m4 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0'/>
+                          </svg>
+                          <br>
+                          <span class='small'>Comments</span>
+                        </button>
+                      </div>
+  
+                      <div class='col-4 p-0 text-center'>
+                        <button class='btn btn-transparent text-dark p-2'>
+                          <img src='/imgs/exclamation.svg' width='35' height='35'>
+                          <br>
+                          <span class='small'>Report</span>
+                        </button>
+                      </div>
+  
+                    </div>
+                  </div>
+                  ";
 
-                          <div class='container my-3 p-3 border border-2 border-muted shadow-sm'>
+                  echo "
+                  <div class='offcanvas offcanvas-start' data-bs-scroll='true' data-bs-backdrop='false' tabindex='-1' id='offcanvasScrolling' aria-labelledby='offcanvasScrollingLabel'>
+                    <div class='offcanvas-header'>
+                      <h5 class='offcanvas-title' id='offcanvasScrollingLabel'>Comments</h5>
+                      <button type='button' class='btn-close shadow-none' data-bs-dismiss='offcanvas' aria-label='Close'></button>
+                    </div>
+                    <div class='offcanvas-body'>
+                      <div class='container p-0'>
+                        <div class='d-flex'>
+                          <input type='text' class='form-control me-1' placeholder='Leave your comments'>
+                          <button class='btn btn-dark btn-outline-light border border-outline-2 border-outline-dark'>Send</button>
+                        </div>
+                  ";
+  
+                  $comments = $db->executeSql("SELECT * FROM comments INNER JOIN projects ON comments.comment_project_id = projects.project_id INNER JOIN users ON comments.comment_user_id = users.id WHERE comment_project_id = ?;", [$eachProjects['project_id']], true);
+                  if ($comments["rows"] == 0) {
+                    echo "<h1>No comment found</h1>
+                          <div class='text-muted text-center'>No comments so far. Be the first ;)</div>
+
+                    ";
+                  } 
+                  else {
+                    echo "<h1>{$comments[0]['comment_text']} = {$comments[0]['project_name']}</h1>
+
+                          <div class='container my-3 p-3 border border-2 border-muted shadow-sm bg-light'>
                             <div class='col-12'>
                               <span class='bg-dark text-white col-3' style='width: 30px; height: 30px; display: inline-flex; justify-content: center; align-items: center; border-radius: 50%;'>U</span> 
-                              <a href='' class='text-dark fw-bold col-9' style='text-decoration: none;'>@username</a>
+                              <a href='' class='text-dark fw-bold col-9' style='text-decoration: none;'>@{$comments[0]["username"]}</a>
                             </div>
                             <div class='col-12'>
-                              <p class='m-0'>what a project</p>
+                              <p class='m-0'>{$comments[0]["comment_text"]}</p>
                               <div class='d-flex justify-content-between'>
                                 <div class='text-center'>
                                   <svg xmlns='http://www.w3.org/2000/svg' width='25' height='25' fill='currentColor' class='bi bi-suit-heart' viewBox='0 0 16 16'>
                                     <path d='m8 6.236-.894-1.789c-.222-.443-.607-1.08-1.152-1.595C5.418 2.345 4.776 2 4 2 2.324 2 1 3.326 1 4.92c0 1.211.554 2.066 1.868 3.37.337.334.721.695 1.146 1.093C5.122 10.423 6.5 11.717 8 13.447c1.5-1.73 2.878-3.024 3.986-4.064.425-.398.81-.76 1.146-1.093C14.446 6.986 15 6.131 15 4.92 15 3.326 13.676 2 12 2c-.777 0-1.418.345-1.954.852-.545.515-.93 1.152-1.152 1.595zm.392 8.292a.513.513 0 0 1-.784 0c-1.601-1.902-3.05-3.262-4.243-4.381C1.3 8.208 0 6.989 0 4.92 0 2.755 1.79 1 4 1c1.6 0 2.719 1.05 3.404 2.008.26.365.458.716.596.992a7.6 7.6 0 0 1 .596-.992C9.281 2.049 10.4 1 12 1c2.21 0 4 1.755 4 3.92 0 2.069-1.3 3.288-3.365 5.227-1.193 1.12-2.642 2.48-4.243 4.38z'/>
-                                  <span class='small ms-1'>10</span>
+                                  <span class='small ms-1'>{$comments[0]["comment_likes"]}</span>
                                 </svg>
                                 </div>
-                                <span class='text-muted d-flex flex-column justify-content-end small'>28/04/2024</span>
+                                <span class='text-muted d-flex flex-column justify-content-end small'>{$comments[0]["comment_time"]}</span>
                               </div>
                             </div>
                           </div>
-                          <div class='container my-3 p-3 border border-2 border-muted shadow-sm'>
-                            <div class='col-12'>
-                              <span class='bg-dark text-white col-3' style='width: 30px; height: 30px; display: inline-flex; justify-content: center; align-items: center; border-radius: 50%;'>U</span> 
-                              <a href='' class='text-dark fw-bold col-9' style='text-decoration: none;'>@username</a>
-                            </div>
-                            <div class='col-12'>
-                              <p class='m-0'>what a project</p>
-                              <div class='d-flex justify-content-between'>
-                                <div class='text-center'>
-                                  <svg xmlns='http://www.w3.org/2000/svg' width='25' height='25' fill='currentColor' class='bi bi-suit-heart' viewBox='0 0 16 16'>
-                                    <path d='m8 6.236-.894-1.789c-.222-.443-.607-1.08-1.152-1.595C5.418 2.345 4.776 2 4 2 2.324 2 1 3.326 1 4.92c0 1.211.554 2.066 1.868 3.37.337.334.721.695 1.146 1.093C5.122 10.423 6.5 11.717 8 13.447c1.5-1.73 2.878-3.024 3.986-4.064.425-.398.81-.76 1.146-1.093C14.446 6.986 15 6.131 15 4.92 15 3.326 13.676 2 12 2c-.777 0-1.418.345-1.954.852-.545.515-.93 1.152-1.152 1.595zm.392 8.292a.513.513 0 0 1-.784 0c-1.601-1.902-3.05-3.262-4.243-4.381C1.3 8.208 0 6.989 0 4.92 0 2.755 1.79 1 4 1c1.6 0 2.719 1.05 3.404 2.008.26.365.458.716.596.992a7.6 7.6 0 0 1 .596-.992C9.281 2.049 10.4 1 12 1c2.21 0 4 1.755 4 3.92 0 2.069-1.3 3.288-3.365 5.227-1.193 1.12-2.642 2.48-4.243 4.38z'/>
-                                  <span class='small ms-1'>10</span>
-                                </svg>
-                                </div>
-                                <span class='text-muted d-flex flex-column justify-content-end small'>28/04/2024</span>
-                              </div>
-                            </div>
-                          </div>
-                          <div class='container my-3 p-3 border border-2 border-muted shadow-sm'>
-                            <div class='col-12'>
-                              <span class='bg-dark text-white col-3' style='width: 30px; height: 30px; display: inline-flex; justify-content: center; align-items: center; border-radius: 50%;'>U</span> 
-                              <a href='' class='text-dark fw-bold col-9' style='text-decoration: none;'>@username</a>
-                            </div>
-                            <div class='col-12'>
-                              <p class='m-0'>what a project</p>
-                              <div class='d-flex justify-content-between'>
-                                <div class='text-center'>
-                                  <svg xmlns='http://www.w3.org/2000/svg' width='25' height='25' fill='currentColor' class='bi bi-suit-heart' viewBox='0 0 16 16'>
-                                    <path d='m8 6.236-.894-1.789c-.222-.443-.607-1.08-1.152-1.595C5.418 2.345 4.776 2 4 2 2.324 2 1 3.326 1 4.92c0 1.211.554 2.066 1.868 3.37.337.334.721.695 1.146 1.093C5.122 10.423 6.5 11.717 8 13.447c1.5-1.73 2.878-3.024 3.986-4.064.425-.398.81-.76 1.146-1.093C14.446 6.986 15 6.131 15 4.92 15 3.326 13.676 2 12 2c-.777 0-1.418.345-1.954.852-.545.515-.93 1.152-1.152 1.595zm.392 8.292a.513.513 0 0 1-.784 0c-1.601-1.902-3.05-3.262-4.243-4.381C1.3 8.208 0 6.989 0 4.92 0 2.755 1.79 1 4 1c1.6 0 2.719 1.05 3.404 2.008.26.365.458.716.596.992a7.6 7.6 0 0 1 .596-.992C9.281 2.049 10.4 1 12 1c2.21 0 4 1.755 4 3.92 0 2.069-1.3 3.288-3.365 5.227-1.193 1.12-2.642 2.48-4.243 4.38z'/>
-                                  <span class='small ms-1'>10</span>
-                                </svg>
-                                </div>
-                                <span class='text-muted d-flex flex-column justify-content-end small'>28/04/2024</span>
-                              </div>
-                            </div>
-                          </div>
-                          <div class='container my-3 p-3 border border-2 border-muted shadow-sm'>
-                            <div class='col-12'>
-                              <span class='bg-dark text-white col-3' style='width: 30px; height: 30px; display: inline-flex; justify-content: center; align-items: center; border-radius: 50%;'>U</span> 
-                              <a href='' class='text-dark fw-bold col-9' style='text-decoration: none;'>@username</a>
-                            </div>
-                            <div class='col-12'>
-                              <p class='m-0'>what a project</p>
-                              <div class='d-flex justify-content-between'>
-                                <div class='text-center'>
-                                  <svg xmlns='http://www.w3.org/2000/svg' width='25' height='25' fill='currentColor' class='bi bi-suit-heart' viewBox='0 0 16 16'>
-                                    <path d='m8 6.236-.894-1.789c-.222-.443-.607-1.08-1.152-1.595C5.418 2.345 4.776 2 4 2 2.324 2 1 3.326 1 4.92c0 1.211.554 2.066 1.868 3.37.337.334.721.695 1.146 1.093C5.122 10.423 6.5 11.717 8 13.447c1.5-1.73 2.878-3.024 3.986-4.064.425-.398.81-.76 1.146-1.093C14.446 6.986 15 6.131 15 4.92 15 3.326 13.676 2 12 2c-.777 0-1.418.345-1.954.852-.545.515-.93 1.152-1.152 1.595zm.392 8.292a.513.513 0 0 1-.784 0c-1.601-1.902-3.05-3.262-4.243-4.381C1.3 8.208 0 6.989 0 4.92 0 2.755 1.79 1 4 1c1.6 0 2.719 1.05 3.404 2.008.26.365.458.716.596.992a7.6 7.6 0 0 1 .596-.992C9.281 2.049 10.4 1 12 1c2.21 0 4 1.755 4 3.92 0 2.069-1.3 3.288-3.365 5.227-1.193 1.12-2.642 2.48-4.243 4.38z'/>
-                                  <span class='small ms-1'>10</span>
-                                </svg>
-                                </div>
-                                <span class='text-muted d-flex flex-column justify-content-end small'>28/04/2024</span>
-                              </div>
-                            </div>
-                          </div>
-                          <div class='container my-3 p-3 border border-2 border-muted shadow-sm'>
-                            <div class='col-12'>
-                              <span class='bg-dark text-white col-3' style='width: 30px; height: 30px; display: inline-flex; justify-content: center; align-items: center; border-radius: 50%;'>U</span> 
-                              <a href='' class='text-dark fw-bold col-9' style='text-decoration: none;'>@username</a>
-                            </div>
-                            <div class='col-12'>
-                              <p class='m-0'>what a project</p>
-                              <div class='d-flex justify-content-between'>
-                                <div class='text-center'>
-                                  <svg xmlns='http://www.w3.org/2000/svg' width='25' height='25' fill='currentColor' class='bi bi-suit-heart' viewBox='0 0 16 16'>
-                                    <path d='m8 6.236-.894-1.789c-.222-.443-.607-1.08-1.152-1.595C5.418 2.345 4.776 2 4 2 2.324 2 1 3.326 1 4.92c0 1.211.554 2.066 1.868 3.37.337.334.721.695 1.146 1.093C5.122 10.423 6.5 11.717 8 13.447c1.5-1.73 2.878-3.024 3.986-4.064.425-.398.81-.76 1.146-1.093C14.446 6.986 15 6.131 15 4.92 15 3.326 13.676 2 12 2c-.777 0-1.418.345-1.954.852-.545.515-.93 1.152-1.152 1.595zm.392 8.292a.513.513 0 0 1-.784 0c-1.601-1.902-3.05-3.262-4.243-4.381C1.3 8.208 0 6.989 0 4.92 0 2.755 1.79 1 4 1c1.6 0 2.719 1.05 3.404 2.008.26.365.458.716.596.992a7.6 7.6 0 0 1 .596-.992C9.281 2.049 10.4 1 12 1c2.21 0 4 1.755 4 3.92 0 2.069-1.3 3.288-3.365 5.227-1.193 1.12-2.642 2.48-4.243 4.38z'/>
-                                  <span class='small ms-1'>10</span>
-                                </svg>
-                                </div>
-                                <span class='text-muted d-flex flex-column justify-content-end small'>28/04/2024</span>
-                              </div>
-                            </div>
-                          </div>
-                          <div class='container my-3 p-3 border border-2 border-muted shadow-sm'>
-                            <div class='col-12'>
-                              <span class='bg-dark text-white col-3' style='width: 30px; height: 30px; display: inline-flex; justify-content: center; align-items: center; border-radius: 50%;'>U</span> 
-                              <a href='' class='text-dark fw-bold col-9' style='text-decoration: none;'>@username</a>
-                            </div>
-                            <div class='col-12'>
-                              <p class='m-0'>what a project</p>
-                              <div class='d-flex justify-content-between'>
-                                <div class='text-center'>
-                                  <svg xmlns='http://www.w3.org/2000/svg' width='25' height='25' fill='currentColor' class='bi bi-suit-heart' viewBox='0 0 16 16'>
-                                    <path d='m8 6.236-.894-1.789c-.222-.443-.607-1.08-1.152-1.595C5.418 2.345 4.776 2 4 2 2.324 2 1 3.326 1 4.92c0 1.211.554 2.066 1.868 3.37.337.334.721.695 1.146 1.093C5.122 10.423 6.5 11.717 8 13.447c1.5-1.73 2.878-3.024 3.986-4.064.425-.398.81-.76 1.146-1.093C14.446 6.986 15 6.131 15 4.92 15 3.326 13.676 2 12 2c-.777 0-1.418.345-1.954.852-.545.515-.93 1.152-1.152 1.595zm.392 8.292a.513.513 0 0 1-.784 0c-1.601-1.902-3.05-3.262-4.243-4.381C1.3 8.208 0 6.989 0 4.92 0 2.755 1.79 1 4 1c1.6 0 2.719 1.05 3.404 2.008.26.365.458.716.596.992a7.6 7.6 0 0 1 .596-.992C9.281 2.049 10.4 1 12 1c2.21 0 4 1.755 4 3.92 0 2.069-1.3 3.288-3.365 5.227-1.193 1.12-2.642 2.48-4.243 4.38z'/>
-                                  <span class='small ms-1'>10</span>
-                                </svg>
-                                </div>
-                                <span class='text-muted d-flex flex-column justify-content-end small'>28/04/2024</span>
-                              </div>
-                            </div>
-                          </div>
-                          
+                    ";
+                  }
+
+                  echo "
                         </div>
                       </div>
-                    </div>
+                    </div>  
+                  ";
+                  // else {
+                  //   $commentText = (string) $comments[0]["comment_text"];
+                  //   $commentTime = date("M d, Y", $comments[0]["comment_time"]);
+                  //   $commentLikes = (int) $comments[0]["comment_likes"];
+                  //   $commentUser = (string) $comments[0]["username"];
 
-                    <div class='col-4 p-0 text-center'>
-                      <button class='btn btn-transparent text-dark p-2'>
-                        <img src='/imgs/exclamation.svg' width='35' height='35'>
-                        <br>
-                        <span class='small'>Report</span>
-                      </button>
-                    </div>
-                  </div>
-                </div>
-                ";
+                  //   echo "
+                    
+                  
+
+                  //   ";
+                  // }
+                }
               }
+
               ?>
             </div>
 
@@ -655,6 +598,7 @@ $resultForThePointsAndUploads = $resultForThePointsAndUploads[0];
 <script src="./loader.js"></script>
 <script src="./script.js"></script>
 <script src="./request.js"></script>
+<script src="./comment.js"></script>
 <script src="/static/sweetalert2.js"></script>
 <script src="/static/bootstrap.bundle.min.js"></script>
 
