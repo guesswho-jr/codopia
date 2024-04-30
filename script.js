@@ -28,7 +28,7 @@ async function textStyler() {
     
     finally {
         notStyled = false;
-        console.log("Text Styled");
+        // console.log("Text Styled");
     }
 }
 
