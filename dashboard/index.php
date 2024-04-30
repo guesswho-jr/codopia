@@ -186,7 +186,7 @@ $resultForThePointsAndUploads = $resultForThePointsAndUploads[0];
             <input type="text" class="form-control shadow Search" placeholder="Search" id="search">
           </div>
           <div class="container col-3 d-block d-md-none d-flex justify-content-center align-items-center">
-            <img src="/imgs/logo.png" width="75" alt="">
+            <a href="/"><img src="/imgs/logo.png" width="75" alt=""></a>
           </div>
         </div>
 
@@ -290,17 +290,17 @@ $resultForThePointsAndUploads = $resultForThePointsAndUploads[0];
                 $projectTime = date("M d, Y", $eachProjects['project_time']);
 
                 list($badgeName, $badgeColor) = getBadge((int)$eachProjects["points"]);
-                $admin = $eachProjects["is_admin"] ? "<div class='badge bg-success col-2 d-flex justify-content-center align-items-center' style='margin-right: 6px'>Admin</div>" : "";
+                $admin = $eachProjects["is_admin"] ? "<div class='badge bg-success col-3 col-sm-2 col-xs-3 d-flex justify-content-center align-items-center' style='margin-right: 6px'>Admin</div>" : "";
 
                 echo "
                 
                 <div class='container shadow col-md-8 rounded-3 mt-5 mb-5 border border-1 project-style bg-white'>
                   <div class='row d-flex px-2 pt-2'>
                     $admin
-                    <div class='badge $badgeColor col-2 d-flex justify-content-center align-items-center' style='margin-right: 6px'>$badgeName</div>
+                    <div class='badge $badgeColor col-3 col-sm-2 col-xs-3 d-flex justify-content-center align-items-center' style='margin-right: 6px'>$badgeName</div>
                   </div>
                   <div class='row d-flex ps-2 pt-2'>
-                    <div class='col-3 fw-bold text-dark bg-warning rounded-2 text-center' style='font-size: 0.75rem;'>{$projectTime}</div>
+                    <div class='col-5 col-sm-4 col-xs-5 fw-bold text-dark bg-warning rounded-2 text-center' style='font-size: 0.75rem;'>{$projectTime}</div>
                   </div>
                   <div class='text-center p-2'>
                     <a href='profile.php?id={$eachProjects['user_id']}' class='nav-link'>
