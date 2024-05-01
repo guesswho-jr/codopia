@@ -233,10 +233,10 @@ $resultForThePointsAndUploads = $resultForThePointsAndUploads[0];
                 foreach ($resultsForTheProjects as $eachProjects) {
                   $eachProjectId = (string) "project_{$eachProjects['project_id']}";
                   $projectTime = date("M d, Y", $eachProjects['project_time']);
-  
+
                   list($badgeName, $badgeColor) = getBadge((int)$eachProjects["points"]);
                   $admin = $eachProjects["is_admin"] ? "<div class='badge bg-success col-3 col-sm-2 col-xs-3 d-flex justify-content-center align-items-center' style='margin-right: 6px'>Admin</div>" : "";
-  
+
                   echo "
                   
                   <div class='container shadow col-10 col-md-9 rounded-3 mt-5 mb-5 border border-1 project-style bg-white pt-0'>
@@ -293,7 +293,7 @@ $resultForThePointsAndUploads = $resultForThePointsAndUploads[0];
                       </div>
   
                       <div class='col-4 p-0 text-center'>
-                          <button class='btn btn-transparent p-2' type='button' data-bs-toggle='offcanvas' data-bs-target='#offcanvasScrolling' aria-controls='offcanvasScrolling'>
+                        <button class='btn btn-transparent p-2 comment-opener' type='button' data-bs-toggle='offcanvas' data-bs-target='#offcanvasScrolling' aria-controls='offcanvasScrolling' projectId='{$eachProjects['project_id']}'>
                           <svg xmlns='http://www.w3.org/2000/svg' width='30' height='30' fill='currentColor' class='bi bi-chat-left-dots' viewBox='0 0 16 16'>
                             <path d='M14 1a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H4.414A2 2 0 0 0 3 11.586l-2 2V2a1 1 0 0 1 1-1zM2 0a2 2 0 0 0-2 2v12.793a.5.5 0 0 0 .854.353l2.853-2.853A1 1 0 0 1 4.414 12H14a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z'/>
                             <path d='M5 6a1 1 0 1 1-2 0 1 1 0 0 1 2 0m4 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0m4 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0'/>
@@ -314,69 +314,6 @@ $resultForThePointsAndUploads = $resultForThePointsAndUploads[0];
                     </div>
                   </div>
                   ";
-
-                  echo "
-                  <div class='offcanvas offcanvas-start' data-bs-scroll='true' data-bs-backdrop='false' tabindex='-1' id='offcanvasScrolling' aria-labelledby='offcanvasScrollingLabel'>
-                    <div class='offcanvas-header'>
-                      <h5 class='offcanvas-title' id='offcanvasScrollingLabel'>Comments</h5>
-                      <button type='button' class='btn-close shadow-none' data-bs-dismiss='offcanvas' aria-label='Close'></button>
-                    </div>
-                    <div class='offcanvas-body'>
-                      <div class='container p-0'>
-                        <div class='d-flex'>
-                          <input type='text' class='form-control me-1' placeholder='Leave your comments'>
-                          <button class='btn btn-dark btn-outline-light border border-outline-2 border-outline-dark'>Send</button>
-                        </div>
-                  ";
-  
-                  $comments = $db->executeSql("SELECT * FROM comments INNER JOIN projects ON comments.comment_project_id = projects.project_id INNER JOIN users ON comments.comment_user_id = users.id WHERE comment_project_id = ?;", [$eachProjects['project_id']], true);
-                  if ($comments["rows"] == 0) {
-                    echo "<h1>No comment found</h1>
-                          <div class='text-muted text-center'>No comments so far. Be the first ;)</div>
-
-                    ";
-                  } 
-                  else {
-                    echo "<h1>{$comments[0]['comment_text']} = {$comments[0]['project_name']}</h1>
-
-                          <div class='container my-3 p-3 border border-2 border-muted shadow-sm bg-light'>
-                            <div class='col-12'>
-                              <span class='bg-dark text-white col-3' style='width: 30px; height: 30px; display: inline-flex; justify-content: center; align-items: center; border-radius: 50%;'>U</span> 
-                              <a href='' class='text-dark fw-bold col-9' style='text-decoration: none;'>@{$comments[0]["username"]}</a>
-                            </div>
-                            <div class='col-12'>
-                              <p class='m-0'>{$comments[0]["comment_text"]}</p>
-                              <div class='d-flex justify-content-between'>
-                                <div class='text-center'>
-                                  <svg xmlns='http://www.w3.org/2000/svg' width='25' height='25' fill='currentColor' class='bi bi-suit-heart' viewBox='0 0 16 16'>
-                                    <path d='m8 6.236-.894-1.789c-.222-.443-.607-1.08-1.152-1.595C5.418 2.345 4.776 2 4 2 2.324 2 1 3.326 1 4.92c0 1.211.554 2.066 1.868 3.37.337.334.721.695 1.146 1.093C5.122 10.423 6.5 11.717 8 13.447c1.5-1.73 2.878-3.024 3.986-4.064.425-.398.81-.76 1.146-1.093C14.446 6.986 15 6.131 15 4.92 15 3.326 13.676 2 12 2c-.777 0-1.418.345-1.954.852-.545.515-.93 1.152-1.152 1.595zm.392 8.292a.513.513 0 0 1-.784 0c-1.601-1.902-3.05-3.262-4.243-4.381C1.3 8.208 0 6.989 0 4.92 0 2.755 1.79 1 4 1c1.6 0 2.719 1.05 3.404 2.008.26.365.458.716.596.992a7.6 7.6 0 0 1 .596-.992C9.281 2.049 10.4 1 12 1c2.21 0 4 1.755 4 3.92 0 2.069-1.3 3.288-3.365 5.227-1.193 1.12-2.642 2.48-4.243 4.38z'/>
-                                  <span class='small ms-1'>{$comments[0]["comment_likes"]}</span>
-                                </svg>
-                                </div>
-                                <span class='text-muted d-flex flex-column justify-content-end small'>{$comments[0]["comment_time"]}</span>
-                              </div>
-                            </div>
-                          </div>
-                    ";
-                  }
-
-                  echo "
-                        </div>
-                      </div>
-                    </div>  
-                  ";
-                  // else {
-                  //   $commentText = (string) $comments[0]["comment_text"];
-                  //   $commentTime = date("M d, Y", $comments[0]["comment_time"]);
-                  //   $commentLikes = (int) $comments[0]["comment_likes"];
-                  //   $commentUser = (string) $comments[0]["username"];
-
-                  //   echo "
-                    
-                  
-
-                  //   ";
-                  // }
                 }
               }
 
@@ -468,20 +405,6 @@ $resultForThePointsAndUploads = $resultForThePointsAndUploads[0];
           </button>
         </div>
         <div class="modal-body text-center d-flex flex-column">
-          <!--<div class="dropdown">
-            <button class="btn border-0 dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-              Theme
-            </button>
-            <ul class="dropdown-menu">
-              <li><button class="btn btn-transparent col-md-12" onclick="setDarkMode()"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-moon" viewBox="0 0 16 16">
-                    <path d="M6 .278a.77.77 0 0 1 .08.858 7.2 7.2 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.277q.792-.001 1.533-.16a.79.79 0 0 1 .81.316.73.73 0 0 1-.031.893A8.35 8.35 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.75.75 0 0 1 6 .278M4.858 1.311A7.27 7.27 0 0 0 1.025 7.71c0 4.02 3.279 7.276 7.319 7.276a7.32 7.32 0 0 0 5.205-2.162q-.506.063-1.029.063c-4.61 0-8.343-3.714-8.343-8.29 0-1.167.242-2.278.681-3.286" />
-                  </svg> Dark</button></li>
-              <li><Button class="btn btn-transparent col-md-12"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-brightness-high" viewBox="0 0 16 16">
-                    <path d="M8 11a3 3 0 1 1 0-6 3 3 0 0 1 0 6m0 1a4 4 0 1 0 0-8 4 4 0 0 0 0 8M8 0a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 0m0 13a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 13m8-5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2a.5.5 0 0 1 .5.5M3 8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2A.5.5 0 0 1 3 8m10.657-5.657a.5.5 0 0 1 0 .707l-1.414 1.415a.5.5 0 1 1-.707-.708l1.414-1.414a.5.5 0 0 1 .707 0m-9.193 9.193a.5.5 0 0 1 0 .707L3.05 13.657a.5.5 0 0 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0m9.193 2.121a.5.5 0 0 1-.707 0l-1.414-1.414a.5.5 0 0 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .707M4.464 4.465a.5.5 0 0 1-.707 0L2.343 3.05a.5.5 0 1 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .708" />
-                  </svg> Light</Button></li>
-
-            </ul>
-          </div>-->
           <div class="dropdown">
             <button class="btn border-0 dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
               Fonts
@@ -587,6 +510,42 @@ $resultForThePointsAndUploads = $resultForThePointsAndUploads[0];
       }
 
       ?>
+    </div>
+  </div>
+
+  <!-- COMMENTS BAR -->
+  <div class='offcanvas offcanvas-start' data-bs-scroll='true' data-bs-backdrop='false' tabindex='-1' id='offcanvasScrolling' aria-labelledby='offcanvasScrollingLabel'>
+    <div class='offcanvas-header'>
+      <h5 class='offcanvas-title' id='offcanvasScrollingLabel'>Comments</h5>
+      <button type='button' class='btn-close shadow-none' data-bs-dismiss='offcanvas' aria-label='Close'></button>
+    </div>
+    <div class='offcanvas-body'>
+      <div class='container p-0' id="comment-bar">
+        <div class='d-flex'>
+          <input type='text' id="my-comment" class='form-control me-1' placeholder='Leave your comments'>
+          <button id="comment-submit" class='btn btn-dark btn-outline-light border border-outline-2 border-outline-dark'>Send</button>
+        </div>
+        <div class="container" id="comment-container">
+          <div class='container my-3 p-3 border border-2 border-muted shadow-sm bg-light'>
+            <div class='col-12'>
+              <span class='bg-dark text-white col-3' style='width: 30px; height: 30px; display: inline-flex; justify-content: center; align-items: center; border-radius: 50%;'>U</span>
+              <a href='' class='text-dark fw-bold col-9' style='text-decoration: none;'>@username</a>
+            </div>
+            <div class='col-12'>
+              <p class='m-0'>comment text</p>
+              <div class='d-flex justify-content-between'>
+                <div class='text-center'>
+                  <svg xmlns='http://www.w3.org/2000/svg' width='25' height='25' fill='currentColor' class='bi bi-suit-heart' viewBox='0 0 16 16'>
+                    <path d='m8 6.236-.894-1.789c-.222-.443-.607-1.08-1.152-1.595C5.418 2.345 4.776 2 4 2 2.324 2 1 3.326 1 4.92c0 1.211.554 2.066 1.868 3.37.337.334.721.695 1.146 1.093C5.122 10.423 6.5 11.717 8 13.447c1.5-1.73 2.878-3.024 3.986-4.064.425-.398.81-.76 1.146-1.093C14.446 6.986 15 6.131 15 4.92 15 3.326 13.676 2 12 2c-.777 0-1.418.345-1.954.852-.545.515-.93 1.152-1.152 1.595zm.392 8.292a.513.513 0 0 1-.784 0c-1.601-1.902-3.05-3.262-4.243-4.381C1.3 8.208 0 6.989 0 4.92 0 2.755 1.79 1 4 1c1.6 0 2.719 1.05 3.404 2.008.26.365.458.716.596.992a7.6 7.6 0 0 1 .596-.992C9.281 2.049 10.4 1 12 1c2.21 0 4 1.755 4 3.92 0 2.069-1.3 3.288-3.365 5.227-1.193 1.12-2.642 2.48-4.243 4.38z' />
+                    <span class='small ms-1'>23</span>
+                  </svg>
+                </div>
+                <span class='text-muted d-flex flex-column justify-content-end small'>May 1, 2024</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 
