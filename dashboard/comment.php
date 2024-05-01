@@ -14,7 +14,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             die(json_encode(["status" => "no", "text" => "Be the first to comment!"]));
         }
         else {
-            // print_r($comments[0]);
             $superData = [];
             for ($i = 0; $i < count($comments) - 1; $i++) {
                 $data = $comments[$i];
@@ -25,11 +24,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     }
 
     if (isset($_POST["myComment"]) and !empty($_POST["myComment"])) {
-        $myComment = $_POST["myComment"];
-        $projectId = $_POST["submitProjectId"];
+        $myComment = htmlspecialchars($_POST["myComment"]);
+        $projectId = (int) htmlspecialchars($_POST["submitProjectId"]);
         // FIX: CHECK IF LIKED OR NOT
         $db->executeSql("INSERT INTO comments (comment_text, comment_time, comment_project_id, comment_user_id) VALUES (?, ?, ?, ?)", [$myComment, time(), $projectId, $_SESSION["userid"]]);
-        die(json_encode(["status" => "done"]));
+        die(json_encode(["status" => "done", "data" => ["username" => $_SESSION["username"], "text" => $myComment, "time" => time()]]));
     } else {
         die(json_encode(["status" => "not done"]));
     }
