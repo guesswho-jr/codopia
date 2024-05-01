@@ -245,7 +245,7 @@ $resultForThePointsAndUploads = $resultForThePointsAndUploads[0];
                       <div class='badge $badgeColor col-3 col-sm-2 col-xs-3 d-flex justify-content-center align-items-center' style='margin-right: 6px'>$badgeName</div>
                     </div>
                     <div class='row d-flex ps-2 pt-2'>
-                      <div class='col-md-4 col-sm-4 col-6 fw-bold text-dark bg-warning rounded-2 text-center' style='font-size: 0.75rem;'><span class='small-date-360'>{$projectTime}</span></div>
+                      <div class='col-md-4 col-sm-4 col-6 fw-bold text-dark p-0 rounded-2' style='font-size: 0.75rem;'><span class='small-date-360'>{$projectTime}</span></div>
                     </div>
                     <div class='text-center p-2'>
                       <a href='profile.php?id={$eachProjects['user_id']}' class='nav-link'>
@@ -304,7 +304,7 @@ $resultForThePointsAndUploads = $resultForThePointsAndUploads[0];
                       </div>
   
                       <div class='col-4 p-0 text-center'>
-                        <button class='btn btn-transparent text-dark p-2'>
+                        <button class='btn btn-transparent text-dark p-2 pt-1'>
                           <img src='/imgs/exclamation.svg' width='35' height='35'>
                           <br>
                           <span class='small'>Report</span>
