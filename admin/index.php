@@ -1,6 +1,7 @@
 <?php
 session_start();
 include("scripts/dashboard_setup.php");
+require_once "../admin/scripts/classes.php";
 
 if ($_SESSION["loggedin"] && !$_SESSION["admin_status"]) {
   header("Location: /dashboard");
@@ -23,6 +24,9 @@ $feedback_stmt = $con->query("SELECT COUNT(`feedback_id`) as NUMBER_OF_FEEDBACKS
 $user_stmt->setFetchMode(PDO::FETCH_ASSOC);
 $result_feedbacks = $feedback_stmt->fetchAll();
 $number_of_feedbacks = $result_feedbacks[0]["NUMBER_OF_FEEDBACKS"];
+
+$db = new DataBase();
+$number_of_projects = $db->executeSql("SELECT COUNT(*) as NUMBER_OF_PROJECTS FROM projects", [], true)[0]["NUMBER_OF_PROJECTS"];
 ?>
 
 <!DOCTYPE html>
@@ -43,18 +47,15 @@ $number_of_feedbacks = $result_feedbacks[0]["NUMBER_OF_FEEDBACKS"];
 <body class="vh-100 bg-light overflow-hidden d-flex justify-content-center align-items-center">
 
   <nav class="navbar  fixed-top" id="nav-b">
-    <div class="container-fluid">
+    <div class="container-fluid d-flex justify-content-around">
       <nav class="navbar">
-        <div class="container-fluid">
-          <a class="navbar-brand" href="../dashboard/">
-            <img src="/imgs/text-logo.png" alt="Logo" width="175" class="d-inline-block align-text-top">
-          </a>
-        </div>
+        <a class="navbar-brand" href="../dashboard/">
+          <img src="/imgs/logo.png" alt="Logo" width="75" class="d-inline-block align-text-top">
+        </a>
       </nav>
       <nav aria-label="breadcrumb">
         <ul class="breadcrumb">
           <li class="breadcrumb-item"><a class="breadcrumb-item" href="/term/">Terms / Regulations</a></li>
-          <!-- <li class="breadcrumb-item"><a class="breadcrumb-item" href="#">Privacy-policy</a></li> -->
         </ul>
       </nav>
       <button class="navbar-toggler shadow-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
@@ -75,7 +76,7 @@ $number_of_feedbacks = $result_feedbacks[0]["NUMBER_OF_FEEDBACKS"];
         </div>
 
         <div class="offcanvas-body bg-dark navbar-dark shadow">
-          <ul class="navbar-nav justify-content-start  flex-grow-1 pe-3 mt-2">
+          <ul class="navbar-nav justify-content-start flex-grow-1 pe-3 mt-2">
             <li class="nav-item">
               <a class="nav-link active" aria-current="page" href="#"><svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-house me-2" viewBox="0 0 16 16">
                   <path d="M8.707 1.5a1 1 0 0 0-1.414 0L.646 8.146a.5.5 0 0 0 .708.708L2 8.207V13.5A1.5 1.5 0 0 0 3.5 15h9a1.5 1.5 0 0 0 1.5-1.5V8.207l.646.647a.5.5 0 0 0 .708-.708L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293zM13 7.207V13.5a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5V7.207l5-5z" />
@@ -126,10 +127,10 @@ $number_of_feedbacks = $result_feedbacks[0]["NUMBER_OF_FEEDBACKS"];
     </div>
   </nav>
   <div class="container">
-    <div class="list row justify-content-evenly">
+    <div class="list row justify-content-evenly g-5">
       <div class="box col-lg-3 col-md-5 col-sm-6 shadow-lg bg-light ml-2">
         <div class="text-center text-dark mt-4">
-          <h3>Number of users</h3>
+          <h3>Users</h3>
         </div>
         <h1 class="description text-center text-dark"><?php echo $number_of_users ?></h1>
       </div>
@@ -137,6 +138,11 @@ $number_of_feedbacks = $result_feedbacks[0]["NUMBER_OF_FEEDBACKS"];
       <div class="box col-lg-3 col-md-5 col-sm-6 shadow-lg bg-light ml-2 gap-2">
         <h3 class="text-center text-dark mt-4">Feedbacks</h3>
         <h1 class="description text-center mb-5"><?php echo $number_of_feedbacks ?></h1>
+      </div>
+
+      <div class="box col-lg-3 col-md-5 col-sm-6 shadow-lg bg-light ml-2 gap-2">
+        <h3 class="text-center text-dark mt-4">Projects</h3>
+        <h1 class="description text-center mb-5"><?php echo $number_of_projects ?></h1>
       </div>
     </div>
   </div>
