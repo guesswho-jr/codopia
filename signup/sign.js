@@ -36,17 +36,17 @@ document.getElementById("username").addEventListener("blur", () => {
       }
     })
 })
-document.getElementById("password").addEventListener("blur", ()=> {
+document.getElementById("pass").addEventListener("blur", ()=> {
   let form = new FormData();
   form.append("type", 100);
-  form.append("password", document.getElementById("password").value)
+  form.append("password", document.getElementById("pass").value)
   fetch("submit.php", {
     method: "POST",
     body: form
   }).then(resp => resp.json())
     .then(data => {
       if (data.success) {
-        document.getElementById("information").textContent = data.success; document.getElementById("information").style.color = "green"
+        document.getElementById("information-pwd").textContent = data.success; document.getElementById("information").style.color = "green"
       }
       else if (data.error) document.querySelector(".message").textContent = data.error
       else if (data.info) {
