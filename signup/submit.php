@@ -7,17 +7,10 @@ session_start();
 
 // OPTIMIZE: ABOUT USERNAME
 if (isset($_POST["type"]) && (int)$_POST["type"] == 99) {
-    $db = new DataBase();
-
-    if (!validateString($_POST["username"])) {
-        die(json_encode(["error" => "Error while validation"]));
-    }
-    $r = $db->executeSql("select username from users where username=? limit 1", [$_POST["username"]], true);
-    if ((int)$r["rows"] !== 0) {
-        die(json_encode(["info" => "Username is taken"]));
-    } else {
-        die(json_encode(["success" => "Username is valid"]));
-    }
+    if (!preg_match("/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/", $_POST["password"]))
+        die(json_encode(["info"=> "Weak password"]));
+    else
+        die(json_encode(["success" => "Strong password"]));
 }
 else if (isset($_POST["type"]) && (int)$_POST["type"] == 100) {
     $db = new DataBase();
