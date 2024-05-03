@@ -19,6 +19,19 @@ if (isset($_POST["type"]) && (int)$_POST["type"] == 99) {
         die(json_encode(["success" => "Username is valid"]));
     }
 }
+else if (isset($_POST["type"]) && (int)$_POST["type"] == 100) {
+    $db = new DataBase();
+
+    if (!validateString($_POST["username"])) {
+        die(json_encode(["error" => "Error while validation"]));
+    }
+    $r = $db->executeSql("select username from users where username=? limit 1", [$_POST["username"]], true);
+    if ((int)$r["rows"] !== 0) {
+        die(json_encode(["info" => "Username is taken"]));
+    } else {
+        die(json_encode(["success" => "Username is valid"]));
+    }
+}
 
 // OPTIMIZE: IF SET AND NOT EMPTY
 // function both($val)
