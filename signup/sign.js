@@ -36,6 +36,28 @@ document.getElementById("username").addEventListener("blur", () => {
       }
     })
 })
+document.getElementById("password").addEventListener("blur", ()=> {
+  let form = new FormData();
+  form.append("type", 100);
+  form.append("password", document.getElementById("password").value)
+  fetch("submit.php", {
+    method: "POST",
+    body: form
+  }).then(resp => resp.json())
+    .then(data => {
+      if (data.success) {
+        document.getElementById("information").textContent = data.success; document.getElementById("information").style.color = "green"
+      }
+      else if (data.error) document.querySelector(".message").textContent = data.error
+      else if (data.info) {
+        document.getElementById("information-pwd").textContent = data.info;
+        document.getElementById("information-pwd").style.color = "red"
+      }
+    })
+
+})
+
+
 
 // upForm.addEventListener("submit", async e => {
 //   e.preventDefault();
