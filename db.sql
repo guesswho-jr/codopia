@@ -4,9 +4,10 @@ CREATE TABLE projects (
     project_name VARCHAR(30) NOT NULL,
     file_path TEXT NOT NULL,
     project_detail VARCHAR(250) NOT NULL,
-    -- project_time DATETIME DEFAULT CURRENT_TIME,
     project_time INT NOT NULL,
     likes INT DEFAULT 0,
+    comments INT DEFAULT 0,
+    reports INT DEFAULT 0,
     liked_by TEXT DEFAULT '[]',
     user_id INT NOT NULL,
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE

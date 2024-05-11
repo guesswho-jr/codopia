@@ -253,7 +253,7 @@ $resultForThePointsAndUploads = $resultForThePointsAndUploads[0];
                         <h3 class='search-item full_name'>{$eachProjects['full_name']}</h3>
                       </a>
                       <div class='mt-1 text-center'>
-                        <p class=''>{$eachProjects['bio']}</p>
+                        <p class='text-muted'>{$eachProjects['bio']}</p>
                       </div>
                     </div>
   
@@ -295,7 +295,7 @@ $resultForThePointsAndUploads = $resultForThePointsAndUploads[0];
                             <path d='M5 6a1 1 0 1 1-2 0 1 1 0 0 1 2 0m4 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0m4 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0'/>
                           </svg>
                           <br>
-                          <span class='small'>Comments</span>
+                          <span class='small comment-count'>{$eachProjects['comments']}</span>
                         </button>
                       </div>
   
@@ -303,7 +303,7 @@ $resultForThePointsAndUploads = $resultForThePointsAndUploads[0];
                         <button class='btn btn-transparent text-dark p-2 pt-1' id='report-btn'>
                           <img src='/imgs/exclamation.svg' width='35' height='35'>
                           <br>
-                          <span class='small'>Report</span>
+                          <span class='small'>{$eachProjects['reports']}</span>
                         </button>
                       </div>
   

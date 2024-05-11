@@ -1,8 +1,8 @@
+const commentOpener = document.querySelectorAll(".comment-opener");
+
 // ADD NEW COMMENT
 
-const commentSubmit = document.getElementById("comment-submit");
-
-function addNewComment() {
+function addNewComment(currentOpen, commentSubmit) {
     const myComment = document.getElementById("my-comment").value;
     const commentContainer = document.getElementById("comment-container");
     if (myComment) {
@@ -49,7 +49,7 @@ function addNewComment() {
                             document.getElementById("no-comment-so-far").remove();
                         }
                         commentContainer.insertBefore(justSentComment, commentContainer.firstChild);
-                        document.getElementById("my-comment").value = "";
+                        currentOpen.querySelector(".comment-count").textContent = Number(currentOpen.querySelector(".comment-count").textContent) + 1;
                         likeSystem();
                         break;
                     case "not done":
@@ -69,22 +69,14 @@ function addNewComment() {
         }
         xhr.send(formData);
     }
+    document.getElementById("my-comment").value = "";
 }
-
-commentSubmit.addEventListener("click", addNewComment);
-document.getElementById("my-comment").addEventListener("keyup", event => {
-    if (event.key === "Enter" && document.getElementById("my-comment").value != "") {
-        event.preventDefault();
-        addNewComment();
-    }
-})
 
 // ABOUT WHICH COMMENT SHOULD BE DISPLAYED ON THE COMMENT BAR WHEN THE COMMENT BUTTON IS CLICKED
 
-const commentOpener = document.querySelectorAll(".comment-opener");
-
 commentOpener.forEach(opener => {
     opener.addEventListener("click", event => {
+        const commentSubmit = document.getElementById("comment-submit");
         const commentContainer = document.getElementById("comment-container");
 
         const formData = new FormData();
@@ -149,42 +141,55 @@ commentOpener.forEach(opener => {
                         console.error("Could not receive response!");
                 }
 
+                // OPTIMIZE: COMMENT ADD SYSTEM
+                commentSubmit.addEventListener("click", function () {
+                    addNewComment(opener, commentSubmit);
+                });
+                document.getElementById("my-comment").addEventListener("keyup", event => {
+                    if (event.key === "Enter" && document.getElementById("my-comment").value != "") {
+                        event.preventDefault();
+                        addNewComment(opener, commentSubmit);
+                        document.getElementById("my-comment").value = "";
+                    }
+                });
+
                 // COMMENT LIKE SYSTEM
                 likeSystem();
             }
         }
         xhr.send(formData);
-    });
+    }, { capture: true });
 });
 
 function likeSystem() {
     const likeBtns = document.querySelectorAll(".comment-like-btn");
     likeBtns.forEach(btn => {
-        btn.addEventListener("click", function (event) {
-            const commentId = event.target.getAttribute("commentid");
-            const formData = new FormData();
-            formData.append("commentId", commentId);
-
-            const xhr = new XMLHttpRequest();
-            xhr.open("POST", "./comment.php", true);
-            xhr.onload = function () {
-                if (xhr.status == 200) {
-                    const likeData = JSON.parse(xhr.response);
-                    switch (likeData.status) {
-                        case "liked":
-                            btn.nextElementSibling.textContent = Number(btn.nextElementSibling.textContent) + 1;
-                            break;
-                        case "disliked":
-                            btn.nextElementSibling.textContent = Number(btn.nextElementSibling.textContent) - 1;
-                            break;
-                        default:
-                            console.error("Error occurred when trying to like or dislike!");
+        if (!btn.classList.contains("like-event-attached")) {
+            btn.classList.add("like-event-attached");
+            btn.addEventListener("click", function (event) {
+                const commentId = event.target.getAttribute("commentid");
+                const formData = new FormData();
+                formData.append("commentId", commentId);
+    
+                const xhr = new XMLHttpRequest();
+                xhr.open("POST", "./comment.php", true);
+                xhr.onload = function () {
+                    if (xhr.status == 200) {
+                        const likeData = JSON.parse(xhr.response);
+                        switch (likeData.status) {
+                            case "liked":
+                                btn.nextElementSibling.textContent = Number(btn.nextElementSibling.textContent) + 1;
+                                break;
+                            case "disliked":
+                                btn.nextElementSibling.textContent = Number(btn.nextElementSibling.textContent) - 1;
+                                break;
+                            default:
+                                console.error("Error occurred when trying to like or dislike!");
+                        }
                     }
                 }
-            }
-            xhr.send(formData);
-        }, { capture: true });
-        console.log("After event listener");
+                xhr.send(formData);
+            }, { capture: true });
+        }
     });
-    console.log("After each loop");
 }

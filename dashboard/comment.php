@@ -37,8 +37,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         }
         $uniqueIdentifier = bin2hex(random_bytes(16)) . $currentTime;
         $db->executeSql("INSERT INTO comments (comment_text, comment_time, comment_project_id, comment_user_id, unique_identifier) VALUES (?, ?, ?, ?, ?)", [$myComment, $currentTime, $projectId, $_SESSION["userid"], $uniqueIdentifier]);
-        $commentId = $db->executeSql("SELECT comment_id FROM comments WHERE comment_time = ? AND comment_user_id = ? AND unique_identifier = ? LIMIT 1", [$currentTime, $_SESSION["userid"], $uniqueIdentifier], true)[0]["comment_id"];
-        die(json_encode(["status" => "done", "data" => ["commentId" => $commentId, "username" => $_SESSION["username"], "text" => $myComment, "time" => $currentTime]]));
+        $commentResult = $db->executeSql("SELECT comment_id, comment_project_id FROM comments WHERE comment_time = ? AND comment_user_id = ? AND unique_identifier = ? LIMIT 1", [$currentTime, $_SESSION["userid"], $uniqueIdentifier], true)[0];
+        $db->executeSql("UPDATE projects SET comments = comments + 1 WHERE project_id = ?", [$commentResult["comment_project_id"]]);
+        die(json_encode(["status" => "done", "data" => ["commentId" => $commentResult["comment_id"], "username" => $_SESSION["username"], "text" => $myComment, "time" => $currentTime]]));
     }
     // else {
     //     die(json_encode(["status" => "not done"]));
