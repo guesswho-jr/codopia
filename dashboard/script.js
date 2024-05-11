@@ -30,13 +30,19 @@ const share = () => {
 
 // Share (Copying the link)
 
-function copyLinkToClipboard(project_id) {
-  console.log(project_id);
+function copyLinkToClipboard(project_id = "") {
   const url = `${window.location.href.split("#")[0]}#${project_id}`;
   navigator.clipboard.writeText(url).then(() => {
-    alert("Link copied to clipboard!");
+    // alert("Link copied to clipboard!");
+    Swal.fire({
+      icon: "success",
+      text: "Link copied to clipboard!",
+    });
   }).catch(error => {
-    alert(`Failed to copy link: ${error}`);
+    Swal.fire({
+      icon: "error",
+      text: "Failed to copy link to clipboard!",
+    });
   });
 }
 
