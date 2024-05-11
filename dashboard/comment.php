@@ -14,8 +14,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $comments = $db->executeSql("SELECT comment_id, comment_text, comment_time, comment_likes, comment_liked_by, username FROM comments INNER JOIN projects ON comments.comment_project_id = projects.project_id INNER JOIN users ON comments.comment_user_id = users.id WHERE comment_project_id = ? ORDER BY comment_time DESC;", [$projectId], true);
         if ($comments["rows"] == 0) {
             die(json_encode(["status" => "no", "text" => "Be the first to comment!"]));
-        }
-        else {
+        } else {
             $superData = [];
             for ($i = 0; $i < count($comments) - 1; $i++) {
                 $data = $comments[$i];
@@ -30,11 +29,17 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $myComment = htmlspecialchars($_POST["myComment"]);
         $projectId = (int) htmlspecialchars($_POST["submitProjectId"]);
         $currentTime = time();
-        // FIX: CHECK IF LIKED OR NOT
-        $db->executeSql("INSERT INTO comments (comment_text, comment_time, comment_project_id, comment_user_id) VALUES (?, ?, ?, ?)", [$myComment, $currentTime, $projectId, $_SESSION["userid"]]);
-        $commentId = $db->executeSql("SELECT comment_id FROM comments WHERE comment_time = ? LIMIT 1", [$currentTime], true)[0]["comment_id"];
+        $checkComment = $db->executeSql("SELECT project_id, comment_id, comment_project_id, comment_user_id FROM projects INNER JOIN comments ON projects.project_id = comments.comment_project_id WHERE project_id = ? AND comment_user_id = ?", [$projectId, $_SESSION["userid"]], true);
+        if ($checkComment["rows"] != 0) {
+            if ($checkComment["rows"] >= 5) {
+                die(json_encode(["status" => "commento", "text" => "Could not comment more than 5 comments for the same project!"]));
+            }
+        }
+        $uniqueIdentifier = bin2hex(random_bytes(16)) . $currentTime;
+        $db->executeSql("INSERT INTO comments (comment_text, comment_time, comment_project_id, comment_user_id, unique_identifier) VALUES (?, ?, ?, ?, ?)", [$myComment, $currentTime, $projectId, $_SESSION["userid"], $uniqueIdentifier]);
+        $commentId = $db->executeSql("SELECT comment_id FROM comments WHERE comment_time = ? AND comment_user_id = ? AND unique_identifier = ? LIMIT 1", [$currentTime, $_SESSION["userid"], $uniqueIdentifier], true)[0]["comment_id"];
         die(json_encode(["status" => "done", "data" => ["commentId" => $commentId, "username" => $_SESSION["username"], "text" => $myComment, "time" => $currentTime]]));
-    } 
+    }
     // else {
     //     die(json_encode(["status" => "not done"]));
     // }
@@ -63,5 +68,3 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         }
     }
 }
-
-?>

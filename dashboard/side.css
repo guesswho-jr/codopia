@@ -108,6 +108,10 @@
   cursor: pointer;
 }
 
+.highlight {
+  background-color: yellowgreen;
+}
+
 /*  */
 
 /* .Search {

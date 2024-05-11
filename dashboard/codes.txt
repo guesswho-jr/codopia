@@ -1,0 +1,8 @@
+comment.php
+    // status: text
+    no: Be the first to comment!
+    yes: "comments to be displayed"
+    commento: Could not comment more than 5 comments for the same project!
+    done: "commentId, username, text, time to be displayed when adding new comment"
+    disliked: null
+    liked: null

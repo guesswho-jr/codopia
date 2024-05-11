@@ -43,10 +43,6 @@ $resultForThePointsAndUploads = $resultForThePointsAndUploads[0];
   <link rel="stylesheet" href="/static/bootstrap.min.css">
   <title>Dashboard - <?php echo $_SESSION["username"] ?></title>
   <style>
-    .highlight {
-      background-color: yellowgreen;
-    }
-
     /* THIS PLACE IS NEEDED FOR THE THEME AND FONT CHANGES */
   </style>
 </head>
