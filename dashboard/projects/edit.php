@@ -30,7 +30,7 @@ if ($projName) {
         die(json_encode(["error" => "Error while validation"]));
     }
     // FIXME: It didn't specify the project id before
-    $resp = $db->executeSql("update projects set project_name=? where project_id = ?", [$_POST['name'], $_POST["projId"]], true);
+    $resp = $db->executeSql("update projects set project_name=? where project_unique_identifier = ?", [$_POST['name'], $_POST["projId"]], true);
     if (is_object($resp) && get_class($resp) == "PDOException") {
         die(['error' => "Please report this on feedback: " . $resp->getCode()]);
     }
@@ -41,7 +41,7 @@ if ($projDesc) {
         die(json_encode(["error" => "Error while validation"]));
     }
     // FIXME: It didn't specify the project id before
-    $resp = $db->executeSql("update projects set project_detail=? where project_id = ?", [$_POST['projDesc'], $_POST["projId"]], true);
+    $resp = $db->executeSql("update projects set project_detail=? where project_unique_identifier = ?", [$_POST['projDesc'], $_POST["projId"]], true);
     if (is_object($resp) && get_class($resp) == "PDOException") {
         die(['error' => "Please report this on feedback: " . $resp->getCode()]);
     }

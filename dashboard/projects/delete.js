@@ -5,7 +5,6 @@ deleteBtns.forEach(btn => {
         const targetBtn = event.target;
         const projectId = targetBtn.getAttribute("projectId");
 
-
         Swal.fire({
             title: 'Are you sure?',
             text: "You won't be able to revert this!",
@@ -63,22 +62,5 @@ deleteBtns.forEach(btn => {
                 })
             }
         });
-
-
-        // xhr.onload = function () {
-        //     if (xhr.status == 200) {
-        //         switch (xhr.response) {
-        //             case "ERROR":
-        //                 Swal.fire({
-        //                     title: "ERROR!",
-        //                     text: "Could not delete project!",
-        //                     icon: "warning"
-        //                 });
-        //                 break;
-        //             default:
-        //                 document.getElementById("project_table").children[1].removeChild(targetBtn.parentElement.parentElement);
-        //         }
-        //     }
-        // }
     });
 });

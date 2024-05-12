@@ -169,8 +169,8 @@ $projectList = $statementForProjectFetching->fetchAll();
                   echo "  <td>$projName</td>";
                   echo "  <td>$projDesc</td>";
                   echo "  <td>$likes</td>";
-                  echo "  <td><button projectId='{$project['project_id']}' class='btn btn-danger p-1 delete-btn'>Delete</button> 
-                  <button projectId='{$project['project_id']}' class='btn btn-primary pl-3 edit-btn'>Edit</button></td>";
+                  echo "  <td><button projectId='{$project['project_unique_identifier']}' class='btn btn-danger p-1 delete-btn'>Delete</button> 
+                  <button projectId='{$project['project_unique_identifier']}' class='btn btn-primary pl-3 edit-btn'>Edit</button></td>";
                   echo "</tr>";
                 }
                 ?>
