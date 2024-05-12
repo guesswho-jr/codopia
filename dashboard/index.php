@@ -217,7 +217,7 @@ $resultForThePointsAndUploads = $resultForThePointsAndUploads[0];
           <span id="comment-tracker"></span>
 
           <div class="row mb-5">
-            <div class="container p-2 d-flex flex-wrap overflow-auto">
+            <div class="container p-2 d-flex flex-wrap overflow-auto justify-content-center">
               <?php
               $statementForTheProjects = $con->prepare("SELECT * FROM projects INNER JOIN users ON projects.user_id = users.id ORDER BY project_time DESC");
               $statementForTheProjects->execute();

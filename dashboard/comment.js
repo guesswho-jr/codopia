@@ -19,7 +19,7 @@ function addNewComment(currentOpen, commentSubmit) {
                         const timestampMilli = Number(objData.data.time) * 1000;
                         const dataObject = new Date(timestampMilli);
                         const month = dataObject.toLocaleString("default", { month: "short" });
-                        const day = dataObject.getDay();
+                        const day = dataObject.getDate();
                         const year = dataObject.getFullYear();
                         const formattedDate = `${month} ${day}, ${year}`;
     
@@ -108,7 +108,7 @@ commentOpener.forEach(opener => {
                             const timestampMilli = Number(data.comment_time) * 1000;
                             const dataObject = new Date(timestampMilli);
                             const month = dataObject.toLocaleString("default", { month: "short" });
-                            const day = dataObject.getDay();
+                            const day = dataObject.getDate();
                             const year = dataObject.getFullYear();
                             const formattedDate = `${month} ${day}, ${year}`;
 

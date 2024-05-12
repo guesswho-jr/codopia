@@ -35,9 +35,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 die(json_encode(["status" => "commento", "text" => "Could not comment more than 5 comments for the same project!"]));
             }
         }
-        $uniqueIdentifier = bin2hex(random_bytes(16)) . $currentTime;
-        $db->executeSql("INSERT INTO comments (comment_text, comment_time, comment_project_id, comment_user_id, unique_identifier) VALUES (?, ?, ?, ?, ?)", [$myComment, $currentTime, $projectId, $_SESSION["userid"], $uniqueIdentifier]);
-        $commentResult = $db->executeSql("SELECT comment_id, comment_project_id FROM comments WHERE comment_time = ? AND comment_user_id = ? AND unique_identifier = ? LIMIT 1", [$currentTime, $_SESSION["userid"], $uniqueIdentifier], true)[0];
+        $uniqueIdentifier = $projectId . bin2hex(random_bytes(16)) . $currentTime;
+        $db->executeSql("INSERT INTO comments (comment_text, comment_time, comment_project_id, comment_user_id, comment_unique_identifier) VALUES (?, ?, ?, ?, ?)", [$myComment, $currentTime, $projectId, $_SESSION["userid"], $uniqueIdentifier]);
+        $commentResult = $db->executeSql("SELECT comment_id, comment_project_id FROM comments WHERE comment_time = ? AND comment_user_id = ? AND comment_unique_identifier = ? LIMIT 1", [$currentTime, $_SESSION["userid"], $uniqueIdentifier], true)[0];
         $db->executeSql("UPDATE projects SET comments = comments + 1 WHERE project_id = ?", [$commentResult["comment_project_id"]]);
         die(json_encode(["status" => "done", "data" => ["commentId" => $commentResult["comment_id"], "username" => $_SESSION["username"], "text" => $myComment, "time" => $currentTime]]));
     }
@@ -45,6 +45,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     //     die(json_encode(["status" => "not done"]));
     // }
 
+    // WHEN LIKING A COMMENT
     if (isset($_POST["commentId"]) and !empty($_POST["commentId"])) {
         $commentIdForLike = (int) htmlspecialchars($_POST["commentId"]);
         $comment_liked_by = $db->executeSql("SELECT comment_liked_by FROM comments WHERE comment_id = ?", [$commentIdForLike], true);
