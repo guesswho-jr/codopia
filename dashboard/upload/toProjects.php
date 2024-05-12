@@ -83,7 +83,8 @@ function handleUpload($formData)
         // Select from projects table and get the project id to set it to the file path
         $resultId = (int)$db->executeSql("SELECT project_id FROM projects WHERE file_path = ?", [$oldPath], true)[0]["project_id"];
         $newPath = (string)$actualFilename . "--" . $currentTimestamp . "%UzX=" . $userid . "%UzX=" . "%PzX=" . $resultId . "%PzX=" . "--." . $extension; // test_doc--20240420110530%UzX=2%UzX=%PzX=10%PzX=--.zip // With project id
-        $db->executeSql("UPDATE projects SET file_path = ? WHERE project_id = ?", [$newPath, $resultId]);
+        $uniqueIdentifier = $resultId . bin2hex(random_bytes(16)) . $currentTimestamp;
+        $db->executeSql("UPDATE projects SET file_path = ?, project_unique_identifier = ? WHERE project_id = ?", [$newPath, $uniqueIdentifier, $resultId]);
 
         $success = move_uploaded_file($tempFilePath, UPLOAD_DIRECTORY . $newPath);
 
