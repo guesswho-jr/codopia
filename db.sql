@@ -10,6 +10,7 @@ CREATE TABLE projects (
     reports INT DEFAULT 0,
     liked_by TEXT DEFAULT '[]',
     user_id INT NOT NULL,
+    project_unique_identifier TEXT,
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 );
 
@@ -68,7 +69,7 @@ CREATE TABLE comments (
     comment_likes INT DEFAULT 0,
     comment_liked_by TEXT DEFAULT '[]',
     comment_project_id INT NOT NULL,
-    unique_identifier TEXT NOT NULL,
+    comment_unique_identifier TEXT NOT NULL,
     FOREIGN KEY (comment_project_id) REFERENCES projects(project_id) ON DELETE CASCADE,
     comment_user_id INT NOT NULL,
     FOREIGN KEY (comment_user_id) REFERENCES users(id) ON DELETE CASCADE
