@@ -4,30 +4,33 @@ document.addEventListener("DOMContentLoaded", () => {
     const likers = document.querySelectorAll(".liker");
     likers.forEach(btn => {
         btn.addEventListener("click", event => {
-            const target = event.target;
             const projectData = JSON.stringify({
-                project_id: target.getAttribute("project_id")
+                project_id: btn.getAttribute("project_id")
             });
-    
+
             const xhr = new XMLHttpRequest();
             xhr.open("POST", "./likeHandler.php", true);
             xhr.onload = function () {
                 if (xhr.status == 200) {
-                    // if (xhr.response == "LIKED") target.parentNode.parentNode.children[2].textContent++;
-                    // else if (xhr.response == "UNLIKED") target.parentNode.parentNode.children[2].textContent--;
                     switch (xhr.response) {
                         case "LIKED":
-                            target.parentNode.parentNode.children[2].textContent++;
+                            btn.children[2].textContent = Number(btn.children[2].textContent) + 1;
+                            btn.children[2].classList.remove("text-dark");
+                            btn.children[2].classList.add("text-danger");
+                            btn.children[0].setAttribute("src", "/imgs/heart.svg");
                             break;
                         case "UNLIKED":
-                            target.parentNode.parentNode.children[2].textContent--;
+                            btn.children[2].textContent = Number(btn.children[2].textContent) - 1;
+                            btn.children[2].classList.remove("text-danger");
+                            btn.children[2].classList.add("text-dark");
+                            btn.children[0].setAttribute("src", "/imgs/heart-muted.svg");
                             break;
                     }
                 }
             }
             xhr.setRequestHeader("Content-Type", "application/json");
             xhr.send(projectData);
-        });
+        }, { capture: true });
     });
 
     // MARK: EVENT XHR
@@ -39,17 +42,17 @@ document.addEventListener("DOMContentLoaded", () => {
     if (form) {
         form.addEventListener("submit", event => {
             event.preventDefault();
-            const checked = document.querySelector(".condition").checked ? 1: -1;
+            const checked = document.querySelector(".condition").checked ? 1 : -1;
             const target = event.target;
             const eventData = JSON.stringify({
                 condition: checked,
                 event_id: target.getAttribute("event_id"),
                 xp: target.getAttribute("xp")
             })
-    
+
             const xhr = new XMLHttpRequest();
             xhr.open("POST", "./acceptHandler.php", true);
-            xhr.onload = function() {
+            xhr.onload = function () {
                 if (xhr.status == 200) {
                     if (xhr.response == "ACCEPTED") {
                         joinBtn.style.backgroundColor = "#dc3545";
@@ -73,6 +76,6 @@ document.addEventListener("DOMContentLoaded", () => {
             xhr.send(eventData);
         });
     }
-    
+
 
 });

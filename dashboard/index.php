@@ -233,6 +233,23 @@ $resultForThePointsAndUploads = $resultForThePointsAndUploads[0];
                   list($badgeName, $badgeColor) = getBadge((int)$eachProjects["points"]);
                   $admin = $eachProjects["is_admin"] ? "<div class='badge bg-success col-3 col-sm-2 col-xs-3 d-flex justify-content-center align-items-center' style='margin-right: 6px'>Admin</div>" : "";
 
+                  $reported_by = json_decode($eachProjects["reported_by"], true);
+                  $reportSVG = "";
+                  if (in_array($sessionUserId, $reported_by)) $reportSVG = "exclamation-muted";
+                  else $reportSVG = "exclamation";
+
+                  $liked_by = json_decode($eachProjects["liked_by"], true);
+                  $likeSVG = "";
+                  $likeColor = "";
+                  if (!in_array($sessionUserId, $liked_by)) {
+                    $likeSVG = "heart-muted";
+                    $likeColor = "text-dark";
+                  }
+                  else {
+                    $likeSVG = "heart";
+                    $likeColor = "text-danger";
+                  }
+
                   echo "
                   
                   <div class='container shadow col-10 col-md-9 rounded-3 mt-5 mb-5 border border-1 project-style bg-white pt-0'>
@@ -278,12 +295,10 @@ $resultForThePointsAndUploads = $resultForThePointsAndUploads[0];
                     <div class='row my-3'>
                       <div class='col-4 p-0 text-center'>
             
-                          <button type='submit' class='btn btn-transparent text-danger g-test-btn p-2'>
-                            <svg xmlns='http://www.w3.org/2000/svg' width='30' height='30' fill='currentColor' class='bi bi-heart-fill' viewBox='0 0 16 16'>
-                              <path class='liker' project_id='{$eachProjects['project_id']}' fill-rule='evenodd' d='M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z' />
-                            </svg>
-                            <br>  
-                            <span class='text-danger'>{$eachProjects['likes']}</span>
+                          <button type='submit' class='btn btn-transparent p-2 liker' project_id='{$eachProjects['project_id']}'>
+                            <img src='/imgs/$likeSVG.svg' width='30' height='30'>
+                            <br>
+                            <span class='$likeColor'>{$eachProjects['likes']}</span>
                           </button>
             
                       </div>
@@ -300,10 +315,10 @@ $resultForThePointsAndUploads = $resultForThePointsAndUploads[0];
                       </div>
   
                       <div class='col-4 p-0 text-center'>
-                        <button class='btn btn-transparent text-dark p-2 pt-1' id='report-btn'>
-                          <img src='/imgs/exclamation.svg' width='35' height='35'>
+                        <button class='btn btn-transparent text-dark p-2 pt-1 report-btn' projectId='{$eachProjects['project_id']}'>
+                          <img src='/imgs/$reportSVG.svg' width='35' height='35'>
                           <br>
-                          <span class='small'>{$eachProjects['reports']}</span>
+                          <span class='small report-count'>{$eachProjects['reports']}</span>
                         </button>
                       </div>
   
@@ -554,6 +569,7 @@ $resultForThePointsAndUploads = $resultForThePointsAndUploads[0];
 <script src="./script.js"></script>
 <script src="./request.js"></script>
 <script src="./comment.js"></script>
+<script src="./report.js"></script>
 <script src="/static/sweetalert2.js"></script>
 <script src="/static/bootstrap.bundle.min.js"></script>
 

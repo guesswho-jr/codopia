@@ -4,7 +4,7 @@ deleteBtns.forEach(btn => {
     btn.addEventListener("click", event => {
         const targetBtn = event.target;
         const projectId = targetBtn.getAttribute("projectId");
-        const userId = targetBtn.getAttribute("userId");
+        const userId = targetBtn.getAttribute("userId");    
 
         Swal.fire({
             title: 'Are you sure?',
@@ -22,9 +22,9 @@ deleteBtns.forEach(btn => {
                     const formData = new FormData();
                     formData.append("projectId", projectId);
                     formData.append("userId", userId);
-                    for (let [key, value] of formData.entries()) {
-                        console.log(`${key}: ${value}`);
-                    }
+                    // for (let [key, value] of formData.entries()) {
+                    //     console.log(`${key}: ${value}`);
+                    // }
 
                     xhr.onload = function () {
                         if (xhr.status === 200) {
