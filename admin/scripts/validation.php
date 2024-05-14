@@ -44,7 +44,7 @@ function validateEmail(&$value)
 function validatePassword($value)
 {
     $value = cleanUp($value);
-    return preg_match("/\w{8,}/", $value);
+    return preg_match("/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/", $value);
 }
 
 function signupValidation(string $fname, string $email, string $username, $password, $confirm, int $checkbox)

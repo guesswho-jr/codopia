@@ -39,9 +39,9 @@ form.addEventListener("submit", e => {
     formData.append("bio", bio);
     formData.append("checkbox", checkbox);
 		
-    for (let [key, value] of formData.entries()) {
-        console.log(`${key}: ${value}`);
-    }
+    // for (let [key, value] of formData.entries()) {
+    //     console.log(`${key}: ${value}`);
+    // }
 
     const xhr_mail = new XMLHttpRequest();
     xhr_mail.open("POST", "./mail.php", true);

@@ -13,24 +13,24 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $password = $_POST["password"];
     $confirm = $_POST["confirm"];
     $bio = $_POST["bio"] ? (string) $_POST["bio"] : "No bio for the moment";
+    $checkbox = (int) $_POST["checkbox"] ? 1 : 0;
 
     $inputCode = $_POST["code"];
 
-    // signupValidation($fname, $email, $username, $password, $confirm);
+    signupValidation($fname, $email, $username, $password, $confirm, $checkbox);
 
-    // print_r($_SESSION);
     if ($inputCode == $_SESSION["verification"]) {
         unset($_SESSION["verification"]);
         unset($_SESSION["trial"]);
 
         $user = new User($username, $password);
-        $result = $user->createUser($username, $password, $confirm, $bio, $fname, $email);
+        $result = $user->createUser($username, $password, $confirm, $bio, $fname, $email, (int) $checkbox);
 
         if ($result["code"] == 0) {
             die(json_encode(["type" => "success"]));
         } 
         else if ($result["code"] == 1) {
-            die($result["data"]); // json_encode(["type" => "error", "message" => "Error occurred while validating your input possibly it is your password length."])
+            die($result["data"]);
         } 
         else if ($result["code"] == 2) {
             $obj = $result["obj"];

@@ -120,12 +120,15 @@ $resultForThePointsAndUploads = $resultForThePointsAndUploads[0];
         //MARK: Search
         ?>
 
-        <div class="row sticky-top py-3 d-flex">
-          <div class="container col-9 d-flex justify-content-center align-items-center">
+        <div class="row sticky-top py-3 d-flex d-flex justify-content-between px-5">
+          <div class="container col-10 d-flex justify-content-center align-items-center bg-transparent p-0">
             <input type="text" class="form-control shadow Search" placeholder="Search" id="search">
           </div>
-          <div class="container col-3 d-block d-md-none d-flex justify-content-center align-items-center">
+          <!-- <div class="container col-3 d-block d-md-none d-flex justify-content-center align-items-center">
             <a href="/"><img src="/imgs/logo.png" width="75" alt=""></a>
+          </div> -->
+          <div class="container col-2 d-flex justify-content-end align-items-center p-0">
+            <img src="/imgs/activity-light.svg" alt="" width="40" height="40" style="cursor: pointer;">
           </div>
         </div>
 
@@ -244,8 +247,7 @@ $resultForThePointsAndUploads = $resultForThePointsAndUploads[0];
                   if (!in_array($sessionUserId, $liked_by)) {
                     $likeSVG = "heart-muted";
                     $likeColor = "text-dark";
-                  }
-                  else {
+                  } else {
                     $likeSVG = "heart";
                     $likeColor = "text-danger";
                   }

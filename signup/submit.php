@@ -6,13 +6,13 @@ require_once "../admin/scripts/validation.php";
 session_start();
 
 // OPTIMIZE: ABOUT USERNAME
-if (isset($_POST["type"]) && (int)$_POST["type"] == 99) {
+if (isset($_POST["type"]) && (int)$_POST["type"] == 100) {
     if (!preg_match("/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/", $_POST["password"]))
         die(json_encode(["info"=> "Weak password"]));
     else
         die(json_encode(["success" => "Strong password"]));
 }
-else if (isset($_POST["type"]) && (int)$_POST["type"] == 100) {
+else if (isset($_POST["type"]) && (int)$_POST["type"] == 99) {
     $db = new DataBase();
 
     if (!validateString($_POST["username"])) {

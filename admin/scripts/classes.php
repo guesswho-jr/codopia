@@ -170,7 +170,7 @@ class User extends DataBase
             $this->username = $username;
             $this->password = $password;
         } else {
-            die(json_encode(["type" => "error", "message" => "Error occurred when validating your inputs."]));
+            die(json_encode(["type" => "error", "message" => "Error occurred when validating your inputs." . $username . "%" . $password]));
         }
     }
     private function hashPassword(string $raw_password)
@@ -212,7 +212,7 @@ class User extends DataBase
         }
         if (!preg_match("/[a-zA-Z]\s[a-zA-Z]/", $full_name)) {
             // ("type"=> "error","message"=>"Check your form error occurred"));
-            return 1;
+            return 10009900;
         }
         if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
             // echo json_encode(["type"=>"error", "message"=>"Email verification failed"]);
@@ -239,13 +239,13 @@ class User extends DataBase
         }
         return 7;
     }
-    public function createUser(string $username, string $password, string $cpassword, string $bio, string $full_name, $email)
+    public function createUser(string $username, string $password, string $cpassword, string $bio, string $full_name, $email, int $checkbox)
     {
         $this->tracker->log("[INFO] at " . date("y-m-d h:m:s")  . " IP address " . $_SERVER['REMOTE_ADDR'] . " attempted a signup with a username of $username");
-        if ($resp = $this->validateForSignUp($username,  $password,  $cpassword,  $bio,  $full_name, $email) != 7) {
-        // if (!signupValidation($username,  $password,  $cpassword,  $bio,  $full_name, $email)) {
+        // if ($resp = $this->validateForSignUp($username,  $password,  $cpassword,  $bio,  $full_name, $email) != 7) {
+        if (!signupValidation($full_name,  $email,  $username,  $password,  $cpassword, $checkbox)) {
             $this->tracker->log("[WARNING] at " . date("y-m-d h:m:s")  . " IP address " . $_SERVER['REMOTE_ADDR'] . " attempted a signup with  $this->username but validation failed");
-            return ["data" => json_encode(["type" => "error", "message" => "Error occurred while validating your input possibly it is your password length. CODE: " . (string)($resp)]), "code" => 1];
+            return ["data" => json_encode(["type" => "error", "message" => "Error occurred while validating your input possibly it is your password length."]), "code" => 1];
             // return ["data" => json_encode(["type" => "error", "message" => "Error occurred while validating your input possibly it is your password length."]), "code" => 1];
         }
         $hashed_password = password_hash($password, PASSWORD_ARGON2ID);
@@ -262,29 +262,29 @@ class User extends DataBase
         return ["code" => 0];
     }
     
-    public function mail(string $from, string $toEmail, string $content, string $pwd, string $toName, string $subject) {
-        $mailer = new PHPMailer(true);
-        try {
-            $mailer->isSMTP();
-            $mailer->Host = "smtp.gmail.com";
-            $mailer->SMTPAuth = true;
-            $mailer->Username= 'codopia_admins@gmail.com';
-            $mailer->Password = $pwd;
-            $mailer->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
-            $mailer->Port = 587;
-            $mailer->setFrom("codopia_admins@gmail.com", "Codopia Admins");
-            $mailer->addAddress($toEmail, $toName);
-            $mailer->isHTML(true);
-            $mailer->Subject = $subject;
-            $mailer->Body = $content;
-            $mailer->send();
-            return true;
-        }
-        catch (Exception $e) {
-            echo $mailer->ErrorInfo;
-            return false;
-        }
-    }
+    // public function mail(string $from, string $toEmail, string $content, string $pwd, string $toName, string $subject) {
+    //     $mailer = new PHPMailer(true);
+    //     try {
+    //         $mailer->isSMTP();
+    //         $mailer->Host = "smtp.gmail.com";
+    //         $mailer->SMTPAuth = true;
+    //         $mailer->Username= 'codopia_admins@gmail.com';
+    //         $mailer->Password = $pwd;
+    //         $mailer->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+    //         $mailer->Port = 587;
+    //         $mailer->setFrom("codopia_admins@gmail.com", "Codopia Admins");
+    //         $mailer->addAddress($toEmail, $toName);
+    //         $mailer->isHTML(true);
+    //         $mailer->Subject = $subject;
+    //         $mailer->Body = $content;
+    //         $mailer->send();
+    //         return true;
+    //     }
+    //     catch (Exception $e) {
+    //         echo $mailer->ErrorInfo;
+    //         return false;
+    //     }
+    // }
     
 }
 
