@@ -158,9 +158,9 @@ if (!$_SESSION["loggedin"]) {
                   $noOfQuestions = $db->executeParams("select count(*) as count from tests where subject=?", [(string)$test["name"]], true);
 
                   echo "
-                    <div class=\"subject col-lg-3 col-md-5 col-sm-6\">
+                    <div class=\"subject col-lg-3 col-md-5 col-sm-6 shadow p-3\">
                       <h3 class=\"text\">{$test['name']}</h3>
-                      <p class=\"description\">Prepared by: {$test['prepared_by']}<br>{$noOfQuestions[0]['count']} questions <br> {$test['difficulity']}</p><a href=\"test?subid={$test['name']}\" class=\"learn-more\">Take the test>></a>
+                      <p class=\"description\">Prepared by: <b>@{$test['prepared_by']}</b><br>{$noOfQuestions[0]['count']} questions <br> {$test['difficulity']}</p><a href=\"./test/index.php?subid={$test['name']}\" class=\"learn-more\">Take the test >></a>
                     </div>
                     
                     ";

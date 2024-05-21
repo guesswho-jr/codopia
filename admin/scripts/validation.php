@@ -1,5 +1,7 @@
 <?php
 
+require_once "classes.php";
+
 function cleanUp($value)
 {
     $value = htmlspecialchars($value);
@@ -45,6 +47,7 @@ function validatePassword($value)
 {
     $value = cleanUp($value);
     return preg_match("/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/", $value);
+    // return $value;
 }
 
 function signupValidation(string $fname, string $email, string $username, $password, $confirm, int $checkbox)
@@ -73,6 +76,11 @@ function signupValidation(string $fname, string $email, string $username, $passw
     }
     if (!$checkbox) {
         die(json_encode(["STATUS_CODE" => "0057", "STATUS_TITLE" => "Checkbox error", "STATUS_TEXT" => "You must agree to our terms and regulations to proceed."]));
+    }
+    $db = new DataBase();
+    $result = $db->executeSql("SELECT email FROM users WHERE email = ?", [$email], true)["rows"];
+    if ($result != 0) {
+        die(json_encode(["STATUS_CODE" => "0058", "STATUS_TITLE" => "Email taken", "STATUS_TEXT" => "An account exists with the email address you entered."]));
     }
     return true;
 }

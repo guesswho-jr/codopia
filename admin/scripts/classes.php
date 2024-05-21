@@ -166,11 +166,12 @@ class User extends DataBase
         parent::__construct();
         $this->tracker = new Tracker("user.log");
         if (validateString($username) && validatePassword($password)) {
-
+        // if (false) {
             $this->username = $username;
             $this->password = $password;
         } else {
-            die(json_encode(["type" => "error", "message" => "Error occurred when validating your inputs." . $username . "%" . $password]));
+            // die(json_encode(["type" => "error", "message" => "Error occurred when validating your inputs." . $username . "%" . $password . validateString($username) . validatePassword($password)]));
+            die(json_encode(["type" => "error", "message" => "Invalid username and/or password"]));
         }
     }
     private function hashPassword(string $raw_password)
