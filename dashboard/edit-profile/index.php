@@ -28,6 +28,7 @@ if ($isUser["rows"] == 0) {
   <link rel="stylesheet" href="../side.css">
   <link rel="stylesheet" href="../loader.css">
   <link rel="stylesheet" href="/static/bootstrap.min.css">
+  <link rel="stylesheet" href="/static/sweetalert2.min.css">
   <title>Edit profile</title>
 
   <style>
@@ -137,7 +138,7 @@ if ($isUser["rows"] == 0) {
       <div class="container col-md-9 main-content-g position-relative d-flex justify-content-center align-items-center">
 
         <div class="container shadow rounded-3 col-md-10 p-3">
-          <form action="./editHandler.php" method="post">
+          <form method="post" id="editForm">
 
             <div class="text d-flex">
               <svg xmlns="http://www.w3.org/2000/svg" width="75" height="75" fill="currentColor" class="bi text-primary bi-person" viewBox="0 0 16 16">
@@ -180,11 +181,13 @@ if ($isUser["rows"] == 0) {
       </div>
     </div>
   </div>
+  <script src="./script.js"></script>
   <script src="../loader.js"></script>
   <script>
     if (localStorage.getItem("font-family")) document.querySelector("style").innerHTML = `*{font-family:"${localStorage.getItem("font-family")}";}`
   </script>
   <script src="/static/bootstrap.bundle.min.js"></script>
+  <script src="/static/sweetalert2.js"></script>
 </body>
 
 </html>
