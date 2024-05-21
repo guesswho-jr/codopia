@@ -165,7 +165,8 @@ class User extends DataBase
     {
         parent::__construct();
         $this->tracker = new Tracker("user.log");
-        if (validateString($username) && validatePassword($password)) {
+        if (validateString($username)) {
+        // if (validateString($username) && validatePassword($password)) {
         // if (false) {
             $this->username = $username;
             $this->password = $password;

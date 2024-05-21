@@ -24,7 +24,7 @@ const share = () => {
   navigator.share({
     text: "Codopia",
     url: window.location.href, //we are going to change it,
-    text: "share your icon"
+    text: "Share this dashboard"
   })
 }
 
@@ -32,18 +32,23 @@ const share = () => {
 
 function copyLinkToClipboard(project_id = "") {
   const url = `${window.location.href.split("#")[0]}#${project_id}`;
-  navigator.clipboard.writeText(url).then(() => {
-    // alert("Link copied to clipboard!");
-    Swal.fire({
-      icon: "success",
-      text: "Link copied to clipboard!",
-    });
-  }).catch(error => {
-    Swal.fire({
-      icon: "error",
-      text: "Failed to copy link to clipboard!",
-    });
-  });
+  // navigator.clipboard.writeText(url).then(() => {
+  //   // alert("Link copied to clipboard!");
+  //   Swal.fire({
+  //     icon: "success",
+  //     text: "Link copied to clipboard!",
+  //   });
+  // }).catch(error => {
+  //   Swal.fire({
+  //     icon: "error",
+  //     text: "Failed to copy link to clipboard!",
+  //   });
+  // });
+  navigator.share({
+    text: "Codopia",
+    url: url, //we are going to change it,
+    text: "Share this dashboard"
+  })
 }
 
 // Search

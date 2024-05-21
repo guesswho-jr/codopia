@@ -72,7 +72,7 @@ function signupValidation(string $fname, string $email, string $username, $passw
     }
     // For strict password checks
     if (preg_match("/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/", $password) == 0) {
-        die(json_encode(["STATUS_CODE" => "0056", "STATUS_TITLE" => "Password is not strong enough enough!", "STATUS_TEXT" => "Password doesn't meet our criteria."]));
+        die(json_encode(["STATUS_CODE" => "0056", "STATUS_TITLE" => "Password is not strong enough!", "STATUS_TEXT" => "Password must contain at least one lowercase, one uppercase, one digit, and one special character"]));
     }
     if (!$checkbox) {
         die(json_encode(["STATUS_CODE" => "0057", "STATUS_TITLE" => "Checkbox error", "STATUS_TEXT" => "You must agree to our terms and regulations to proceed."]));

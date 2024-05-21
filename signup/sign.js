@@ -46,9 +46,10 @@ document.getElementById("pass").addEventListener("blur", ()=> {
   }).then(resp => resp.json())
     .then(data => {
       if (data.success) {
-        document.getElementById("information-pwd").textContent = data.success; document.getElementById("information").style.color = "green"
+        document.getElementById("information-pwd").textContent = data.success; 
+        document.getElementById("information-pwd").style.color = "green"
       }
-      else if (data.error) document.querySelector(".message").textContent = data.error
+      // else if (data.error) document.querySelector(".message").textContent = data.error
       else if (data.info) {
         document.getElementById("information-pwd").textContent = data.info;
         document.getElementById("information-pwd").style.color = "red"
