@@ -47,7 +47,7 @@ $resultForThePointsAndUploads = $resultForThePointsAndUploads[0];
   </style>
 </head>
 
-<body class="d-flex justify-content-center align-items-center bg-light">
+<body class="d-flex justify-content-center align-items-center" style="background-color: rgb(235, 235, 235);">
 
   <div id="loader-container">
     <div class="loader"></div>
