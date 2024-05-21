@@ -14,11 +14,3 @@ CREATE TABLE `users` (
     uploads INT DEFAULT 0,
     is_admin BOOLEAN DEFAULT false
 );
-CREATE TABLE IF NOT EXISTS `test_list` (
-    `id` int PRIMARY KEY AUTO_INCREMENT,
-    `name` VARCHAR(200),
-    `prepared_by` VARCHAR(200),
-    `difficulity` VARCHAR(200),
-    `link` VARCHAR(200),
-    `taken_by` TEXT DEFAULT '[]'
-);

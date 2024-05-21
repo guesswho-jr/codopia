@@ -61,6 +61,17 @@ CREATE TABLE if NOT EXISTS tests (
     `subject` VARCHAR(50)
 );
 
+-- Test list
+
+CREATE TABLE IF NOT EXISTS `test_list` (
+    `id` int PRIMARY KEY AUTO_INCREMENT,
+    `name` VARCHAR(200),
+    `prepared_by` VARCHAR(200),
+    `difficulty` VARCHAR(200),
+    `link` VARCHAR(200),
+    `taken_by` TEXT DEFAULT '[]'
+);
+
 -- Comments table
 
 CREATE TABLE comments (
