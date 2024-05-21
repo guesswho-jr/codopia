@@ -2,14 +2,14 @@
 CREATE TABLE IF NOT EXISTS test_list (
    test_list_id INT PRIMARY KEY AUTO_INCREMENT,
    name TEXT NOT NULL,
-   difficulity TEXT NOT NULL,
+   difficulty TEXT NOT NULL,
    prepared_by TEXT NOT NULL
 );
 
 INSERT INTO
-   test_list(name, difficulity, prepared_by)
+   test_list(name, difficulty, prepared_by)
 VALUES
-("JavaScript", "Medium", "Benyas Berhanu"),
+   ("JavaScript", "Medium", "Benyas Berhanu"),
    (
       "HTML",
       "Medium",
@@ -136,7 +136,7 @@ values
 INSERT INTO
    tests (question, answer, a, b, c, d, subject)
 VALUES
-(
+   (
       "Let the object be <code>let obj = {a:1,b:2}</code>, How can I get the output 1?",
       "a",
       "obj.a",

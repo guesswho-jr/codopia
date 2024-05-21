@@ -36,7 +36,7 @@ no.addEventListener("keyup", () => {
 
 form.addEventListener("submit", e => {
     e.preventDefault();
-    const subject = document.querySelector("input[name='subject']").value;
+    const subject = document.querySelector("select[name='subject']").value;
     const diff = document.querySelector("select[name='diff']").value;
     if (subject && diff) {
         let dataToSend = {};
@@ -62,7 +62,10 @@ form.addEventListener("submit", e => {
             method: "post",
             body: formData
         }).then(response => response.json()).then(data => {
-            console.log(data); // Handle response data
+            Swal.fire({
+                icon: data.type,
+                text: data.text,
+            });
         }).catch(error => {
             console.error("Error:", error); // Handle errors
         });

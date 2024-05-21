@@ -152,15 +152,20 @@ if (!$_SESSION["loggedin"]) {
               <?php
               $db = new DataBase();
               $res = $db->executeSql("select * from test_list", [], true);
-
-              foreach ($res as $test) {
+              foreach ($res as $test) { 
                 if (is_array($test)) {
-                  $noOfQuestions = $db->executeParams("select count(*) as count from tests where subject=?", [(string)$test["name"]], true);
+                  // echo "<pre>";
+                  // print_r($test);
+                  // echo "</pre>";
+                  
+                  $noOfQuestions = $db->executeParams("select count(*) as count from tests where test_list_id=?", [(string)$test["id"]], true);
+
+                  // $correctNumber = $db->executeSql("SELECT COUNT(*) AS count")
 
                   echo "
                     <div class=\"subject col-lg-3 col-md-5 col-sm-6 shadow p-3\">
                       <h3 class=\"text\">{$test['name']}</h3>
-                      <p class=\"description\">Prepared by: <b>@{$test['prepared_by']}</b><br>{$noOfQuestions[0]['count']} questions <br> {$test['difficulity']}</p><a href=\"./test/index.php?subid={$test['name']}\" class=\"learn-more\">Take the test >></a>
+                      <p class=\"description\">Prepared by: <b>@{$test['prepared_by']}</b><br>{$noOfQuestions[0]['count']} questions <br> {$test['difficulty']}</p><a href=\"./test/index.php?subid={$test['name']}\" class=\"learn-more\">Take the test >></a>
                     </div>
                     
                     ";

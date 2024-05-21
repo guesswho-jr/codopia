@@ -48,19 +48,6 @@ CREATE TABLE feedbacks (
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 );
 
--- Tests table
-
-CREATE TABLE if NOT EXISTS tests (
-    test_id INT PRIMARY KEY AUTO_INCREMENT,
-    question VARCHAR(300),
-    answer VARCHAR(1),
-    a VARCHAR(300), 
-    b VARCHAR(300),
-    c VARCHAR(300),
-    d VARCHAR(300),
-    `subject` VARCHAR(50)
-);
-
 -- Test list
 
 CREATE TABLE IF NOT EXISTS `test_list` (
@@ -68,8 +55,24 @@ CREATE TABLE IF NOT EXISTS `test_list` (
     `name` VARCHAR(200),
     `prepared_by` VARCHAR(200),
     `difficulty` VARCHAR(200),
-    `link` VARCHAR(200),
-    `taken_by` TEXT DEFAULT '[]'
+    -- `link` VARCHAR(200),
+    `taken_by` TEXT DEFAULT '[]',
+    test_list_unique_identifier TEXT NOT NULL
+);
+
+-- Tests table
+
+CREATE TABLE if NOT EXISTS tests (
+    test_id INT PRIMARY KEY AUTO_INCREMENT,
+    question VARCHAR(300),
+    answer VARCHAR(1),
+    a VARCHAR(300),
+    b VARCHAR(300),
+    c VARCHAR(300),
+    d VARCHAR(300),
+    `subject` VARCHAR(50),
+    test_list_id INT NOT NULL,
+    FOREIGN KEY (test_list_id) REFERENCES test_list(id) ON DELETE CASCADE
 );
 
 -- Comments table
