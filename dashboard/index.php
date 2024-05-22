@@ -28,6 +28,8 @@ $statementForThePointsAndUploads->execute([$_SESSION["userid"]]);
 $statementForThePointsAndUploads->setFetchMode(PDO::FETCH_ASSOC);
 $resultForThePointsAndUploads = $statementForThePointsAndUploads->fetchAll();
 $resultForThePointsAndUploads = $resultForThePointsAndUploads[0];
+
+$notification_counter = 0;
 ?>
 
 <!DOCTYPE html>
@@ -52,6 +54,86 @@ $resultForThePointsAndUploads = $resultForThePointsAndUploads[0];
   <div id="loader-container">
     <div class="loader"></div>
   </div>
+
+  <!-- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- -->
+  <!-- NOTIFICATION BAR -->
+  <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
+    <div class="offcanvas-header">
+      <h5 class="offcanvas-title" id="offcanvasRightLabel">Notifications</h5>
+      <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <hr>
+    <div class="offcanvas-body">
+
+      <?php
+      require_once "../admin/scripts/classes.php";
+      $db = new DataBase();
+
+      $notes = $db->executeSql("SELECT * FROM notifications ORDER BY notify_time DESC", return: true);
+      if ($notes["rows"] == 0) {
+        echo "
+          <div class='container text-center'>
+            <div class='col-12'>
+                <h4 class='m-0'>Your inbox is empty <img src='../imgs/box.svg' width='50' height='50'></h4>
+            </div>
+          </div>
+        ";
+      } else if ($notes["rows"] != 0) {
+        foreach ($notes as $note) {
+          if (is_array($note)) {
+            $notifyFullMessage = str_replace("%USER%", "@" . strtolower($_SESSION["username"]), $note["notify_message"]);
+            $notifyTime = date("M d, Y", $note["notify_time"]);
+            $notifyShortMessage = substr($notifyFullMessage, 0, 30);
+            if (json_decode($note["notify_to"], true)[0] == "everyone") {
+              echo "
+                <div class='container notification mt-3 bg-light p-4 rounded shadow-sm border'>
+                  <div class='d-flex justify-content-between align-items-center'>
+                    <div>
+                      <button class='btn btn-close text-danger'></button>
+                      <span><b>{$note['notify_title']}</b></span>
+                    </div>
+                    <div>
+                      <span class='text-muted'>$notifyTime</span>
+                    </div>
+                  </div>
+                  <hr class='my-3'>
+                  <div class='d-flex justify-content-between align-items-center flex-wrap'>
+                    <span>$notifyShortMessage...</span>
+                    <button notifyId='{$note['notify_id']}' type='button' class='btn p-1 text-secondary border notification-read-more' data-bs-toggle='modal' data-bs-target='#staticBackdrop'>Read more</button>
+                  </div>
+                </div>
+              ";
+              $notification_counter++;
+            } else if (in_array(strtolower($_SESSION["username"]), json_decode($note["notify_to"], true))) {
+              echo "
+                <div class='container notification mt-3 bg-light p-4 rounded shadow-sm border'>
+                  <div class='d-flex justify-content-between align-items-center'>
+                    <div>
+                      <button class='btn btn-close text-danger'></button>
+                      <span><b>{$note['notify_title']}</b></span>
+                    </div>
+                    <div>
+                      <span class='text-muted'>$notifyTime</span>
+                    </div>
+                  </div>
+                  <hr class='my-3'>
+                  <div class='d-flex justify-content-between align-items-center flex-wrap'>
+                    <span>$notifyShortMessage...</span>
+                    <button notifyId='{$note['notify_id']}' type='button' class='btn p-1 text-secondary border notification-read-more' data-bs-toggle='modal' data-bs-target='#staticBackdrop'>Read more</button>
+                  </div>
+                </div>
+              ";
+              $notification_counter++;
+            }
+          }
+        }
+      }
+
+      ?>
+
+    </div>
+  </div>
+  <!-- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- -->
 
   <div class="container-fluid">
     <div class="row pt-5 pt-md-0">
@@ -123,6 +205,7 @@ $resultForThePointsAndUploads = $resultForThePointsAndUploads[0];
         <div class="row sticky-top py-3 d-flex d-flex justify-content-between px-5">
           <div class="container col-10 d-flex justify-content-center align-items-center bg-transparent p-0">
             <input type="text" class="form-control shadow Search" placeholder="Search" id="search">
+            <img src="/imgs/search.svg" width="25" height="25">
           </div>
           <!-- <div class="container col-3 d-block d-md-none d-flex justify-content-center align-items-center">
             <a href="/"><img src="/imgs/logo.png" width="75" alt=""></a>
@@ -130,11 +213,12 @@ $resultForThePointsAndUploads = $resultForThePointsAndUploads[0];
           <div class="container col-2 d-flex justify-content-end align-items-center p-0">
             <!-- <img src="/imgs/activity-light.svg" alt="" width="40" height="40" style="cursor: pointer;"> -->
             <button id="notification-opener" class="btn border-0" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
-              <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="black" class="bi text-warning bi-bell" viewBox="0 0 16 16">
+              <img src="/imgs/bell.svg" alt="" width="40" height="40" style="cursor: pointer;">
+              <!-- <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="black" class="bi text-warning bi-bell" viewBox="0 0 16 16">
                 <path d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2M8 1.918l-.797.161A4 4 0 0 0 4 6c0 .628-.134 2.197-.459 3.742-.16.767-.376 1.566-.663 2.258h10.244c-.287-.692-.502-1.49-.663-2.258C12.134 8.197 12 6.628 12 6a4 4 0 0 0-3.203-3.92zM14.22 12c.223.447.481.801.78 1H1c.299-.199.557-.553.78-1C2.68 10.2 3 6.88 3 6c0-2.42 1.72-4.44 4.005-4.901a1 1 0 1 1 1.99 0A5 5 0 0 1 13 6c0 .88.32 4.2 1.22 6" />
-              </svg>
+              </svg> -->
               <br>
-              <span id="notification-count" class="fw-bold">2</span>
+              <span class="fw-bold"><?php echo $notification_counter ?></span>
             </button>
           </div>
         </div>
@@ -162,20 +246,22 @@ $resultForThePointsAndUploads = $resultForThePointsAndUploads[0];
                       </h5>
                       <p class="mb-2 text-muted"><?php echo $_SESSION["bio"] ?></p>
 
-                      <div class="row">
-                        <div class="col-md-6">
-                          <p class="card-text"><strong>XP:</strong>
-                            <?php echo "<span id='total-xp'>{$resultForThePointsAndUploads['points']}</span>" ?>
-                          </p>
+                      <?php
+                      list($profileCardBadgeName, $profileCardBadgeColor) = getBadge((int)$resultForThePointsAndUploads['points']);
+                      ?>
+                      <div class="row d-flex justify-content-between flex-wrap">
+                        <div class="col p-0 mt-3">
+                          <strong class="bg-white border border-muted p-1" style="border-top-left-radius: 15px; border-bottom-left-radius: 15px;">Level</strong><?php echo "<span id='total-xp' class='$profileCardBadgeColor text-white fw-bold border border-primary p-1' style='border-top-right-radius: 15px; border-bottom-right-radius: 15px;'>$profileCardBadgeName</span>" ?>
                         </div>
-                        <div class="col-md-6">
-                          <p class="card-text"><strong>Uploads:</strong>
-                            <?php echo $resultForThePointsAndUploads["uploads"] ?>
-                          </p>
+                        <div class="col p-0 mt-3">
+                          <strong class="bg-warning text-dark border border-warning p-1" style="border-top-left-radius: 15px; border-bottom-left-radius: 15px;">XP</strong><?php echo "<span id='total-xp' class='bg-white fw-bold border border-muted p-1' style='border-top-right-radius: 15px; border-bottom-right-radius: 15px;'>{$resultForThePointsAndUploads['points']}</span>" ?>
+                        </div>
+                        <div class="col p-0 mt-3">
+                          <strong class="bg-info text-dark border border-info p-1" style="border-top-left-radius: 15px; border-bottom-left-radius: 15px;">Uploads</strong><?php echo "<span class='bg-white fw-bold border border-muted p-1' style='border-top-right-radius: 15px; border-bottom-right-radius: 15px;'>{$resultForThePointsAndUploads['uploads']}</span>" ?>
                         </div>
                       </div>
                       <div class="mt-3">
-                        <a href="./edit-profile/" class="btn btn-primary">Edit Profile</a>
+                        <a href="./edit-profile/" class="btn btn-dark">Edit Profile</a>
                       </div>
                     </div>
                   </div>
@@ -206,7 +292,7 @@ $resultForThePointsAndUploads = $resultForThePointsAndUploads[0];
                   <div class=\"card-body\">
                       <h4 class=\"text-center p-2 text-muted\">Click read more for more information</h4>
                       <div class=\"container d-flex justify-content-center\">
-                      <button class=\"btn btn-primary btn-lg col-md-6\" data-bs-toggle=\"modal\" data-bs-target=\"#eventModal\">
+                      <button class=\"btn btn-dark btn-lg col-md-6\" data-bs-toggle=\"modal\" data-bs-target=\"#eventModal\">
                         <i class=\"bi bi-info-circle me-10\"></i>Read More
                       </button>
                     </div>
@@ -566,82 +652,6 @@ $resultForThePointsAndUploads = $resultForThePointsAndUploads[0];
           </div>
         </div>
       </div>
-    </div>
-  </div>
-
-  <!-- NOTIFICATION BAR -->
-  <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
-    <div class="offcanvas-header">
-      <h5 class="offcanvas-title" id="offcanvasRightLabel">Notifications</h5>
-      <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-    </div>
-    <hr>
-    <div class="offcanvas-body">
-
-      <?php
-      require_once "../admin/scripts/classes.php";
-      $db = new DataBase();
-
-      $notes = $db->executeSql("SELECT * FROM notifications ORDER BY notify_time DESC", return: true);
-      if ($notes["rows"] == 0) {
-        echo "
-          <div class='container text-center'>
-            <div class='col-12'>
-                <h4 class='m-0'>Your inbox is empty <img src='../imgs/box.svg' width='50' height='50'></h4>
-            </div>
-          </div>
-        ";
-      } else if ($notes["rows"] != 0) {
-        foreach ($notes as $note) {
-          if (is_array($note)) {
-            $notifyFullMessage = str_replace("%USER%", "@" . strtolower($_SESSION["username"]), $note["notify_message"]);
-            $notifyTime = date("M d, Y", $note["notify_time"]);
-            $notifyShortMessage = substr($notifyFullMessage, 0, 30);
-            if (json_decode($note["notify_to"], true)[0] == "everyone") {
-              echo "
-                <div class='container notification mt-3 bg-light p-4 rounded shadow-sm border'>
-                  <div class='d-flex justify-content-between align-items-center'>
-                    <div>
-                      <button class='btn btn-close text-danger'></button>
-                      <span><b>{$note['notify_title']}</b></span>
-                    </div>
-                    <div>
-                      <span class='text-muted'>$notifyTime</span>
-                    </div>
-                  </div>
-                  <hr class='my-3'>
-                  <div class='d-flex justify-content-between align-items-center'>
-                    <span>$notifyShortMessage...</span>
-                    <button notifyId='{$note['notify_id']}' type='button' class='btn p-1 text-secondary border notification-read-more' data-bs-toggle='modal' data-bs-target='#staticBackdrop'>Read more</button>
-                  </div>
-                </div>
-              ";
-            } else if (in_array(strtolower($_SESSION["username"]), json_decode($note["notify_to"], true))) {
-              echo "
-                <div class='container notification mt-3 bg-light p-4 rounded shadow-sm border'>
-                  <div class='d-flex justify-content-between align-items-center'>
-                    <div>
-                      <button class='btn btn-close text-danger'></button>
-                      <span><b>{$note['notify_title']}</b></span>
-                    </div>
-                    <div>
-                      <span class='text-muted'>$notifyTime</span>
-                    </div>
-                  </div>
-                  <hr class='my-3'>
-                  <div class='d-flex justify-content-between align-items-center'>
-                    <span>$notifyShortMessage...</span>
-                    <button notifyId='{$note['notify_id']}' type='button' class='btn p-1 text-secondary border notification-read-more' data-bs-toggle='modal' data-bs-target='#staticBackdrop'>Read more</button>
-                  </div>
-                </div>
-              ";
-            }
-          }
-        }
-      }
-
-      ?>
-
     </div>
   </div>
 
