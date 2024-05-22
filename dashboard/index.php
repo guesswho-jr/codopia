@@ -582,7 +582,7 @@ $resultForThePointsAndUploads = $resultForThePointsAndUploads[0];
       require_once "../admin/scripts/classes.php";
       $db = new DataBase();
 
-      $notes = $db->executeSql("SELECT notify_title, notify_message, notify_to, notify_time FROM notifications ORDER BY notify_time DESC", return: true);
+      $notes = $db->executeSql("SELECT * FROM notifications ORDER BY notify_time DESC", return: true);
       if ($notes["rows"] == 0) {
         echo "
           <div class='container text-center'>
@@ -594,12 +594,12 @@ $resultForThePointsAndUploads = $resultForThePointsAndUploads[0];
       } else if ($notes["rows"] != 0) {
         foreach ($notes as $note) {
           if (is_array($note)) {
-            $notifyFullMessage = str_replace("%USER%", strtolower($_SESSION["username"]), $note["notify_message"]);
+            $notifyFullMessage = str_replace("%USER%", "@" . strtolower($_SESSION["username"]), $note["notify_message"]);
             $notifyTime = date("M d, Y", $note["notify_time"]);
             $notifyShortMessage = substr($notifyFullMessage, 0, 30);
             if (json_decode($note["notify_to"], true)[0] == "everyone") {
               echo "
-                <div class='container notification mt-3 bg-light p-4 rounded shadow-sm'>
+                <div class='container notification mt-3 bg-light p-4 rounded shadow-sm border'>
                   <div class='d-flex justify-content-between align-items-center'>
                     <div>
                       <button class='btn btn-close text-danger'></button>
@@ -612,15 +612,13 @@ $resultForThePointsAndUploads = $resultForThePointsAndUploads[0];
                   <hr class='my-3'>
                   <div class='d-flex justify-content-between align-items-center'>
                     <span>$notifyShortMessage...</span>
-                    <button type='button' class='btn p-1 text-secondary border' data-bs-toggle='modal' data-bs-target='#staticBackdrop'>
-                      Read more
-                    </button>
+                    <button notifyId='{$note['notify_id']}' type='button' class='btn p-1 text-secondary border notification-read-more' data-bs-toggle='modal' data-bs-target='#staticBackdrop'>Read more</button>
                   </div>
                 </div>
               ";
             } else if (in_array(strtolower($_SESSION["username"]), json_decode($note["notify_to"], true))) {
               echo "
-                <div class='container notification mt-3 bg-light p-4 rounded shadow-sm'>
+                <div class='container notification mt-3 bg-light p-4 rounded shadow-sm border'>
                   <div class='d-flex justify-content-between align-items-center'>
                     <div>
                       <button class='btn btn-close text-danger'></button>
@@ -633,9 +631,7 @@ $resultForThePointsAndUploads = $resultForThePointsAndUploads[0];
                   <hr class='my-3'>
                   <div class='d-flex justify-content-between align-items-center'>
                     <span>$notifyShortMessage...</span>
-                    <button type='button' class='btn p-1 text-secondary border' data-bs-toggle='modal' data-bs-target='#staticBackdrop'>
-                      Read more
-                    </button>
+                    <button notifyId='{$note['notify_id']}' type='button' class='btn p-1 text-secondary border notification-read-more' data-bs-toggle='modal' data-bs-target='#staticBackdrop'>Read more</button>
                   </div>
                 </div>
               ";
@@ -655,11 +651,11 @@ $resultForThePointsAndUploads = $resultForThePointsAndUploads[0];
 
       <div class="modal-content" id="notification-modal">
         <div class='modal-header'>
-          <h5 class='modal-title' id='staticBackdropLabel'>Message</h5>
+          <h5 class='modal-title notification-modal-title' id='staticBackdropLabel'>Message</h5>
           <button type='button' class='btn-close' data-bs-dismiss='modal' aria-label='Close'></button>
         </div>
         <div class='modal-body'>
-          <p> In the heart of the bustling city, amidst the cacophony of honking cars and chatter of passersby, there exists a hidden oasis, a quaint bookstore tucked away on a narrow cobblestone street. Its weathered exterior bears testament to the passage of time, yet inside, it emanates a timeless charm. Rows of bookshelves stand tall, each one a portal to a different world, inviting exploration and discovery. The scent of old paper mingles with the aroma of freshly brewed coffee, creating an atmosphere where every page turned feels like a journey embarked upon. Here, amidst the books and the whispers of stories yet untold, one can find solace from the chaos outside, losing oneself in the endless possibilities of literature.</p>
+          <p id="notification-modal-message"> In the heart of the bustling city, amidst the cacophony of honking cars and chatter of passersby, there exists a hidden oasis, a quaint bookstore tucked away on a narrow cobblestone street. Its weathered exterior bears testament to the passage of time, yet inside, it emanates a timeless charm. Rows of bookshelves stand tall, each one a portal to a different world, inviting exploration and discovery. The scent of old paper mingles with the aroma of freshly brewed coffee, creating an atmosphere where every page turned feels like a journey embarked upon. Here, amidst the books and the whispers of stories yet untold, one can find solace from the chaos outside, losing oneself in the endless possibilities of literature.</p>
         </div>
       </div>
 
@@ -678,6 +674,6 @@ $resultForThePointsAndUploads = $resultForThePointsAndUploads[0];
 <script src="./request.js"></script>
 <script src="./comment.js"></script>
 <script src="./report.js"></script>
-<script src="./notify.js"></script>
+<script src="./notify_modal.js"></script>
 
 </html>
