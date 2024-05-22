@@ -1,3 +1,7 @@
+<?php
+require_once "../scripts/admin_check.php";
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -22,6 +26,7 @@
                         <input class="form-check-input check" type="checkbox" id="flexCheckDefault">
                         <label class="form-check-label fw-bold" for="flexCheckDefault">Notify all users</label>
                     </div>
+                    <input type="text" id="title" class="form-control mb-1" placeholder="Enter your title" required>
                     <textarea id="message" cols="30" rows="10" class="form-control" placeholder="Enter your message" required></textarea>
                 </div>
                 <button class="btn btn-primary col-6 mt-3" type="submit" id="send">Send</button>

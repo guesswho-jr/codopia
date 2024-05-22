@@ -106,6 +106,7 @@ CREATE TABLE reports (
 
 CREATE TABLE notifications (
     notify_id INT PRIMARY KEY AUTO_INCREMENT,
+    notify_title TEXT NOT NULL,
     notify_message TEXT NOT NULL,
     notify_to TEXT NOT NULL,
     notify_time INT NOT NULL

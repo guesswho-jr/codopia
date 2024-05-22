@@ -4,6 +4,7 @@ form.addEventListener("submit", event => {
 
     const users = document.getElementById("users").value.trim().split(/\s*,\s*/);;
     const check = document.querySelector(".check").checked ? 1 : 0;
+    const title = document.getElementById("title").value;
     const message = document.getElementById("message").value;
 
     const formData = new FormData();
@@ -13,6 +14,7 @@ form.addEventListener("submit", event => {
     } else {
         formData.append("users", users);
         formData.append("check", check);
+        formData.append("title", title);
         formData.append("message", message);
 
         for (let [key, value] of formData.entries()) {
