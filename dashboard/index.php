@@ -128,7 +128,14 @@ $resultForThePointsAndUploads = $resultForThePointsAndUploads[0];
             <a href="/"><img src="/imgs/logo.png" width="75" alt=""></a>
           </div> -->
           <div class="container col-2 d-flex justify-content-end align-items-center p-0">
-            <img src="/imgs/activity-light.svg" alt="" width="40" height="40" style="cursor: pointer;">
+            <!-- <img src="/imgs/activity-light.svg" alt="" width="40" height="40" style="cursor: pointer;"> -->
+            <button class="btn border-0" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
+              <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi text-warning bi-bell" viewBox="0 0 16 16">
+                <path d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2M8 1.918l-.797.161A4 4 0 0 0 4 6c0 .628-.134 2.197-.459 3.742-.16.767-.376 1.566-.663 2.258h10.244c-.287-.692-.502-1.49-.663-2.258C12.134 8.197 12 6.628 12 6a4 4 0 0 0-3.203-3.92zM14.22 12c.223.447.481.801.78 1H1c.299-.199.557-.553.78-1C2.68 10.2 3 6.88 3 6c0-2.42 1.72-4.44 4.005-4.901a1 1 0 1 1 1.99 0A5 5 0 0 1 13 6c0 .88.32 4.2 1.22 6" />
+              </svg>
+              <br>
+              <span class="fw-bold">2</span>
+            </button>
           </div>
         </div>
 
@@ -558,6 +565,56 @@ $resultForThePointsAndUploads = $resultForThePointsAndUploads[0];
             </div>
           </div>
         </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- NOTIFICATION BAR -->
+  <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
+    <div class="offcanvas-header">
+      <h5 class="offcanvas-title" id="offcanvasRightLabel">Notifications</h5>
+      <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body">
+
+      <div class="container notification mt-3 bg-light p-4 rounded shadow-sm">
+        <div class="d-flex justify-content-between align-items-center">
+          <div>
+            <span class="fw-bold">1</span>
+            <button class="btn btn-close text-danger"></button>
+          </div>
+          <div>
+            <span class="text-muted">14/05/2024</span>
+          </div>
+        </div>
+        <hr class="my-3">
+        <p class="mb-3">
+          Message....
+        <div class="text-end">
+          <button type="button" class="btn " data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+            Read more
+          </button>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+
+  <!-- Notification Modal -->
+  <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="staticBackdropLabel">Message</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <p> In the heart of the bustling city, amidst the cacophony of honking cars and chatter of passersby, there exists a hidden oasis, a quaint bookstore tucked away on a narrow cobblestone street. Its weathered exterior bears testament to the passage of time, yet inside, it emanates a timeless charm. Rows of bookshelves stand tall, each one a portal to a different world, inviting exploration and discovery. The scent of old paper mingles with the aroma of freshly brewed coffee, creating an atmosphere where every page turned feels like a journey embarked upon. Here, amidst the books and the whispers of stories yet untold, one can find solace from the chaos outside, losing oneself in the endless possibilities of literature.</p>
+        </div>
+        <!-- <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <a href="#" class="btn btn-primary">Feedback</a>
+        </div> -->
       </div>
     </div>
   </div>

@@ -101,3 +101,12 @@ CREATE TABLE reports (
     R3 INT DEFAULT 0,
     R4 INT DEFAULT 0
 );
+
+-- Notifications table
+
+CREATE TABLE notifications (
+    notify_id INT PRIMARY KEY AUTO_INCREMENT,
+    notify_message TEXT NOT NULL,
+    notify_to TEXT NOT NULL,
+    notify_time INT NOT NULL
+);
