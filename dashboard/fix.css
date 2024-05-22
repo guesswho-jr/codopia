@@ -43,6 +43,12 @@ html {
     background: #555;
 }
 
+/* @media (max-width: 450px) {
+    .shrink-below-450 {
+        transform: scale(1.5) !important;
+    }
+} */
+
 @media (max-width: 420px) {
     .hide-below-420 {
         display: none !important;

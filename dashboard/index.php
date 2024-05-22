@@ -83,7 +83,7 @@ $notification_counter = 0;
           if (is_array($note)) {
             $notifyFullMessage = str_replace("%USER%", "@" . strtolower($_SESSION["username"]), $note["notify_message"]);
             $notifyTime = date("M d, Y", $note["notify_time"]);
-            $notifyShortMessage = substr($notifyFullMessage, 0, 30);
+            $notifyShortMessage = substr($notifyFullMessage, 0, 36);
             if (json_decode($note["notify_to"], true)[0] == "everyone") {
               echo "
                 <div class='container notification mt-3 bg-light p-4 rounded shadow-sm border'>
@@ -97,8 +97,8 @@ $notification_counter = 0;
                     </div>
                   </div>
                   <hr class='my-3'>
-                  <div class='d-flex justify-content-between align-items-center flex-wrap'>
-                    <span>$notifyShortMessage...</span>
+                  <div class=''>
+                    <div>$notifyShortMessage...</div>
                     <button notifyId='{$note['notify_id']}' type='button' class='btn p-1 text-secondary border notification-read-more' data-bs-toggle='modal' data-bs-target='#staticBackdrop'>Read more</button>
                   </div>
                 </div>
@@ -117,8 +117,8 @@ $notification_counter = 0;
                     </div>
                   </div>
                   <hr class='my-3'>
-                  <div class='d-flex justify-content-between align-items-center flex-wrap'>
-                    <span>$notifyShortMessage...</span>
+                  <div class=''>
+                    <div>$notifyShortMessage...</div>
                     <button notifyId='{$note['notify_id']}' type='button' class='btn p-1 text-secondary border notification-read-more' data-bs-toggle='modal' data-bs-target='#staticBackdrop'>Read more</button>
                   </div>
                 </div>
@@ -204,8 +204,14 @@ $notification_counter = 0;
 
         <div class="row sticky-top py-3 d-flex d-flex justify-content-between px-5">
           <div class="container col-10 d-flex justify-content-center align-items-center bg-transparent p-0">
-            <input type="text" class="form-control shadow Search" placeholder="Search" id="search">
-            <img src="/imgs/search.svg" width="25" height="25">
+            <!-- <input type="text" class="form-control shadow Search" placeholder="Search" id="search">
+            <img src="/imgs/search.svg" width="25" height="25"> -->
+            <div class="container search col-12 d-flex justify-content-center shadow rounded-4 align-items-center bg-white border border-dark p-2">
+              <input type="text" class="form-control bg-transparent border-0 me-2" placeholder="Search" id="search">
+              <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-search me-2" viewBox="0 0 16 16">
+                <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
+              </svg>
+            </div>
           </div>
           <!-- <div class="container col-3 d-block d-md-none d-flex justify-content-center align-items-center">
             <a href="/"><img src="/imgs/logo.png" width="75" alt=""></a>
@@ -661,11 +667,11 @@ $notification_counter = 0;
 
       <div class="modal-content" id="notification-modal">
         <div class='modal-header'>
-          <h5 class='modal-title notification-modal-title' id='staticBackdropLabel'>Message</h5>
+          <h5 class='modal-title notification-modal-title' id='staticBackdropLabel'></h5>
           <button type='button' class='btn-close' data-bs-dismiss='modal' aria-label='Close'></button>
         </div>
         <div class='modal-body'>
-          <p id="notification-modal-message"> In the heart of the bustling city, amidst the cacophony of honking cars and chatter of passersby, there exists a hidden oasis, a quaint bookstore tucked away on a narrow cobblestone street. Its weathered exterior bears testament to the passage of time, yet inside, it emanates a timeless charm. Rows of bookshelves stand tall, each one a portal to a different world, inviting exploration and discovery. The scent of old paper mingles with the aroma of freshly brewed coffee, creating an atmosphere where every page turned feels like a journey embarked upon. Here, amidst the books and the whispers of stories yet untold, one can find solace from the chaos outside, losing oneself in the endless possibilities of literature.</p>
+          <p id="notification-modal-message"></p>
         </div>
       </div>
 
