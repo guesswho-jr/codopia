@@ -16,8 +16,14 @@ require("../scripts/admin_check.php");
 </head>
 
 <body class="d-flex justify-content-center">
-
-    <div class="container-fluid p-5">
+    
+    <div class="container-fluid px-5 pb-5">
+        <nav style="--bs-breadcrumb-divider: '/'; " aria-label="breadcrumb" class="mt-2">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="../" style="text-decoration: none;">Home</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Tests</li>
+            </ol>
+        </nav>
         <div class="row mb-5">
             <div class="container d-flex justify-content-center">
                 <div class="col-3 me-2">
@@ -28,10 +34,10 @@ require("../scripts/admin_check.php");
                     <!-- <input type="text" name="subject" id="subject" class="form-control me-2" placeholder="Subject" required> -->
                     <select name="subject" id="subject" class="form-control me-2">
                         <option value="HTML" name="HTML">HTML</option>
-                        <option value="CSS" name="CSS">CSS</option>
+                        <!-- <option value="CSS" name="CSS">CSS</option> -->
                         <option value="JavaScript" name="JavaScript">JavaScript</option>
-                        <option value="Bootstrap" name="Bootstrap">Bootstrap</option>
-                        <option value="Python" name="Python">Python</option>
+                        <!-- <option value="Bootstrap" name="Bootstrap">Bootstrap</option>
+                        <option value="Python" name="Python">Python</option> -->
                     </select>
                     <select name="diff" id="diff" class="form-control">
                         <option value="Easy" name="Easy">Easy</option>

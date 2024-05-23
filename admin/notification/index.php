@@ -14,7 +14,13 @@ require_once "../scripts/admin_check.php";
 </head>
 
 <body>
-    <div class="container-fluid vh-100 d-flex justify-content-center align-items-center">
+    <div class="container-fluid px-5 pb-5">
+        <nav style="--bs-breadcrumb-divider: '/'; " aria-label="breadcrumb" class="mt-2">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="../" style="text-decoration: none;">Home</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Notifications</li>
+            </ol>
+        </nav>
         <div class="container p-1 d-flex flex-column align-items-center shadow col-8">
             <div class="card-title mt-3">
                 <h1>Notify</h1>
