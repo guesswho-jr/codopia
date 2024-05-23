@@ -2,7 +2,7 @@
 include("../scripts/dashboard_setup.php");
 session_start();
 
-$sql = "SELECT * FROM `users`  \n" . "ORDER BY `users`.`is_admin` DESC";
+$sql = "SELECT * FROM `users` ORDER BY id ASC";
 $topUserStatement = $con->prepare($sql);
 $topUserStatement->execute();
 $topUserStatement->setFetchMode(PDO::FETCH_ASSOC);

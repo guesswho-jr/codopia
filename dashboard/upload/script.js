@@ -15,7 +15,7 @@ document.getElementById("upload-form").addEventListener("submit", function (even
             if (response.ERROR_CODE) {
                 Swal.fire({
                     icon: "error",
-                    title: `ERROR: ${response.ERROR_CODE}`,
+                    // title: `ERROR: ${response.ERROR_CODE}`,
                     text: response.ERROR_MESSAGE,
                     footer: '<a href="../feedback/">Why do I have this issue?</a>'
                 });

@@ -16,14 +16,14 @@ $userid = (int)$_SESSION["userid"];
 $db = new DataBase();
 $xpSystem = new XPSystem($userid);
 
-$last_upload = $db->executeSql("SELECT project_time FROM projects WHERE user_id = ? ORDER BY project_time DESC LIMIT 1", [$userid], true);
-if ($last_upload["rows"] != 0) {
-    $last_upload = $last_upload[0]["project_time"];
-    if (time() - $last_upload < 86400) {
-        echo json_encode(["ERROR_CODE" => 1001, "ERROR_MESSAGE" => "You have uploaded a project in the last 24 hours"]);
-        exit;
-    }
-}
+// $last_upload = $db->executeSql("SELECT project_time FROM projects WHERE user_id = ? ORDER BY project_time DESC LIMIT 1", [$userid], true);
+// if ($last_upload["rows"] != 0) {
+//     $last_upload = $last_upload[0]["project_time"];
+//     if (time() - $last_upload < 86400) {
+//         echo json_encode(["ERROR_CODE" => 1001, "ERROR_MESSAGE" => "You have uploaded a project in the last 24 hours"]);
+//         exit;
+//     }
+// }
 
 function validateFileType(string $tempFilePath, string $extension)
 {
@@ -49,10 +49,10 @@ function handleUpload($formData)
     $project_desc = $_POST["capInput"];
 
     // FIXME: CHECK THIS VALIDATION
-    if (!(validateString($project_name) && validateStringWithSpaces($project_desc))) {
-        echo json_encode(["ERROR_CODE" => 1002, "ERROR_MESSAGE" => "Please fill in all fields."]);
-        exit;
-    }
+    // if (!(validateString($project_name) && validateStringWithSpaces($project_desc))) {
+    //     echo json_encode(["ERROR_CODE" => 1002, "ERROR_MESSAGE" => "Please fill in all fields."]);
+    //     exit;
+    // }
 
     if (empty($file_name) && empty($project_name) && empty($project_desc)) {
         echo json_encode(["ERROR_CODE" => 1002, "ERROR_MESSAGE" => "Please fill in all fields."]);

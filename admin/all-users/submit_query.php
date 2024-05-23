@@ -32,13 +32,20 @@ if (!validateInteger($id)){
 // }
 
 
+// deleting projects
 $stmt=$con->prepare("select file_path from projects where user_id=?");
 $stmt->execute([$id]);
 
-$file = $stmt->fetchAll(PDO::FETCH_ASSOC);
+$files = $stmt->fetchAll(PDO::FETCH_ASSOC);
+try {
+    foreach($files as $file) {
+        unlink("../../dashboard/upload/uploads/". $file["file_path"]);
+    }
+} catch(Exception $e) {
+    die($e);
+}
 
-unlink("../../dashboard/upload/uploads/".$file[0]["file_path"]);
-
+// deleting user
 $stmt = $con->prepare('delete from users where id=?');
 $stmt->execute([$id]);
 
