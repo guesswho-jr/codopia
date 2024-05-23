@@ -2,6 +2,7 @@
 
 require_once "../../admin/scripts/classes.php";
 require_once "../../admin/scripts/validation.php";
+session_start();
 
 if (!(isset($_POST["projId"]) && isset($_POST["name"]) && isset($_POST["projDesc"]))) {
     die(json_encode(["error" => "Fatal error occurred"]));
@@ -30,7 +31,7 @@ if ($projName) {
         die(json_encode(["error" => "Error while validation"]));
     }
     // FIXME: It didn't specify the project id before
-    $resp = $db->executeSql("update projects set project_name=? where project_unique_identifier = ?", [$_POST['name'], $_POST["projId"]], true);
+    $resp = $db->executeSql("update projects set project_name=? where project_id = ? AND user_id = ? AND project_unique_identifier = ?", [$_POST['name'], $_POST["projId"], $_SESSION["userid"], $_POST["pui"]], true);
     if (is_object($resp) && get_class($resp) == "PDOException") {
         die(['error' => "Please report this on feedback: " . $resp->getCode()]);
     }
@@ -41,11 +42,11 @@ if ($projDesc) {
         die(json_encode(["error" => "Error while validation"]));
     }
     // FIXME: It didn't specify the project id before
-    $resp = $db->executeSql("update projects set project_detail=? where project_unique_identifier = ?", [$_POST['projDesc'], $_POST["projId"]], true);
+    $resp = $db->executeSql("update projects set project_detail=? where project_id = ? AND user_id = ? AND project_unique_identifier = ?", [$_POST['projDesc'], $_POST["projId"],$_SESSION["userid"], $_POST["pui"]], true);
     if (is_object($resp) && get_class($resp) == "PDOException") {
         die(['error' => "Please report this on feedback: " . $resp->getCode()]);
     }
 }
 
-$db->executeSql("update projects set project_time=?", [date('y-m-d h:m:s')]);
+$db->executeSql("update projects set project_time=? where project_id = ? AND user_id = ? AND project_unique_identifier = ?", [time(), $_POST["projId"], $_SESSION["userid"], $_POST["pui"]]);
 die(json_encode(["success" => 1]));

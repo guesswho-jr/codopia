@@ -154,7 +154,7 @@ $projectList = $statementForProjectFetching->fetchAll();
                 echo "<tr>";
                 echo "  <th>Project Name</th>";
                 echo "  <th>Caption</th>";
-                echo "  <th>Total Likes</th>";
+                echo "  <th>L/C/R</th>";
                 echo "  <th>Actions</th>";
                 echo "</tr>";
                 echo "</thead>";
@@ -164,13 +164,15 @@ $projectList = $statementForProjectFetching->fetchAll();
                   $projDesc = $project["project_detail"];
                   $projectId = $project["project_id"];
                   $likes = $project["likes"];
+                  $comments = $project["comments"];
+                  $reports = $project["reports"];
 
                   echo "<tr>";
                   echo "  <td>$projName</td>";
                   echo "  <td>$projDesc</td>";
-                  echo "  <td>$likes</td>";
-                  echo "  <td><button projectId='{$project['project_unique_identifier']}' class='btn btn-danger p-1 delete-btn'>Delete</button> 
-                  <button projectId='{$project['project_unique_identifier']}' class='btn btn-primary pl-3 edit-btn'>Edit</button></td>";
+                  echo "  <td>$likes/$comments/$reports</td>";
+                  echo "  <td><button projectId='{$project['project_id']}' projectUniqueIdentifier='{$project['project_unique_identifier']}' class='btn btn-danger p-1 delete-btn'>Delete</button> 
+                  <button projectId='{$project['project_id']}' projectUniqueIdentifier='{$project['project_unique_identifier']}' class='btn btn-primary pl-3 edit-btn'>Edit</button></td>";
                   echo "</tr>";
                 }
                 ?>
@@ -190,7 +192,8 @@ $projectList = $statementForProjectFetching->fetchAll();
     const editButtons = document.querySelectorAll(".edit-btn");
     let projectId;
     let projectName;
-    let ProjectDesc;
+    let projectDesc;
+    let pui;
     editButtons.forEach(button => {
       button.addEventListener("click", ev => {
         ev.preventDefault();
@@ -205,12 +208,14 @@ $projectList = $statementForProjectFetching->fetchAll();
           showCancelButton: true,
           preConfirm: async () => {
             projectName = document.getElementById("newname").value
-            ProjectDesc = document.getElementById("newdesc").value
+            projectDesc = document.getElementById("newdesc").value
             projectId = ev.target.getAttribute("projectId")
+            pui = ev.target.getAttribute("projectUniqueIdentifier")
             const formData = new FormData();
             formData.append("name", projectName)
             formData.append("projId", projectId)
-            formData.append("projDesc", ProjectDesc)
+            formData.append("projDesc", projectDesc)
+            formData.append("pui", pui)
             let resp = await fetch("edit.php", {
               method: "POST",
               body: formData
@@ -225,7 +230,7 @@ $projectList = $statementForProjectFetching->fetchAll();
             if (resp.success) {
               // FIXME: added the following condition
               if (projectName != "") ev.target.parentElement.parentElement.children[0].textContent = projectName;
-              if (ProjectDesc != "") ev.target.parentElement.parentElement.children[1].textContent = ProjectDesc;
+              if (projectDesc != "") ev.target.parentElement.parentElement.children[1].textContent = projectDesc;
             }
 
           }
