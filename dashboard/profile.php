@@ -226,8 +226,8 @@ session_start();
                         if (is_array($projects)) {
                             $time = date("M d, Y", $projects["project_time"]);
                             echo "
-                            <div class='row bg-light shadow border border-dark rounded-4 mt-5 col-12 col-lg-8 col-md-10 project-style'>
-                                <div class='col-6 border border-dark bg-dark text-white' style='border-top-left-radius: 15px; border-bottom-left-radius: 15px;'>
+                            <div class='row bg-light shadow border rounded-4 mt-5 col-12 col-lg-8 col-md-10 project-style'>
+                                <div class='col-6 border-end bg-muted text-dark' style='border-top-left-radius: 15px; border-bottom-left-radius: 15px;'>
                                     <h2 class='search-item project-name'>{$projects['project_name']}</h2>
                                     <h6 class='search-item project-detail'>{$projects['project_detail']}</h6>
                                 </div>
@@ -249,7 +249,7 @@ session_start();
                                     </div>
                                 </div>
                                 <div class='col-4 d-flex flex-column justify-content-center align-items-end'>
-                                    <p class='text-end'><span class='bg-warning fw-bold p-2 rounded small shrink-below-450'>$time</span></p>
+                                    <p class='text-end'><span class='fw-bold p-2 rounded small shrink-below-450'>$time</span></p>
                                     <a href='./index.php#project_{$projects['project_id']}' class='btn btn-outline-info p-3 rounded-4 fw-bold shrink-below-450'>Go to >></a>
                                 </div>
                             </div>
