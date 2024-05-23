@@ -254,10 +254,11 @@ $notification_counter = 0;
 
                       <?php
                       list($profileCardBadgeName, $profileCardBadgeColor) = getBadge((int)$resultForThePointsAndUploads['points']);
+                      $forBorderColor = explode("bg-", $profileCardBadgeColor)[1];
                       ?>
                       <div class="row d-flex justify-content-between flex-wrap">
                         <div class="col p-0 mt-3">
-                          <strong class="bg-white border border-muted p-1" style="border-top-left-radius: 15px; border-bottom-left-radius: 15px;">Level</strong><?php echo "<span id='total-xp' class='$profileCardBadgeColor text-white fw-bold border border-primary p-1' style='border-top-right-radius: 15px; border-bottom-right-radius: 15px;'>$profileCardBadgeName</span>" ?>
+                          <strong class="bg-white border border-muted p-1" style="border-top-left-radius: 15px; border-bottom-left-radius: 15px;">Level</strong><?php echo "<span id='total-xp' class='$profileCardBadgeColor text-white fw-bold border border-$forBorderColor p-1' style='border-top-right-radius: 15px; border-bottom-right-radius: 15px;'>$profileCardBadgeName</span>" ?>
                         </div>
                         <div class="col p-0 mt-3">
                           <strong class="bg-warning text-dark border border-warning p-1" style="border-top-left-radius: 15px; border-bottom-left-radius: 15px;">XP</strong><?php echo "<span id='total-xp' class='bg-white fw-bold border border-muted p-1' style='border-top-right-radius: 15px; border-bottom-right-radius: 15px;'>{$resultForThePointsAndUploads['points']}</span>" ?>
