@@ -39,8 +39,10 @@ deleteBtns.forEach(btn => {
                                 text: response.MESSAGE,
                                 icon: response.TYPE
                             });
-                            if (response.CODE == 2001) isDeleted = true;
-                            document.getElementById("project_table").children[1].removeChild(targetBtn.parentElement.parentElement);
+                            if (response.CODE == 2001) {
+                                isDeleted = true;
+                                document.getElementById("project_table").children[1].removeChild(targetBtn.parentElement.parentElement);
+                            }
                         } else {
                             reject('Something went wrong!');
                         }
