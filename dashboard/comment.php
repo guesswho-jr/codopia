@@ -20,7 +20,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 $data = $comments[$i];
                 array_push($superData, $data);
             }
-            die(json_encode(["status" => "yes", "text" => $superData]));
+            die(json_encode(["status" => "yes", "text" => $superData, "userid" => $userid]));
         }
     }
 
