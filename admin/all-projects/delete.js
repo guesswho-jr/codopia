@@ -1,9 +1,11 @@
 const deleteBtns = document.querySelectorAll(".delete-btn");
+let isDeleted = false;
 
 deleteBtns.forEach(btn => {
     btn.addEventListener("click", event => {
         const targetBtn = event.target;
         const projectId = targetBtn.getAttribute("projectId");
+        const pui = targetBtn.getAttribute("projectUniqueIdentifier");
         const userId = targetBtn.getAttribute("userId");    
 
         Swal.fire({
@@ -21,7 +23,9 @@ deleteBtns.forEach(btn => {
 
                     const formData = new FormData();
                     formData.append("projectId", projectId);
+                    formData.append("pui", pui);
                     formData.append("userId", userId);
+
                     // for (let [key, value] of formData.entries()) {
                     //     console.log(`${key}: ${value}`);
                     // }
@@ -30,25 +34,19 @@ deleteBtns.forEach(btn => {
                         if (xhr.status === 200) {
                             const response = JSON.parse(xhr.responseText);
                             resolve(response);
-                            switch (response.CODE) {
-                                case "2001":
-                                    Swal.fire({
-                                        title: `ERROR: ${response.CODE}`,
-                                        text: response.MESSAGE,
-                                        icon: "error"
-                                    });
-                                    break;
-                                default:
-                                    document.getElementById("project_table").children[1].removeChild(targetBtn.parentElement.parentElement);
-                            }
+                            Swal.fire({
+                                title: `${response.TYPE.toUpperCase()}: ${response.CODE}`,
+                                text: response.MESSAGE,
+                                icon: response.TYPE
+                            });
+                            if (response.CODE == 2001) isDeleted = true;
+                            document.getElementById("project_table").children[1].removeChild(targetBtn.parentElement.parentElement);
                         } else {
                             reject('Something went wrong!');
                         }
                     };
 
-                    // What to do when the request fails
                     xhr.onerror = function () {
-                        // Reject the promise with an error message
                         reject('Something went wrong!');
                     };
 
@@ -57,7 +55,7 @@ deleteBtns.forEach(btn => {
             },
             allowOutsideClick: () => !Swal.isLoading()
         }).then((result) => {
-            if (result.isConfirmed) {
+            if (result.isConfirmed && isDeleted) {
                 Swal.fire({
                     title: "Deleting project...",
                     timer: 1500,
@@ -68,22 +66,5 @@ deleteBtns.forEach(btn => {
                 })
             }
         });
-
-
-        // xhr.onload = function () {
-        //     if (xhr.status == 200) {
-        //         switch (xhr.response) {
-        //             case "ERROR":
-        //                 Swal.fire({
-        //                     title: "ERROR!",
-        //                     text: "Could not delete project!",
-        //                     icon: "warning"
-        //                 });
-        //                 break;
-        //             default:
-        //                 document.getElementById("project_table").children[1].removeChild(targetBtn.parentElement.parentElement);
-        //         }
-        //     }
-        // }
     });
 });

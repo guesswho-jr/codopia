@@ -34,25 +34,25 @@ require_once "../scripts/classes.php";
             <th>Project Name</th>
             <th>Project Detail</th>
             <th>Released Date</th>
-            <th>Likes</th>
+            <th>L/C/R</th>
             <th>Actions</th>
           </tr>
         </thead>
         <tbody>
           <?php
           $db = new DataBase();
-          $projects = $db->executeSql("SELECT project_id, project_name, project_detail, project_time, likes, username, user_id FROM projects INNER JOIN users ON projects.user_id = users.id ORDER BY project_time DESC", [], true);
+          $projects = $db->executeSql("SELECT project_id, project_name, project_detail, project_time, likes, comments, reports, project_unique_identifier, username, user_id FROM projects INNER JOIN users ON projects.user_id = users.id ORDER BY project_time DESC", [], true);
           if ($projects["rows"] != 0) {
             for ($i = 0; $i < count($projects) - 1; $i++) {
               $projectTime = date("M d, Y", $projects[$i]['project_time']);
               echo "
                 <tr>
-                  <td>{$projects[$i]['username']}</td>
+                  <td>@{$projects[$i]['username']}</td>
                   <td>{$projects[$i]['project_name']}</td>
                   <td>{$projects[$i]['project_detail']}</td>
                   <td>{$projectTime}</td>
-                  <td>{$projects[$i]['likes']}</td>
-                  <td><button projectId='{$projects[$i]['project_id']}' userId='{$projects[$i]['user_id']}' class='btn btn-danger p-1 delete-btn'>Delete</button></td>
+                  <td>{$projects[$i]['likes']}/{$projects[$i]['comments']}/{$projects[$i]['reports']}</td>
+                  <td><button projectId='{$projects[$i]['project_id']}' projectUniqueIdentifier='{$projects[$i]['project_unique_identifier']}' userId='{$projects[$i]['user_id']}' class='btn btn-danger p-1 delete-btn'>Delete</button></td>
                 </tr>
               ";
             }
