@@ -71,11 +71,11 @@ if ($newQuestion["rows"] ==0){
     $resarr = (array)(json_decode($subjectCheck[0]["taken_by"]));
     array_push($resarr, SUBJECT_ID);
     $db->executeSql("update test_list set taken_by=? where name=?", [json_encode($resarr), $subjectMap[SUBJECT_ID]]);
-    $cache->cleanUp();
     $correct = ($realAns[0]["answer"] == $userAnswer) ? 1:0;
     if ($correct==1){
         $xpSys->addXP(10);
     }
+    $cache->cleanUp();
     die(json_encode(array("error"=> 12, "correct"=>$correct)));
 }
 $newQuestionJSON = [
