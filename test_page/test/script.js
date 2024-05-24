@@ -81,14 +81,14 @@ const updateDOM = (realAnswer, userAnswer)=>{
     else if (realAnswer.correct === 0){
         wrong = wrong + 1;
         
-        if (userAnswerEl.classList.contains("selected")){
-            userAnswerEl.classList.replace("selected","wrong");
-            document.getElementById(realAnswer.ans.answer).classList.add("correct");
-        }
         if (realAnswer.error === 12){
             setTimeout(()=>{
                 showReport();
             }, 1000);
+        }
+        if (userAnswerEl.classList.contains("selected")){
+            userAnswerEl.classList.replace("selected","wrong");
+            document.getElementById(realAnswer.ans.answer).classList.add("correct");
         }
     }
     
