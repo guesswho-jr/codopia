@@ -24,30 +24,37 @@ if (!$_SESSION["loggedin"]) {
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="shortcut icon" href="/imgs/logo.png">
+  <link rel="stylesheet" href="bootstrap.min.css">
   <link rel="stylesheet" href="/dashboard/side.css">
-  <link rel="stylesheet" href="/dashboard/fix.css">
-  <link rel="stylesheet" href="/dashboard/loader.css">
-  <link rel="stylesheet" href="/static/bootstrap.min.css">
-
-  <title>Test and Questions</title>
+  <link rel="stylesheet" href=" /dashboard/fix.css">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .main-cont {
+      background-color: #ccc;
+    }
+  </style>
+  <script src="/static/bootstrap.bundle.min.js"></script>
+  <script>
+    const share = () => {
+      navigator.share({
+        text: "Codopia",
+        url: window.location.href
+      })
+    }
+  </script>
+  <title>Questions</title>
 </head>
 
-<body class="d-flex bg-light">
-
-  <div id="loader-container">
-    <div class="loader"></div>
-  </div>
-
+<body class="d-flex main-cont">
   <div class="container-fluid">
     <div class="row">
       <?php
       //MARK: SIDEBAR
       ?>
       <!-- #1e2d40 -->
-      <div id="sidebar" class="sidebar d-none d-md-block col-md-3 sidebar-g position-relative shadow" style="background-color: #1e2d40;">
+      <div id="sidebar" class="sidebar d-none d-md-block col-3 sidebar-g position-relative shadow" style="background-color: #1e2d40;">
         <div class="logo d-flex h-25 justify-content-center align-items-center">
-          <a href="/"><img src="/imgs/text-logo.png" style="width: 187.5px;" alt="codopia logo"></a>
+          <a href="../"><img src="/imgs/text-logo.png" style="width: 187.5px;" alt="codopia logo"></a>
         </div>
         <ul class="nav mt-5 flex-column">
           <li class="nav-item">
@@ -142,6 +149,8 @@ if (!$_SESSION["loggedin"]) {
       ?>
       <div class="container col-9 main-content-g position-relative">
 
+
+
         <div class="questions">
           <div class="container">
             <div class="intro">
@@ -152,48 +161,29 @@ if (!$_SESSION["loggedin"]) {
               <?php
               $db = new DataBase();
               $res = $db->executeSql("select * from test_list", [], true);
-              foreach ($res as $test) { 
-                if (is_array($test)) {
-                  // echo "<pre>";
-                  // print_r($test);
-                  // echo "</pre>";
-                  
-                  $noOfQuestions = $db->executeParams("select count(*) as count from tests where test_list_id=?", [(string)$test["id"]], true);
 
-                  // $correctNumber = $db->executeSql("SELECT COUNT(*) AS count")
+              foreach ($res as $test) {
+                if (is_array($test)) {
+                  $noOfQuestions = $db->executeParams("select count(*) as count from tests where subject=?", [(string)$test["name"]], true);
 
                   echo "
-                    <div class=\"subject col-lg-3 col-md-5 col-sm-6 shadow p-3\">
+                    <div class=\"subject col-lg-3 col-md-5 col-sm-6\">
                       <h3 class=\"text\">{$test['name']}</h3>
-                      <p class=\"description\">Prepared by: <b>@{$test['prepared_by']}</b><br>{$noOfQuestions[0]['count']} questions <br> {$test['difficulty']}</p><a href=\"./test/index.php?subid={$test['name']}\" class=\"learn-more\">Take the test >></a>
+                      <p class=\"description\">Prepared by: {$test['prepared_by']}<br>{$noOfQuestions[0]['count']} questions <br> {$test['difficulity']}</p><a href=\"test?subid={$test['name']}\" class=\"learn-more\">Take the test>></a>
                     </div>
                     
                     ";
                 }
               }
               ?>
+
+
             </div>
           </div>
         </div>
-
       </div>
-      <!--  END OF MAIN CONTENT -->
     </div>
   </div>
-
-  <script src="/static/bootstrap.bundle.min.js"></script>
-  <script>
-    const share = () => {
-      navigator.share({
-        text: "Codopia",
-        url: window.location.href
-      })
-    }
-  </script>
-  <script>
-    if (localStorage.getItem("font-family")) document.querySelector("style").innerHTML = `*{font-family:"${localStorage.getItem("font-family")}";}`
-  </script>
-  <script src="/dashboard/loader.js"></script>
 </body>
 
 </html>
