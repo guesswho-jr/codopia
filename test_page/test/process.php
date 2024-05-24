@@ -76,7 +76,7 @@ if ($newQuestion["rows"] ==0){
     if ($correct==1){
         $xpSys->addXP(10);
     }
-    die(json_encode(array("error"=> 12, "correct"=>$correct, "ans"=>$realAns["answer"])));
+    die(json_encode(array("error"=> 12, "correct"=>$correct, "ans"=>$realAns[0]["answer"])));
 }
 $newQuestionJSON = [
     "question"=>$newQuestion[0]["question"],
