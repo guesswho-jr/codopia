@@ -75,8 +75,8 @@ if ($newQuestion["rows"] ==0){
     if ($correct==1){
         $xpSys->addXP(10);
     }
-    $cache->cleanUp();
     echo json_encode(array("error"=> 12, "correct"=>$correct));
+    $cache->cleanUp();
     exit;
 }
 $newQuestionJSON = [
